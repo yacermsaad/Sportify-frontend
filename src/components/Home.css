@@ -1,0 +1,20 @@
+#imgs {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40PX;
+  }
+  
+  #imgs img {
+    width: 200px;
+    border: 7px solid #fff; /* White border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow */
+    border-radius: 5px;
+  }
+  
+  #imgs img:first-child {
+    transform: rotate(-10deg);
+  }
+  
+  #imgs img:last-child {
+    transform: rotate(15deg);
+  }
