@@ -62,26 +62,26 @@ function Home() {
  <div id='section' style={{ marginTop: "50px" }}>
  <h1 className="text-center text-2xl font-bold mb-8">Ce qui vous attend chez Eversports</h1>
  <div className="flex justify-between p-8" style={{borderRadius:"10px"}}>
- <div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , mozBorderRadius: "10px" ,webkitBorderRadius: "10px" }}>
+ <div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , MozBorderRadius: "10px" ,WebkitBorderRadius: "10px" }}>
  <div className="icon-placeholder" style={{ position: "absolute", top: "0", right: "0", width: "100px", height: "100px", border: "10px solid white", display: "flex", justifyContent: "center", alignItems: "center",marginTop:"-20px",marginLeft:"70px",borderRadius:"8px"}}>
-   <i class="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
+   <i className="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
  </div>
  {/* Placeholder for the icon */}
  <h2 className="text-lg font-bold mb-2" style={{ fontSize: "26px" }}>Trouve l'activité qui te correspond !</h2>
  <p className="text-sm" style={{ marginTop: "30px" }}>Découvre de nouveaux cours, professeur.e.s et studios qui correspondent à tes envies au quotidien</p>
 </div>
 
-<div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , mozBorderRadius: "10px" ,webkitBorderRadius: "10px" }}>
+<div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , MozBorderRadius: "10px" ,WebkitBorderRadius: "10px" }}>
  <div className="icon-placeholder" style={{ position: "absolute", top: "0", right: "0", width: "100px", height: "100px", border: "10px solid white", display: "flex", justifyContent: "center", alignItems: "center",marginTop:"-20px",marginLeft:"70px",borderRadius:"8px"}}>
-   <i class="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
+   <i className="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
  </div>
  {/* Placeholder for the icon */}
  <h2 className="text-lg font-bold mb-2" style={{ fontSize: "26px" }}>Trouve l'activité qui te correspond !</h2>
  <p className="text-sm" style={{ marginTop: "30px" }}>Découvre de nouveaux cours, professeur.e.s et studios qui correspondent à tes envies au quotidien</p>
 </div>
-<div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , mozBorderRadius: "10px" ,webkitBorderRadius: "10px" }}>
+<div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , MozBorderRadius: "10px" ,WebkitBorderRadius: "10px" }}>
  <div className="icon-placeholder" style={{ position: "absolute", top: "0", right: "0", width: "100px", height: "100px", border: "10px solid white", display: "flex", justifyContent: "center", alignItems: "center",marginTop:"-20px",marginLeft:"70px",borderRadius:"8px"}}>
-   <i class="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
+   <i className="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
  </div>
  {/* Placeholder for the icon */}
  <h2 className="text-lg font-bold mb-2" style={{ fontSize: "26px" }}>Trouve l'activité qui te correspond !</h2>
@@ -256,31 +256,31 @@ function Home() {
   <div className="flex justify-around items-end" style={{marginTop:"80px"}}>
     <div className="box border border-gray-300 shadow-lg rounded-lg p-6 w-64" style={{background:"white"}}>
       <div className="flex items-center justify-center mb-4">
-        <i class="fa-solid fa-location-dot" style={{color: "#4B5563"}}></i>
+        <i className="fa-solid fa-location-dot" style={{color: "#4B5563"}}></i>
       </div>
       <div className="text-center text-gray-700">Studios</div>
     </div>
     <div className="box border border-gray-300 shadow-lg rounded-lg p-6 w-64" style={{background:"white"}}>
       <div className="flex items-center justify-center mb-4">
-        <i class="fa-solid fa-person-walking" style={{color: "#4B5563"}}></i>
+        <i className="fa-solid fa-person-walking" style={{color: "#4B5563"}}></i>
       </div>
       <div className="text-center text-gray-700">Cours et Entraînements</div>
     </div>
     <div className="box border border-gray-300 shadow-lg rounded-lg p-6 w-64" style={{background:"white"}}>
       <div className="flex items-center justify-center mb-4">
-        <i class="fa-solid fa-fire" style={{color: "#4B5563"}}></i>
+        <i className="fa-solid fa-fire" style={{color: "#4B5563"}}></i>
       </div>
       <div className="text-center text-gray-700">Événements</div>
     </div>
     <div className="box border border-gray-300 shadow-lg rounded-lg p-6 w-64" style={{background:"white"}}>
       <div className="flex items-center justify-center mb-4">
-        <i class="fa-solid fa-video" style={{color: "#4B5563"}}></i>
+        <i className="fa-solid fa-video" style={{color: "#4B5563"}}></i>
       </div>
       <div className="text-center text-gray-700">Vidéos</div>
     </div>
     <div className="box border border-gray-300 shadow-lg rounded-lg p-6 w-64" style={{background:"white",height:"107px"}}>
           <div className="flex items-center justify-center mb-4">
-        <i class="fa-solid fa-tv" style={{color: "#4B5563"}}></i>
+        <i className="fa-solid fa-tv" style={{color: "#4B5563"}}></i>
       </div>
       <div className="text-center text-gray-700">Activités en ligne en direct</div>
     </div>

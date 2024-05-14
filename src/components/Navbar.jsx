@@ -1,10 +1,35 @@
 import React, { useState } from 'react';
+import Login from './login/Login.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import 'animate.css';
+
 
 const Navbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isModalOpenlogin, setIsModalOpenlogin] = useState(false);
+  const [isModalOpencreate, setIsModalOpencreate] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
+  };
+  const closeModal = () => {
+    setIsModalOpenlogin(false);
+    setIsModalOpencreate(false)
+   
+  };
+  const openModalLogin = () => {
+    setIsModalOpenlogin(true);
+    dispatch({type:'create',log:false});
+    setIsModalOpencreate(false)
+    
+  };
+  const openModalCreate = () => {
+    setIsModalOpencreate(true);
+    dispatch({type:'create',log:true});
+    setIsModalOpenlogin(false);
+    
+    
   };
 
   return (
@@ -29,10 +54,13 @@ const Navbar = () => {
         <span className="text-gray-400">|</span>
         <a href="#" className="block md:inline-block mt-2 md:mt-0 text-gray-600 hover:text-green-500">Pour les particuliers</a>
         <span className="text-gray-400">|</span>
-        <a href="#" className="block md:inline-block mt-2 md:mt-0 text-green-500 hover:text-green-700" style={{color:"#04cfb4"}}>Connexion</a>
+        <a  className="block md:inline-block mt-2 md:mt-0 text-green-500 hover:text-green-700 cursor-pointer" style={{color:"#04cfb4"}} onClick={openModalLogin}>Connexion</a>
+        <Login isOpen={isModalOpenlogin} setOpen={closeModal} />
         <span className="text-gray-400">|</span>
-        <a href="#" className="block md:inline-block mt-2 md:mt-0 text-white font-bold py-2 px-4 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 rounded-full" style={{background:"#04cfb4"}} >Inscription</a>
+        <a className="block md:inline-block mt-2 md:mt-0 text-white font-bold py-2 px-4 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 rounded-full" style={{background:"#04cfb4"}} onClick={openModalCreate}>Inscription</a>
+        <Login isOpen={isModalOpencreate} setOpen={closeModal} />
       </div>
+      
     </nav>
   );
 };
