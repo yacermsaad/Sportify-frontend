@@ -5,7 +5,7 @@ import Footer from './Footer';
 function Home() {
   return (
    <div>
-   <div style={{ background: 'rgb(2,0,36)',background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }}>
+   <div style={{ background: 'rgb(2,0,36)', background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }}>
    <Navbar />
    <div id='header' className="flex flex-wrap" style={{marginTop:"10Opx"}}>
      <div id='text' className="w-full md:w-1/2 p-8">
