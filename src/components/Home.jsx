@@ -2,16 +2,24 @@ import React from 'react';
 import Navbar from './Navbar';
 import './Home.css'
 import Footer from './Footer';
+import { useTranslation } from 'react-i18next';
 function Home() {
+  const [t,i18n]=useTranslation();
   return (
    <div>
+<<<<<<< HEAD
    <div style={{ background: 'rgb(2,0,36)', background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }}>
+=======
+    <div  className="rtl"  style={i18n.language=='fr'?{background: 'rgb(2,0,36)',background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }:{background: 'rgb(2,0,36)', background: 'linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)'} }>
+
+>>>>>>> 93843ee4782cf6f1fec253548407b1b066222417
    <Navbar />
-   <div id='header' className="flex flex-wrap" style={{marginTop:"10Opx"}}>
-     <div id='text' className="w-full md:w-1/2 p-8">
-       <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">Réserve ton yoga et tes activités sportives, c'est parti !</h1>
-       <p className="mb-4 text-white">Reste flexible et réserve tes activités au moment et de la manière qui te conviennent le mieux</p>
-       <select id="lieu" name="lieu" className="border border-gray-300 rounded px-4 py-2 mb-4 text-gray-800 bg-white" style={{height:"70px",width:"180px",border:"none", borderRadius: "20px 0px 0px 20px",outline:"none"}}>
+   <div id='header' className={`flex flex-wrap flex-row ${i18n.language=='ar'?'flex-row-reverse':''}`} style={{marginTop:"10Opx"}}>
+     <div id='text' className={`w-full md:w-1/2 p-8 ${i18n.language=='ar'?'text-right':''}`}>
+       <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white ">{t('ab')}</h1>
+       <p className="mb-4 text-white">{t('p2')}</p>
+      
+       <select id="lieu" name="lieu" className="border border-gray-300 rounded px-4 py-2 mb-4 text-gray-800 bg-white" style={{height:"70px",width:"180px",border:"none", borderRadius: "20px 0px 0px 20px",outline:"none"}} >
          <option value="Casablanca">Casablanca</option>
          <option value="Rabat">Rabat</option>
          <option value="Marrakech">Marrakech</option>
@@ -32,7 +40,8 @@ function Home() {
          <option value="El Jadida">El Jadida</option>
          <option value="Taza">Taza</option>
        </select>
-       <input type='search' className="border border-gray-300 rounded px-4 py-2 mb-4 text-gray-800 bg-white" placeholder="Rechercher un sport ou le nom d'un studio/centre" style={{height:"70px",width:"350px",border:"none", borderRadius: "0px 20px 20px 0px",outline:"none",marginLeft:"1px"}} />
+       <input type='search' className="border border-gray-300 rounded px-4 py-2 mb-4 text-gray-800 bg-white" placeholder="Rechercher un sport ou le nom d'un studio/centre" style={{height:"70px",width:"350px",border:"none", borderRadius: "0px 20px 20px 0px",outline:"none",marginLeft:"1px"}}  />
+
        <div>
          <div className="flex flex-wrap mb-4">
            <button className="bg-transparent text-white px-4 py-2 rounded mr-2 mb-2 border border-white">Yoga</button>
@@ -43,15 +52,16 @@ function Home() {
            <button className="bg-transparent text-white px-4 py-2 rounded mr-2 mb-2 border border-white">Cuisses-Abdos-Fessiers</button>
            <button className="bg-transparent text-white px-4 py-2 rounded mr-2 mb-2 border border-white">Boxe</button>
            <button className="bg-transparent text-white px-4 py-2 rounded mr-2 mb-2 border border-white">Fitness</button>
-         </div>
-         <div id='buttons' className="flex" style={{marginTop:"130px"}}>
+         </div> 
+          <div id='buttons' className="flex" style={{marginTop:"130px"}}>
            <button className="bg-transparent text-white px-4 py-2 rounded mb-2 mr-2 border border-white">Tu travailles en Ressources Humaines ? Découvre les avantages d'Eversports Corporate.</button>
            <button className="bg-transparent text-white px-4 py-2 rounded mb-2 border border-white">Tu travailles en Ressources Humaines ? Découvre les avantages d'Eversports Corporate.</button>
          </div>
        </div>
+       
      </div>
-     <div id='img' className="w-full md:w-1/2">
-       <img src='https://www.eversports.fr/static/media/hero.2f3d543c.webp' className="w-full h-full object-cover" alt="Sport" />
+     <div id='img' className="w-full md:w-1/2 ">
+       <img src='https://www.eversports.fr/static/media/hero.2f3d543c.webp' className="w-full h-full object-cover " alt="Sport" />
      </div>
    </div>
 
@@ -197,7 +207,7 @@ function Home() {
 
 
   <label>Consulte les offres à </label>
-  <select id="lieu" name="lieu" className="border border-gray-300 rounded px-4 py-2 mb-4 text-gray-800 bg-white" style={{height:"70px",width:"180px",border:"none", borderRadius: "20px 0px 0px 20px",outline:"none", borderLeft:"1,5px solid black"}}>
+  <select id="lieu" name="lieu" className="border border-gray-300 rounded px-4 py-2 mb-4 text-gray-800 bg-white" style={{height:"70px",width:"180px",border:"none", borderRadius: "20px 0px 0px 20px",outline:"none", borderLeft:"1,5px solid black"}} dir={`${i18n.language == 'ar' ?"rtl" : ''}`}>
     <option value="Casablanca">Casablanca</option>
     <option value="Rabat">Rabat</option>
     <option value="Marrakech">Marrakech</option>
@@ -231,6 +241,7 @@ function Home() {
       outline: "none",
       
     }}
+    
   >
   
     <option value="yoga">Yoga</option>
@@ -246,11 +257,7 @@ function Home() {
     <option value="skateboarding">Skateboarding</option>
     <option value="hiking">Hiking</option>
     <option value="rock climbing">Rock Climbing</option>
-    <option value="skiing">Skiing</option>
-    <option value="snowboarding">Snowboarding</option>
-    <option value="karate">Karate</option>
-    <option value="judo">Judo</option>
-    <option value="boxing">Boxing</option>
+   
   </select>
 
   <div className="flex justify-around items-end" style={{marginTop:"80px"}}>
@@ -372,28 +379,6 @@ function Home() {
 </div>
 
 
-
-<div id="download-app" className="py-12 flex flex-col md:flex-row items-center justify-between" style={{ marginLeft: "50px" }}>
-  <div className="container mx-auto px-4">
-    <div className="max-w-md text-center md:text-left">
-      <h2 className="text-3xl font-semibold mb-6 md:mb-8" style={{ fontSize: "40px" }}>Téléchargez notre application</h2>
-      <p className="text-gray-700 mb-8">Télécharge notre application Eversports et garde une trace de tes réservations, amis, studios, cours et professeurs préférés.</p>
-      <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-x-4 md:space-y-0">
-        <a href="link_to_app_store" className="flex items-center bg-white py-2 px-6 rounded-lg shadow-md transition duration-300 hover:bg-gray-200" style={{ background: "black" }}>
-          <img src="img/logoApple.png" alt="App Store" className="w-10 mr-2" />
-          <span className="text-gray-800 font-medium" style={{ color: "white" }}>App Store</span>
-        </a>
-        <a href="link_to_google_play" className="flex items-center bg-white py-2 px-6 rounded-lg shadow-md transition duration-300 hover:bg-gray-200" style={{ border: "1px solid black" }}>
-          <img src="img/GooglePlay.png" alt="Google Play" className="w-10 mr-2" />
-          <span className="text-gray-800 font-medium">Google Play</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div className="hidden md:block w-full md:w-1/2">
-    <img src="https://www.eversports.fr/static/media/download-apps-phone.cce3f794.webp" alt="Application Image" className="mx-auto md:ml-0" style={{ width: "280px" }} />
-  </div>
-</div>
 
 
 
