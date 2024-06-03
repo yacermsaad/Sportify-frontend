@@ -1,16 +1,54 @@
 import React from 'react';
 import Navbar from './Navbar';
+import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 function Services() {
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
+  const [itemsPerPage, setItemsPerPage] = useState(6); // Default to 6 items
+
+  // Function to update itemsPerPage based on screen width
+  const updateItemsPerPage = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1024) {
+      setItemsPerPage(6); // Desktop: Show 6 items per page
+    } else if (screenWidth >= 768) {
+      setItemsPerPage(4); // iPad: Show 4 items per page
+    } else {
+      setItemsPerPage(2); // Phones: Show 2 items per page
+    }
+  };
+
+  // Update itemsPerPage when the screen resizes
+  useEffect(() => {
+    window.addEventListener('resize', updateItemsPerPage);
+    return () => window.removeEventListener('resize', updateItemsPerPage);
+  }, []);
+
+  // Function to handle next page click
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  // Function to handle previous page click
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Calculate the index of the first and last item to display
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  
   return (
     <div>
       <Navbar />
 
       <div id='blogs' className="p-8 relative rounded-lg">
-        <h1 className="text-2xl font-bold mb-4">Résultats pour  <span style={{color:'lightgreen'}}>Yoga</span></h1>
+        <h1 className="text-2xl font-bold mb-4">Résultats pour  <span style={{ color: 'lightgreen' }}>Yoga</span></h1>
         <p className="mb-4" style={{ width: "32%" }}>Recherchez plutôt Yoga.</p>
 
         <div className="flex mb-4" style={{ gap: "1rem" }}>
@@ -53,8 +91,8 @@ function Services() {
           Afficher la version anglaise
         </p>
 
-        <div className="flex justify-between items-center mb-4" style={{marginTop:"30px"}}>
-          <p style={{color:"gray"}}>41 résultats</p>
+        <div className="flex justify-between items-center mb-4" style={{ marginTop: "30px" }}>
+          <p style={{ color: "gray" }}>41 résultats</p>
           <div>
             <span>Triez par :</span>
             <select className="rounded-md px-4 py-2 border border-gray-300 ml-2">
@@ -65,397 +103,54 @@ function Services() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Premier Blog */}
-          <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-            <Carousel showArrows={true}>
-              <div>
-                <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        {/* Render items based on pagination */}
+        {Array.from({ length: itemsPerPage }).map((_, index) => {
+          const dataIndex = startIndex + index;
+          return (
+            dataIndex < 41 && ( // Assuming total results is 41
+              <div key={dataIndex} className="relative rounded-md p-4" style={{ border: "1px solid LIGHTGRAY", maxWidth: "300px", flex: "1 0 300px" }}>
+                {/* Carousel component */}
+                <Carousel showArrows={true} showThumbs={false} showStatus={false} infiniteLoop={true} >
+                  <div>
+                    <img src={`https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp`} alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{ width: "100%", height: "auto", border: "1px solid lightgray" }} />
+                  </div>
+                  <div>
+                    <img src={`https://www.eversports.fr/static/media/schedule.c222088a.webp`} alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{ width: "100%", height: "auto", border: "1px solid lightgray" }} />
+                  </div>
+                  <div>
+                    <img src={`https://www.eversports.fr/static/media/schedule.c222088a.webp`} alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{ width: "100%", height: "auto", border: "1px solid lightgray" }} />
+                  </div>
+                </Carousel>
+                {/* Blog content */}
+                <div className="flex items-center mb-2">
+                  <img src={`https://d1fufvy4xao6k9.cloudfront.net/images/blog/posts/2023/06/hock36.jpg`} alt="User" className="rounded-full mr-2 h-8 w-8" />
+                  <h2 className="text-lg font-bold mb-2 mr-2">Yasser Msaad</h2>
+                  <span className="text-red-500 cursor-pointer">
+                    <i className="fa-regular fa-heart" style={{ color: "black" }}></i>
+                  </span>
+                </div>
+                <p>Je rehausserai votre marque avec des logos simples mais frappants</p>
+                <div className="flex items-center mt-2">
+                  <i className="fas fa-star text-yellow-500 mr-1"></i>
+                  <span>5,0</span>
+                  <span className="ml-2">À partir de 80 $US</span>
+                </div>
               </div>
-              <div>
-                <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-              <div>
-                <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-            </Carousel>
-            <div className="flex items-center mb-2">
-              <i className="fa-solid fa-user mr-2"></i>
-              <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-            </div>
-            <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-            <div className="flex items-center mt-2">
-              <i className="fas fa-star text-yellow-500 mr-1"></i>
-              <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              <span className="ml-2">À partir de 80 $US</span>
-            </div>
-          </div>
-          <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-          <Carousel showArrows={true}>
-            <div>
-              <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-              <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                <i className="fas fa-heart"></i>
-              </span>
-            </div>
-            <div>
-              <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-              <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                <i className="fas fa-heart"></i>
-              </span>
-            </div>
-            <div>
-              <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-              <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                <i className="fas fa-heart"></i>
-              </span>
-            </div>
-          </Carousel>
-          <div className="flex items-center mb-2">
-            <i className="fa-solid fa-user mr-2"></i>
-            <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-          </div>
-          <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-          <div className="flex items-center mt-2">
-            <i className="fas fa-star text-yellow-500 mr-1"></i>
-            <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <span className="ml-2">À partir de 80 $US</span>
-          </div>
-        </div>
-        <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-        <Carousel showArrows={true}>
-          <div>
-            <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-            <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-              <i className="fas fa-heart"></i>
-            </span>
-          </div>
-          <div>
-            <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-            <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-              <i className="fas fa-heart"></i>
-            </span>
-          </div>
-          <div>
-            <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-            <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-              <i className="fas fa-heart"></i>
-            </span>
-          </div>
-        </Carousel>
-        <div className="flex items-center mb-2">
-          <i className="fa-solid fa-user mr-2"></i>
-          <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-        </div>
-        <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-        <div className="flex items-center mt-2">
-          <i className="fas fa-star text-yellow-500 mr-1"></i>
-          <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-          <span className="ml-2">À partir de 80 $US</span>
-        </div>
+            )
+          );
+        })}
       </div>
-      <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-      <Carousel showArrows={true}>
-        <div>
-          <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-          <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-            <i className="fas fa-heart"></i>
-          </span>
-        </div>
-        <div>
-          <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-          <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-            <i className="fas fa-heart"></i>
-          </span>
-        </div>
-        <div>
-          <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-          <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-            <i className="fas fa-heart"></i>
-          </span>
-        </div>
-      </Carousel>
-      <div className="flex items-center mb-2">
-        <i className="fa-solid fa-user mr-2"></i>
-        <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-      </div>
-      <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-      <div className="flex items-center mt-2">
-        <i className="fas fa-star text-yellow-500 mr-1"></i>
-        <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <span className="ml-2">À partir de 80 $US</span>
-      </div>
+      
+      <div className="flex justify-between mt-4">
+      <button onClick={prevPage} disabled={currentPage === 1}>
+        Previous
+      </button>
+      <button onClick={nextPage}>
+        Next
+      </button>
     </div>
-    <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-    <Carousel showArrows={true}>
-      <div>
-        <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-        <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-          <i className="fas fa-heart"></i>
-        </span>
-      </div>
-      <div>
-        <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-        <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-          <i className="fas fa-heart"></i>
-        </span>
-      </div>
-      <div>
-        <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-        <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-          <i className="fas fa-heart"></i>
-        </span>
-      </div>
-    </Carousel>
-    <div className="flex items-center mb-2">
-      <i className="fa-solid fa-user mr-2"></i>
-      <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-    </div>
-    <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-    <div className="flex items-center mt-2">
-      <i className="fas fa-star text-yellow-500 mr-1"></i>
-      <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <span className="ml-2">À partir de 80 $US</span>
-    </div>
-  </div>
-  <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-  <Carousel showArrows={true}>
-    <div>
-      <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-      <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-        <i className="fas fa-heart"></i>
-      </span>
-    </div>
-    <div>
-      <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-      <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-        <i className="fas fa-heart"></i>
-      </span>
-    </div>
-    <div>
-      <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-      <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-        <i className="fas fa-heart"></i>
-      </span>
-    </div>
-  </Carousel>
-  <div className="flex items-center mb-2">
-    <i className="fa-solid fa-user mr-2"></i>
-    <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-  </div>
-  <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-  <div className="flex items-center mt-2">
-    <i className="fas fa-star text-yellow-500 mr-1"></i>
-    <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    <span className="ml-2">À partir de 80 $US</span>
-  </div>
-</div>
-<div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-<Carousel showArrows={true}>
-  <div>
-    <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-</Carousel>
-<div className="flex items-center mb-2">
-  <i className="fa-solid fa-user mr-2"></i>
-  <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-</div>
-<p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-<div className="flex items-center mt-2">
-  <i className="fas fa-star text-yellow-500 mr-1"></i>
-  <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <span className="ml-2">À partir de 80 $US</span>
-</div>
-</div>
-<div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-<Carousel showArrows={true}>
-  <div>
-    <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-</Carousel>
-<div className="flex items-center mb-2">
-  <i className="fa-solid fa-user mr-2"></i>
-  <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-</div>
-<p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-<div className="flex items-center mt-2">
-  <i className="fas fa-star text-yellow-500 mr-1"></i>
-  <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <span className="ml-2">À partir de 80 $US</span>
-</div>
-</div>
-<div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-<Carousel showArrows={true}>
-  <div>
-    <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-</Carousel>
-<div className="flex items-center mb-2">
-  <i className="fa-solid fa-user mr-2"></i>
-  <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-</div>
-<p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-<div className="flex items-center mt-2">
-  <i className="fas fa-star text-yellow-500 mr-1"></i>
-  <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <span className="ml-2">À partir de 80 $US</span>
-</div>
-</div>
-<div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-<Carousel showArrows={true}>
-  <div>
-    <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-  <div>
-    <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-    <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-      <i className="fas fa-heart"></i>
-    </span>
-  </div>
-</Carousel>
-<div className="flex items-center mb-2">
-  <i className="fa-solid fa-user mr-2"></i>
-  <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-</div>
-<p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-<div className="flex items-center mt-2">
-  <i className="fas fa-star text-yellow-500 mr-1"></i>
-  <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <span className="ml-2">À partir de 80 $US</span>
-</div>
-</div>
 
-          {/* Deuxième Blog */}
-          <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-            <Carousel showArrows={true}>
-              <div>
-                <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-              <div>
-                <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-              <div>
-                <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-            </Carousel>
-            <div className="flex items-center mb-2">
-              <i className="fa-solid fa-calendar-days mr-2"></i>
-              <h2 className="text-lg font-bold mb-2">Cours complet ? Pas de problème !</h2>
-            </div>
-            <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-            <div className="flex items-center mt-2">
-              <i className="fas fa-star text-yellow-500 mr-1"></i>
-              <span>5,0</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              <span className="ml-2">À partir de 80 $US</span>
-            </div>
-          </div>
-
-          {/* Troisième Blog */}
-          <div className="relative rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-            <Carousel showArrows={true}>
-              <div>
-                <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-              <div>
-                <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-              <div>
-                <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-                <span className="absolute top-2 right-2 text-red-500 cursor-pointer">
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
-            </Carousel>
-            <div className="flex items-center mb-2">
-              <i className="fa-solid fa-paper-plane mr-2"></i>
-              <h2 className="text-lg font-bold mb-2">Restez informé(e)</h2>
-            </div>
-            <p>Pour vous offrir la meilleure expérience possible, nous travaillons constamment sur de nouvelles fonctionnalités ! Deux à trois nouvelles fonctionnalités sont ajoutées chaque mois. Restez connecté !</p>
-            <div className="flex items-center mt-2">
-              <i className="fas fa-star text-yellow-500 mr-1"></i>
-              <span>5,0</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              <span className="ml-2" >À partir de 80 $US</span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <Footer />
