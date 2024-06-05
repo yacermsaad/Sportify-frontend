@@ -7,12 +7,8 @@ function Home() {
   const [t,i18n]=useTranslation();
   return (
    <div>
-<<<<<<< HEAD
-   <div style={{ background: 'rgb(2,0,36)', background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }}>
-=======
     <div  className="rtl"  style={i18n.language=='fr'?{background: 'rgb(2,0,36)',background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }:{background: 'rgb(2,0,36)', background: 'linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)'} }>
 
->>>>>>> 93843ee4782cf6f1fec253548407b1b066222417
    <Navbar />
    <div id='header' className={`flex flex-wrap flex-row ${i18n.language=='ar'?'flex-row-reverse':''}`} style={{marginTop:"10Opx"}}>
      <div id='text' className={`w-full md:w-1/2 p-8 ${i18n.language=='ar'?'text-right':''}`}>
