@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { GoogleLogin } from 'react-google-login';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../../assets/css/Login.css';
 
 Modal.setAppElement('#root');
@@ -14,6 +15,7 @@ const Login = (props) => {
     const [IsOpen, setIsOpen] = useState(false);
     const create = useSelector(e => e.create);
     const [t, i18n] = useTranslation();
+    const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     useEffect(() => {
         setIsOpen(props.isOpen);
@@ -27,6 +29,16 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [message, setMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    useEffect(() => {
+        if (isSuccess) {
+            const timer = setTimeout(() => {
+                navigate('/');  // Use navigate function to redirect to home page after 6 seconds
+            }, 6000);
+            return () => clearTimeout(timer);  // Cleanup timeout on component unmount
+        }
+    }, [isSuccess, navigate]);
 
     const handleRegistration = async (e) => {
         e.preventDefault();
@@ -51,15 +63,16 @@ const Login = (props) => {
                 setEmail('');
                 setPass('');
                 setMessage('Registration successful!');
-                // Optionally close the modal or redirect user
-                closeModal();
+                setIsSuccess(true);
             } else {
                 console.error('Registration failed:', response.statusText);
                 setMessage('Registration failed: ' + response.statusText);
+                setIsSuccess(false);
             }
         } catch (error) {
             console.error('Error during registration:', error);
             setMessage('Error during registration: ' + error.message);
+            setIsSuccess(false);
         }
     };
 
@@ -80,17 +93,20 @@ const Login = (props) => {
                 const data = await response.json();
                 console.log('Login successful:', data);
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify({ name: data.name, type: data.type }));
                 setEmail('');
                 setPass('');
                 setMessage('Login successful!');
-                closeModal();
+                setIsSuccess(true);
             } else {
                 console.error('Login failed:', response.statusText);
                 setMessage('Login failed: ' + response.statusText);
+                setIsSuccess(false);
             }
         } catch (error) {
             console.error('Error during login:', error);
             setMessage('Error during login: ' + error.message);
+            setIsSuccess(false);
         }
     };
 
@@ -99,7 +115,7 @@ const Login = (props) => {
             <Modal isOpen={IsOpen} onRequestClose={closeModal} contentLabel="Pop-up Modal" className="w-full h-full bg-[rgba(0,0,0,.65)] pt-[148px] pb-[110px] z-[999]">
                 <div className={`flex justify-center animate__animated animate__zoomIn`}>
                     <div className="min-[870px]:flex hidden w-[490px] h-[560px] ">
-                        <img src="/img/img2.jpg" alt="login" className="w-full h-full rounded-l-lg" />
+                        <img src="https://i.pinimg.com/564x/ed/1c/53/ed1c53ea75cacaf96165684b1179c074.jpg" alt="login" className="w-full h-full rounded-l-lg" />
                     </div>
                     <div className="min-[550px]:w-[490px] w-full h-[560px] min-[870px]:rounded-r-lg max-[870px]:rounded-lg bg-white" dir={`${i18n.language === 'ar' ? "rtl" : ''}`}>
                         <button className='w-5 h-5 ml-[460px] mt-[6px]' onClick={closeModal}>
@@ -134,7 +150,7 @@ const Login = (props) => {
                             <div className='flex justify-center py-2'>
                                 <GoogleLogin className='GoogleLogin' buttonText='Continue with Google' isSignedIn={false} />
                             </div>
-                            {message && <div className="mt-2 text-center text-red-500 text-sm">{message}</div>}
+                            {message && <div className={`mt-2 text-center text-sm ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>{message}</div>}
                         </form>
                     </div>
                 </div>
