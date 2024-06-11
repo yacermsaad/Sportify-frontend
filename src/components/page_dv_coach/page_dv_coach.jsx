@@ -8,7 +8,7 @@ import Professional_info from './professional_info';
 
 
 
-export default function Page_dv_vendeur(){
+export default function Page_dv_coache(){
 
   const {step, setvendData,setfinalData } = useContext(multistepcontext)
   let [scrolly, setscrolly] = useState();

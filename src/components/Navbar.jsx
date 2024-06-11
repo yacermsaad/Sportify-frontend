@@ -19,7 +19,7 @@ const Navbar = () => {
       const name = user.name;
       setUserInitial(name.slice(0, 2).toUpperCase());
     }
-  }, []);
+  });
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -56,11 +56,11 @@ const Navbar = () => {
       </div>
 
       {/* Links */}
-      <div className="md:flex items-center space-x-4">
-        <Link to="/" className="text-green-500 hover:text-[#04cfb4] cursor-pointer text-bold text-md text-center transition-colors" style={{color:"black"}}>{t('Home')}</Link>
-        <Link to="/services" className="text-green-500 hover:text-[#04cfb4] cursor-pointer text-bold text-md text-center transition-colors" style={{color:"black"}}>{t('Services')}</Link>
-        <Link to="/blogs" className="text-green-500 hover:text-[#04cfb4] cursor-pointer text-bold text-md text-center transition-colors" style={{color:"black"}}>{t('Blogs')}</Link>
-        <Link to="/contact" className="text-green-500 hover:text-[#04cfb4] cursor-pointer text-bold text-md text-center transition-colors" style={{color:"black"}}>{t('Contact')}</Link>
+      <div className="block md:flex items-center space-x-5 mx-auto">
+        <Link to="/" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Home')}</Link>
+        <Link to="/services" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Services')}</Link>
+        <Link to="/blogs" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Blogs')}</Link>
+        <Link to="/contact" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Contact')}</Link>
       </div>
 
       {/* User Authentication Section */}
@@ -76,30 +76,58 @@ const Navbar = () => {
 
         {!userInitial && (
           <>
+            <span className="text-gray-400 max-md:hidden">|</span>
             <a className="block md:inline-block mt-2 md:mt-0 text-green-500 hover:text-green-700 cursor-pointer text-bold text-md text-center" style={{ color: "#04cfb4" }} onClick={openModalLogin}>{t('cnx')}</a>
             <Login isOpen={isModalOpenLogin} setOpen={closeModal} />
             <span className="text-gray-400 max-md:hidden">|</span>
             <a className="block md:inline-block mt-2 md:mt-0 text-white font-bold py-2 px-4 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 rounded-full text-bold text-md cursor-pointer" style={{ background: "#04cfb4" }} onClick={openModalCreate}>{t('insc')}</a>
             <Login isOpen={isModalOpenCreate} setOpen={closeModal} />
-            <span className="text-gray-400 max-md:hidden">|</span>
+          
           </>
         )}
         {userInitial && (
 
           <div className="flex items-center space-x-4">
-            <button
-              onClick={handleLogout}
-              className="text-white  py-2 px-4 bg-red-500 hover:bg-red-700 rounded-full"
-              style={{background:"transparent",border:"1px solid black", color:"black"}}
-            >
-              Logout
-            </button> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="flex items-center justify-center w-10 h-10 bg-green-500 text-white rounded-full"
-            style={{background:"lightgreen", color:"white", marginLeft:"-20px",fontWeight:"bold"}} 
-            
-            >
-              {userInitial}
+           
+            <input type="checkbox" id="dropdownToggle" class="hidden peer" />
+           
+            <div class="relative inline-block text-left  rounded-lg  pl-6  py-1 shadow-sm ">
+              <input type="checkbox" id="dropdownAvatarNameToggle" class="hidden peer" />
+              <label for="dropdownAvatarNameToggle" class="flex items-center text-sm pe-1  text-black font-semibold rounded-full cursor-pointer hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 ">
+                
+                <div className="flex items-center justify-center w-8 h-8 bg-green-500 text-white rounded-full mr-4"
+                  style={{background:"lightgreen", color:"white", marginLeft:"-20px",fontWeight:"bold"} }   id="dropdownToggle">
+                  {userInitial}
+                </div>
+                <span className='pl-2'>{JSON.parse(localStorage.getItem('user')).name}</span>
+                <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+              </label>
+
+            <div id="dropdownAvatarName" className="absolute right-0 z-10 hidden bg-white divide-y divide-gray-300 rounded-lg shadow w-44 peer-checked:block mt-2">
+              <div className="px-4 py-3 text-sm text-gray-900 ">
+                <div className="truncate">{JSON.parse(localStorage.getItem('user')).email}</div>
+              </div>
+              <ul className="py-2 text-sm text-gray-900 ">
+                <li>
+                  <a href="/becom_coache" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">Become a coach</a>
+                </li>
+                <li>
+                  <a href="/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">Settings</a>
+                </li>
+               
+              </ul>
+              <div className="py-2 cursor-pointer" onClick={handleLogout}>
+                <a  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-green-500 dark:text-gray-900 dark:hover:text-white">Sign out</a>
+              </div>
             </div>
+          </div>
+
+
+
+
+
           
           </div>
         )}
