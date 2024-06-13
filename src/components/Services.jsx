@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import service from './service';
+import Service from './service';
 
 function Services() {
   const [currentPage, setCurrentPage] = useState(1); // Track current page
@@ -103,44 +105,7 @@ function Services() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {/* Render items based on pagination */}
-        {Array.from({ length: itemsPerPage }).map((_, index) => {
-          const dataIndex = startIndex + index;
-          return (
-            dataIndex < 41 && ( // Assuming total results is 41
-              <div key={dataIndex} className="relative rounded-md p-4" style={{ border: "1px solid LIGHTGRAY", maxWidth: "300px", flex: "1 0 300px" }}>
-                {/* Carousel component */}
-                <Carousel showArrows={true} showThumbs={false} showStatus={false} infiniteLoop={true} >
-                  <div>
-                    <img src={`https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp`} alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{ width: "100%", height: "auto", border: "1px solid lightgray" }} />
-                  </div>
-                  <div>
-                    <img src={`https://www.eversports.fr/static/media/schedule.c222088a.webp`} alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{ width: "100%", height: "auto", border: "1px solid lightgray" }} />
-                  </div>
-                  <div>
-                    <img src={`https://www.eversports.fr/static/media/schedule.c222088a.webp`} alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{ width: "100%", height: "auto", border: "1px solid lightgray" }} />
-                  </div>
-                </Carousel>
-                {/* Blog content */}
-                <div className="flex items-center mb-2">
-                  <img src={`https://d1fufvy4xao6k9.cloudfront.net/images/blog/posts/2023/06/hock36.jpg`} alt="User" className="rounded-full mr-2 h-8 w-8" />
-                  <h2 className="text-lg font-bold mb-2 mr-2">Yasser Msaad</h2>
-                  <span className="text-red-500 cursor-pointer">
-                    <i className="fa-regular fa-heart" style={{ color: "black" }}></i>
-                  </span>
-                </div>
-                <p>Je rehausserai votre marque avec des logos simples mais frappants</p>
-                <div className="flex items-center mt-2">
-                  <i className="fas fa-star text-yellow-500 mr-1"></i>
-                  <span>5,0</span>
-                  <span className="ml-2">À partir de 80 $US</span>
-                </div>
-              </div>
-            )
-          );
-        })}
-      </div>
+        <Service/>
       
       <div className="flex justify-between mt-4">
       <button onClick={prevPage} disabled={currentPage === 1}>

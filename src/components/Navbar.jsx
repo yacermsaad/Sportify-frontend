@@ -56,11 +56,13 @@ const Navbar = () => {
       </div>
 
       {/* Links */}
-      <div className="block md:flex items-center space-x-5 mx-auto">
+      <div className="block md:flex items-center space-x-5 mx-auto" style={{marginLeft:"260px"}}>
         <Link to="/" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Home')}</Link>
         <Link to="/services" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Services')}</Link>
         <Link to="/blogs" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Blogs')}</Link>
         <Link to="/contact" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Contact')}</Link>
+        <Link to="#" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('FAQs')}</Link>
+
       </div>
 
       {/* User Authentication Section */}

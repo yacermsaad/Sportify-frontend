@@ -3,10 +3,17 @@ import Navbar from './Navbar';
 import './Home.css'
 import Footer from './Footer';
 import { useTranslation } from 'react-i18next';
+import Example from './Banner';
+import NewsletterSubscription from './NewsletterSubscription';
+import BlogSection from './BlogSection';
+import Testimonials from './Testimonial';
+import FAQ from './FAQ';
+import Cards from './Cards';
 function Home() {
   const [t,i18n]=useTranslation();
   return (
    <div>
+   <Example/>
     <div  className="rtl"  style={i18n.language=='fr'?{background: 'rgb(2,0,36)',background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)' }:{background: 'rgb(2,0,36)', background: 'linear-gradient(-90deg, rgba(2,0,36,1) 0%, rgba(9,105,121,1) 32%, rgba(0,255,222,1) 100%)'} }>
 
    <Navbar />
@@ -57,7 +64,7 @@ function Home() {
        
      </div>
      <div id='img' className="w-full md:w-1/2 ">
-       <img src='https://www.eversports.fr/static/media/hero.2f3d543c.webp' className="w-full h-full object-cover " alt="Sport" />
+       <img src='https://i.postimg.cc/9MJc7DMN/Home-Page-Graphic.png' className="w-full h-full object-cover " alt="Sport" />
      </div>
    </div>
 
@@ -65,42 +72,7 @@ function Home() {
  </div>
 
 
- <div id='section' style={{ marginTop: "50px" }}>
- <h1 className="text-center text-2xl font-bold mb-8">Ce qui vous attend chez Eversports</h1>
- <div className="flex justify-between p-8" style={{borderRadius:"10px"}}>
- <div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , MozBorderRadius: "10px" ,WebkitBorderRadius: "10px" }}>
- <div className="icon-placeholder" style={{ position: "absolute", top: "0", right: "0", width: "100px", height: "100px", border: "10px solid white", display: "flex", justifyContent: "center", alignItems: "center",marginTop:"-20px",marginLeft:"70px",borderRadius:"8px"}}>
-   <i className="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
- </div>
- {/* Placeholder for the icon */}
- <h2 className="text-lg font-bold mb-2" style={{ fontSize: "26px" }}>Trouve l'activité qui te correspond !</h2>
- <p className="text-sm" style={{ marginTop: "30px" }}>Découvre de nouveaux cours, professeur.e.s et studios qui correspondent à tes envies au quotidien</p>
-</div>
-
-<div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , MozBorderRadius: "10px" ,WebkitBorderRadius: "10px" }}>
- <div className="icon-placeholder" style={{ position: "absolute", top: "0", right: "0", width: "100px", height: "100px", border: "10px solid white", display: "flex", justifyContent: "center", alignItems: "center",marginTop:"-20px",marginLeft:"70px",borderRadius:"8px"}}>
-   <i className="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
- </div>
- {/* Placeholder for the icon */}
- <h2 className="text-lg font-bold mb-2" style={{ fontSize: "26px" }}>Trouve l'activité qui te correspond !</h2>
- <p className="text-sm" style={{ marginTop: "30px" }}>Découvre de nouveaux cours, professeur.e.s et studios qui correspondent à tes envies au quotidien</p>
-</div>
-<div className="w-1/3 p-4 relative" style={{ background: "#F1FAFC",  borderRadius: "10px", fontSize: "16px", marginRight: "20px", height: "290px" , MozBorderRadius: "10px" ,WebkitBorderRadius: "10px" }}>
- <div className="icon-placeholder" style={{ position: "absolute", top: "0", right: "0", width: "100px", height: "100px", border: "10px solid white", display: "flex", justifyContent: "center", alignItems: "center",marginTop:"-20px",marginLeft:"70px",borderRadius:"8px"}}>
-   <i className="fa-solid fa-person-walking" style={{ color: "#000", fontSize: "34px",borderRadius:"10px" }}></i>
- </div>
- {/* Placeholder for the icon */}
- <h2 className="text-lg font-bold mb-2" style={{ fontSize: "26px" }}>Trouve l'activité qui te correspond !</h2>
- <p className="text-sm" style={{ marginTop: "30px" }}>Découvre de nouveaux cours, professeur.e.s et studios qui correspondent à tes envies au quotidien</p>
-</div>
-
-   {/* Repeat the same structure for the other two sections */}
-   {/* Example for the second section */}
-   
-   {/* Example for the third section */}
- 
- </div>
-</div>
+<Cards/>
 
 
 
@@ -114,6 +86,7 @@ function Home() {
     </div>
   </div>
 </div>
+
 
 
 
@@ -185,6 +158,7 @@ function Home() {
     </div>
   </div>
 </div>
+
 
 
 <div id='tuVeuxEssayer' className="p-8 relative rounded-lg" style={{marginTop:"30px", background: "#F3F4F6", height: "600px"}}>
@@ -293,86 +267,57 @@ function Home() {
 
 
 
-<div id='blogs' className="p-8 relative rounded-lg">
-  <h1 className="text-2xl font-bold mb-4">Comment rester motivé ?</h1>
-  <p className="mb-4" style={{ width: "32%" }}>Ces deux fonctionnalités te permettent de rester motivé et actif, même lors des journées difficiles.</p>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {/* Premier Blog */}
-    <div className="rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-      <img src="https://www.eversports.fr/static/media/friends-feed.cbff43d1.webp" alt="Connecte-toi avec tes amis" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-      <div className="flex items-center mb-4">
-        <i className="fa-solid fa-user mr-2"></i>
-        <h2 className="text-lg font-bold mb-2">Connecte-toi avec tes amis</h2>
-      </div>
-      <p>Sur Eversports, tu peux non seulement ajouter des amis, mais vous pouvez aussi vous inviter à faire des activités ensemble. De plus, tu peux voir quelles activités tes amis ont réservées et les rejoindre directement.</p>
-    </div>
-    
-    {/* Deuxième Blog */}
-    <div className="rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-      <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Cours complet ? Pas de problème !" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-      <div className="flex items-center mb-4">
-        <i className="fa-solid fa-calendar-days mr-2"></i>
-        <h2 className="text-lg font-bold mb-2">Cours complet ? Pas de problème !</h2>
-      </div>
-      <p>Inscris-toi sur liste d'attente pour le cours, l'atelier ou l'événement auquel tu souhaites participer et sois immédiatement averti(e) dès qu'une place se libère.</p>
-    </div>
-    
-    {/* Troisième Blog */}
-    <div className="rounded-md p-4" style={{border:"1px solid LIGHTGRAY"}}>
-      <img src="https://www.eversports.fr/static/media/schedule.c222088a.webp" alt="Restez informé(e)" className="mb-4 rounded-lg shadow-lg" style={{width: "100%", height: "auto",border:"1px solid lightgray"}} />
-      <div className="flex items-center mb-4">
-        <i className="fa-solid fa-paper-plane mr-2"></i>
-        <h2 className="text-lg font-bold mb-2">Restez informé(e)</h2>
-      </div>
-      <p>Pour vous offrir la meilleure expérience possible, nous travaillons constamment sur de nouvelles fonctionnalités ! Deux à trois nouvelles fonctionnalités sont ajoutées chaque mois. Restez connecté !</p>
-    </div>
-  </div>
-</div>
+
+
+<BlogSection/>
 
 
 
 
 
-<div id='reviews' className="p-8 relative rounded-lg" style={{ marginTop: "30px", background: "#F3F4F6" }}>
-  <h1 className="text-2xl font-bold mb-4 text-center">Qu'en pense la communauté ?</h1>
-  <p className="mb-4 text-center" style={{ width: "100%", margin: "0 auto" }}>Les utilisateurs d'Eversports font part de leur expérience avec l'application et le site Internet.</p>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {/* Premier Review */}
-    <div className="bg-white rounded border border-gray-200 p-4 relative flex flex-col items-center">
-      <img src="https://www.eversports.fr/static/media/testimonial-claudia-nl.7e4ce178.webp" alt="Reviewer" className="rounded-full w-16 h-16 mb-4" />
-      <i className="fa-solid fa-quote-right text-gray-400 mt-2 mb-4 text-3xl"></i>
-      <div className="text-center">
-        <h2 className="text-lg font-bold mb-2">Claudia</h2>
-        <p className="text-sm text-gray-600 mb-2">Pays-Bas</p>
-        <p className="text-sm">Navigation rapide et facile pour trouver une salle de sport ou un cours de yoga près de chez moi, ce qui fait gagner beaucoup de temps !</p>
-      </div>
-    </div>
+<div className="py-16 bg-white">
+            <div className="container m-auto px-6 space-y-8 text-gray-500 md:px-12 lg:px-20">
+                <div className="flex justify-center gap-6 md:text-left md:flex lg:items-center lg:gap-16">
+                    <div className="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
+                        <h1 className="text-4xl text-gray-700 font-bold md:text-5xl" style={{width:"130%"}}>Start your fitness journey today with our <br></br> <span style={{color:"lightgreen", marginTop:"17px"}}>expert coaching!</span></h1>
+                        <p className="text-lg">Join millions of people worldwide who are transforming their lives with Tailus in modern User Interfaces.</p>
+                        <div className="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
+                            <button type="button" title="Start buying" className="w-full py-3 px-6 text-center rounded-xl transition bg-gray-700 shadow-xl hover:bg-gray-600 active:bg-gray-700 focus:bg-gray-600 sm:w-max">
+                                <span className="block text-white font-semibold">
+                                    Start Now
+                                </span>
+                            </button>
+                            <button type="button" title="more about" className="w-full order-first py-3 px-6 text-center rounded-xl bg-gray-100 transition hover:bg-gray-200 active:bg-gray-300 focus:bg-gray-200 sm:w-max">
+                                <span className="block text-gray-600 font-semibold">
+                                    Learn More
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-5 grid-rows-4 gap-4 md:w-5/12 lg:w-6/12">
+                        <div className="col-span-2 row-span-4">
+                            <img src="https://testeurs-outdoor.com/new/wp-content/uploads/2023/07/IMG_3890-682x1024.jpeg" className="rounded-full" width="640" height="960" alt="shoes" loading="lazy" />
+                        </div>
+                        <div className="col-span-2 row-span-2">
+                            <img src="https://c.superprof.com/i/a/548532/256922/600/20220811122847/coach-sportif-expert-running-individuel-collectif-prepa-10k-semi-marathon-trail-renforcement-musculaire-suivi.jpg" className="w-full h-full object-cover object-top rounded-xl" width="640" height="640" alt="shoe" loading="lazy" />
+                        </div>
+                        <div className="col-span-3 row-span-3">
+                            <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=417x1024:format=jpg/path/se3e5a365e0d10e6c/image/id66c76824e04812d/version/1607025931/baptiste-massin-votre-coach-sportif-au-puy-en-velay-en-haute-loire.jpg" className="w-full h-full object-cover object-top rounded-xl" width="640" height="427" alt="shoes" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    {/* Deuxième Review */}
-    <div className="bg-white rounded border border-gray-200 p-4 relative flex flex-col items-center">
-      <img src="https://www.eversports.fr/static/media/testimonial-claudia-nl.7e4ce178.webp" alt="Reviewer" className="rounded-full w-16 h-16 mb-4" />
-      <i className="fa-solid fa-quote-right text-gray-400 mt-2 mb-4 text-3xl"></i>
-      <div className="text-center">
-        <h2 className="text-lg font-bold mb-2">Alexis</h2>
-        <p className="text-sm text-gray-600 mb-2">Autriche</p>
-        <p className="text-sm">J'adore utiliser Eversports pour réserver des terrains de padel et partager le match avec mes amis !</p>
-      </div>
-    </div>
 
-    {/* Troisième Review */}
-    <div className="bg-white rounded border border-gray-200 p-4 relative flex flex-col items-center">
-      <img src="https://www.eversports.fr/static/media/testimonial-claudia-nl.7e4ce178.webp" alt="Reviewer" className="rounded-full w-16 h-16 mb-4" />
-      <i className="fa-solid fa-quote-right text-gray-400 mt-2 mb-4 text-3xl"></i>
-      <div className="text-center">
-        <h2 className="text-lg font-bold mb-2">Camille</h2>
-        <p className="text-sm text-gray-600 mb-2">Pays-Bas</p>
-        <p className="text-sm">J'ai eu l'occasion de participer à des sports aériens et à des danses latines grâce à cette application. Cela m'a donné beaucoup de flexibilité et de liberté.</p>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+        <Testimonials/>
+
+
+        <FAQ/>
 
 
 
@@ -380,6 +325,7 @@ function Home() {
 
 
 
+<NewsletterSubscription/>
 
 
    

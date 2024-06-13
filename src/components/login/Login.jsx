@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { GoogleLogin } from 'react-google-login';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import '../../assets/css/Login.css';
 
 Modal.setAppElement('#root');
@@ -15,7 +15,7 @@ const Login = (props) => {
     const [IsOpen, setIsOpen] = useState(false);
     const create = useSelector(e => e.create);
     const [t, i18n] = useTranslation();
-    const navigate = useNavigate(); // Use useNavigate instead of useHistory
+    const navigate = useNavigate();
 
     useEffect(() => {
         setIsOpen(props.isOpen);
@@ -28,20 +28,32 @@ const Login = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
+    const [passwordError, setPasswordError] = useState('');
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
         if (isSuccess) {
             const timer = setTimeout(() => {
-                navigate('/');  // Use navigate function to redirect to home page after 6 seconds
+                navigate('/');
             }, 6000);
-            return () => clearTimeout(timer);  // Cleanup timeout on component unmount
+            return () => clearTimeout(timer);
         }
     }, [isSuccess, navigate]);
 
+    const validatePassword = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return regex.test(password);
+    };
+
     const handleRegistration = async (e) => {
         e.preventDefault();
+        if (!validatePassword(password)) {
+            setPasswordError('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.');
+            setIsSuccess(false);
+            return;
+        }
+        setPasswordError('');
         try {
             const response = await fetch('http://localhost:8000/api/register', {
                 method: 'POST',
@@ -64,9 +76,6 @@ const Login = (props) => {
                 setPass('');
                 setMessage('Registration successful!');
                 setIsSuccess(true);
-               
-                dispatch({ type: 'create', log: !create })
-              
             } else {
                 console.error('Registration failed:', response.statusText);
                 setMessage('Registration failed: ' + response.statusText);
@@ -96,12 +105,11 @@ const Login = (props) => {
                 const data = await response.json();
                 console.log('Login successful:', data);
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify({ name: data.name, type: data.type, email: data.email }));
+                localStorage.setItem('user', JSON.stringify({ name: data.name, type: data.type }));
                 setEmail('');
                 setPass('');
                 setMessage('Login successful!');
                 setIsSuccess(true);
-                closeModal()
             } else {
                 console.error('Login failed:', response.statusText);
                 setMessage('Login failed: ' + response.statusText);
@@ -142,10 +150,11 @@ const Login = (props) => {
                                 <div className={'mb-1 mt-2'}>
                                     <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="password" dir={`${i18n.language === 'ar' ? "rtl" : ''}`}>{t('m_p')}</label>
                                     <input required className="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10" id="password" type="password" placeholder={t('v_m_p')} onChange={(e) => setPass(e.target.value)} value={password} />
+                                    {passwordError && <p className="text-red-500 text-xs italic mt-1">{passwordError}</p>}
                                     {!create && <a className="inline-block align-baseline text-sm text-gray-600 hover:text-gray-800" href="/">{t('o_m')}</a>}
                                 </div>
                                 <div className="flex w-full mt-6">
-                                    <button className="w-full bg-[#04cfb4] hover:bg-grey-900 text-white text-sm py-2 px-4 font-semibold rounded h-10" type="submit">{create ? t('insc') : t('cnx')}</button>
+                                    <button className="w-full bg-[#04cfb4] hover:bg-gray-900 hover:transition-colors duration-300 text-white text-sm py-2 px-4 font-semibold rounded h-10" type="submit">{create ? t('insc') : t('cnx')}</button>
                                 </div>
                             </div>
                             <div className="my-2 border-b text-center">
@@ -154,7 +163,7 @@ const Login = (props) => {
                             <div className='flex justify-center py-2'>
                                 <GoogleLogin className='GoogleLogin' buttonText='Continue with Google' isSignedIn={false} />
                             </div>
-                            {message && <div className={`mt-2 text-center text-sm ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>{message}</div>}
+                            {message && !passwordError && <div className={`mt-2 text-center text-sm ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>{message}</div>}
                         </form>
                     </div>
                 </div>
