@@ -76,6 +76,7 @@ const Login = (props) => {
                 setPass('');
                 setMessage('Registration successful!');
                 setIsSuccess(true);
+                dispatch({ type: 'create', log: !create });
             } else {
                 console.error('Registration failed:', response.statusText);
                 setMessage('Registration failed: ' + response.statusText);
@@ -105,11 +106,13 @@ const Login = (props) => {
                 const data = await response.json();
                 console.log('Login successful:', data);
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify({ name: data.name, type: data.type }));
+                localStorage.setItem('user', JSON.stringify({ name: data.name, type: data.type, email: data.email,id: data.id}));
+                localStorage.setItem('coache',data.coache);
                 setEmail('');
                 setPass('');
                 setMessage('Login successful!');
                 setIsSuccess(true);
+                closeModal();
             } else {
                 console.error('Login failed:', response.statusText);
                 setMessage('Login failed: ' + response.statusText);

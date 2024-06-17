@@ -4,7 +4,7 @@ export const multistepcontext=React.createContext()
 export default function Stepcontext(){
     const [step,setstep]=useState(1);
     const [vendData,setvendData]=useState({personnel_info:{fullname:"",description:"",picture:""},
-        profesonel_info:{skills:[],education:[],certification:[]}
+        profesonel_info:{skills:[],education:[],certification:[],website:"",linkdine:""}
     });
     const [finalData,setfinalData]=useState([]);
     return(

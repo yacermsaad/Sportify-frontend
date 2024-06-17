@@ -45,6 +45,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('coache');
     setUserInitial(null);
   };
 
@@ -113,7 +114,7 @@ const Navbar = () => {
               </div>
               <ul className="py-2 text-sm text-gray-900 ">
                 <li>
-                  <a href="/becom_coache" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">Become a coach</a>
+                  <a href={localStorage.getItem('coache')==0?'/becom_coache':'/profile'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">{localStorage.getItem('coache')==0?'Become a coach':'switch to coache'}</a>
                 </li>
                 <li>
                   <a href="/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">Settings</a>

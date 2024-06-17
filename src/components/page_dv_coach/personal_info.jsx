@@ -5,6 +5,9 @@ export default function Personal_info(){
     const { step,setstep, setvendData,vendData,setfinalData,finalData} = useContext(multistepcontext)
     const [description,setdescription]=useState("")
     const [fullname,setfullname]=useState("")
+    const [msg_err_nm,setmsg_err_nm]=useState("")
+    const [msg_err_dsc,setmsg_err_dsc]=useState("")
+
     const [picture,setpicture]=useState("")
 
     function Personal_data(){
@@ -14,6 +17,10 @@ export default function Personal_info(){
             vendData.personnel_info.picture=picture
             setstep(step+1)
 
+        } if(fullname==""){
+            setmsg_err_nm("Please enter your full name")
+        } if(description==""){
+            setmsg_err_dsc("Please enter your description")
         }
     }
 
@@ -39,6 +46,8 @@ export default function Personal_info(){
                             placeholder=" "
                             onChange={(e)=>{setfullname(e.target.value)}}
                             />
+                             <label className='text-red-500'>{msg_err_nm}</label>
+                        
                             <label className="text-gray-400  before:content[' '] after:content[' '] pointer-events-none absolute left-0 
                             -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 
                             transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block
@@ -66,8 +75,9 @@ export default function Personal_info(){
                         <label className="flex flex-col items-center justify-center w-[130px] h-[8rem] border-gray-300 rounded-[60%] cursor-pointer bg-gray-50 dark:hover:bg-gray-800 hover:bg-gray-300 dark:border-gray-600 photo" 
                         style={{ backgroundImage: "url('/img/img_prf.png')" }}>
                                 
-                            <input id="dropzone-file" type="file" className="hidden"  onChange={(e)=>{setpicture(e.target.value)}}/>
+                            <input id="dropzone-file" type="file" className="hidden" accept="image/png, image/jpeg" onChange={(e)=>{setpicture(e.target.value)}}/>
                             <img src='./img/camera.png' className='invisible group-hover:visible   w-5 h-5'/>
+                           
                         </label>
                     </div></td>
                 </tr>
@@ -84,8 +94,9 @@ export default function Personal_info(){
                         </div><div className='flex justify-between text-gray-400'>
                             {description.length==""?<label >min 150 characters</label>:description.length<150?
                             <label className='text-red-500'>Please enter at least 150 characters</label>:
-                            <label></label>}
+                            null}
                             <label><span>{description.length} </span>/600</label></div>
+                            <label className='text-red-500'>{msg_err_dsc}</label>
                         </td>
                     </tr>
                     <tr className='md:mb-10 mb-5  block'>

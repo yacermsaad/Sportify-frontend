@@ -8,6 +8,7 @@ export default function Skills(){
     const [data_update,setdata_update]=useState({titre:"",level:""});
     const [afiche,setafiche]=useState(true);
     const [updt,setupdt]=useState(false);
+   
 
     const addskils=()=>{
         if(skill!="" && level!=""){
@@ -81,6 +82,7 @@ export default function Skills(){
                     <option  defaultValue="intermediate">Intermediate</option>
                     <option  defaultValue="expert">Expert</option>
                 </select>
+                <label className='text-red-500'>{msg_er_skil}</label>
                 {/* <button className='bg-[#41d049]  focus:outline-none shadow
                 text-white  w-[100px] text-lg font-bold' onClick={()=>{updtskils()}}>update</button> */}
             </div>:null}
@@ -113,6 +115,7 @@ export default function Skills(){
                         </tr>)
 
                         })}
+                        
                     </tbody>
                 </table>
                 </div>:null}
