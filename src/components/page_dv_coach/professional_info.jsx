@@ -5,7 +5,7 @@ import Certification from './certification';
 import Education from './education';
 import { useNavigate } from 'react-router-dom';
 
-export default function Professional_info(){
+export default function Professional_info(props){
     const { step,setstep, setvendData,vendData,setfinalData } = useContext(multistepcontext)
     const [linkdine,setlinkdine]=useState("")
     const [website,setwebsite]=useState("")
@@ -13,8 +13,9 @@ export default function Professional_info(){
     const [msg_er_edc,setmsg_er_edc]=useState("")
     const [msg_er_crtf,setmsg_er_crtf]=useState("")
     const navigate = useNavigate();
- 
+  
     const professional_func = async (e) => {
+       
         if(vendData.profesonel_info.skills.length==0){
             setmsg_er_skil("Please enter your skills ")
         }
@@ -31,20 +32,17 @@ export default function Professional_info(){
             vendData.profesonel_info.linkdine=linkdine;
         }
         if(vendData.profesonel_info.skills.length>0 && vendData.profesonel_info.education.length>0 && 
-            vendData.profesonel_info.certification.length>0){
-                const personnel_info=vendData.personnel_info;
+                vendData.profesonel_info.certification.length>0){
                 const profesonel_info=vendData.profesonel_info;
                 const id=JSON.parse(localStorage.getItem('user')).id
-            
                 try {
-                    const response = await fetch('http://localhost:8000/api/becomcoache', {
+                    const response = await fetch('http://localhost:8000/api/becomcoache2', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                           personnel_info,id,profesonel_info
-                          
+                           id,profesonel_info
                         })
                     });
                     if (response.ok) {
@@ -60,10 +58,7 @@ export default function Professional_info(){
                 } catch (error) {
                     console.error('Error during registration:', error);
                 }
-
         }
-        
-
     }
 
     return(<div className='lg:mx-[4%] xl:mx-[12%] mx-[1%] '>

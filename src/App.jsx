@@ -13,7 +13,8 @@ import BlogSection from './components/BlogSection';
 import NotFoundPage from './components/NotFoundPage'; 
 import ResetPasswordForm from './components/ResetPasswordForm';
 import PlaceholderCard from './components/PlaceholderCard';
-
+import Blogs from './components/blogs/blogs';
+import Test from './test';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -41,9 +42,11 @@ function App() {
           <Route path="/dash" element={<Dashbord />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/blogs" element={<BlogSection />} />
+          {/* <Route path="/blogs" element={<BlogSection />} /> */}
           <Route path="/reset" element={<ResetPasswordForm />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/blogs" element={<Blogs />} />
+          
         </Routes>
       </div>
     </Router>

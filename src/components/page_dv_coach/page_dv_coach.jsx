@@ -13,12 +13,15 @@ export default function Page_dv_coache(){
   const {step, setvendData,setfinalData } = useContext(multistepcontext)
   let [scrolly, setscrolly] = useState();
   window.addEventListener('scroll',()=>{setscrolly(window.scrollY)})
+  
   function showStep(step){
+   
+    
     switch(step){
       case 1:
-        return <Personal_info/>
+        return <Personal_info />
       case 2:
-        return <Professional_info/> 
+        return <Professional_info  /> 
       
     }
   }

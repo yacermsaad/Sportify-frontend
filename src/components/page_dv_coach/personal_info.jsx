@@ -1,22 +1,36 @@
 import { useContext, useState } from 'react';
 import { multistepcontext } from './StepContext'
+import axios from 'axios';
 
-export default function Personal_info(){
+export default function Personal_info(props){
     const { step,setstep, setvendData,vendData,setfinalData,finalData} = useContext(multistepcontext)
     const [description,setdescription]=useState("")
     const [fullname,setfullname]=useState("")
     const [msg_err_nm,setmsg_err_nm]=useState("")
     const [msg_err_dsc,setmsg_err_dsc]=useState("")
-
     const [picture,setpicture]=useState("")
 
     function Personal_data(){
+        const formData = new FormData();
         if(description.length>150 && fullname!=""){
-            vendData.personnel_info.fullname=fullname;
-            vendData.personnel_info.description=description
-            vendData.personnel_info.picture=picture
-            setstep(step+1)
-
+            formData.append('picture', picture);
+            formData.append('fullname', fullname);
+            formData.append('description', description);
+            const id=JSON.parse(localStorage.getItem('user')).id
+            formData.append('id', id);
+          
+            axios.post('http://localhost:8000/api/becomcoache1',formData)
+            .then(response => {
+                console.log(response.data);
+                setfullname('');setdescription('');
+                setmsg_err_nm('');setmsg_err_dsc('');setpicture('')
+                setstep(step+1)
+            })
+            .catch(error => {
+                console.error('There was an error uploading the image!', error);
+                
+            });
+          
         } if(fullname==""){
             setmsg_err_nm("Please enter your full name")
         } if(description==""){
@@ -73,13 +87,16 @@ export default function Personal_info(){
                     <td><div className="flex items-center justify-center w-full group hover:-translate-x-1 duration-300  delay-150 transition ease-in-out  ">
                     
                         <label className="flex flex-col items-center justify-center w-[130px] h-[8rem] border-gray-300 rounded-[60%] cursor-pointer bg-gray-50 dark:hover:bg-gray-800 hover:bg-gray-300 dark:border-gray-600 photo" 
-                        style={{ backgroundImage: "url('/img/img_prf.png')" }}>
+                        style={{ backgroundImage: "url('/img/img_prf.png')" } }>
                                 
-                            <input id="dropzone-file" type="file" className="hidden" accept="image/png, image/jpeg" onChange={(e)=>{setpicture(e.target.value)}}/>
-                            <img src='./img/camera.png' className='invisible group-hover:visible   w-5 h-5'/>
+                            <input id="dropzone-file" type="file" className="hidden" accept="image/png, image/jpeg" onChange={(e)=>{ setpicture(e.target.files[0]);}}/>
+                         <img src='./img/camera.png' className='invisible group-hover:visible   w-5 h-5'/>
+                            
                            
                         </label>
-                    </div></td>
+                        
+                    </div>
+                    {picture!=""?<p className='text-green-500 ml-3 font-semibold'>Image est valider</p>:null}</td>
                 </tr>
                 {/* description */}
                 <tr className=' md:mb-10 mb-5 md:flex block'><td className='block  md:mr-[10%] lg:mr-[20%] xl:mr-[29%]  text-lg md:text-xl md:font-semibold text-gray-600 md:mb-0 mb-1'> Description <span className='text-red-500'>*</span></td>
