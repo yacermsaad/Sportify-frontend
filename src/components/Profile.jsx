@@ -82,6 +82,24 @@ const [isEditing, setIsEditing] = useState(false);
     coach_id: storedCoachId,
 });
 
+const [educationData, setEducationData] = useState({
+  label: '',
+  speciality: '',
+  anne: '',
+  ecole: '',
+  paye_ecole: '',
+  coach_id: storedCoachId, 
+});
+
+const [showFormEducation, setShowFormEducation] = useState(false);
+
+const handleChangeEducation = (e) => {
+  setEducationData({ ...educationData, [e.target.name]: e.target.value });
+};
+
+const toggleFormVisibilityEducation = () => {
+  setShowFormEducation(!showFormEducation);
+};
 
 const handleChangeSkill = (e) => {
   setSkillData({ ...skillData, [e.target.name]: e.target.value });
@@ -115,6 +133,35 @@ const handleChange = (e) => {
         alert('Failed to add certification.'); 
     }
   };
+
+  const handleSubmitEducation = async (e) => {
+    e.preventDefault();
+    try {
+     
+      const response = await axios.post('http://127.0.0.1:8000/api/educations', educationData);
+      console.log('Response:', response.data);
+  
+     
+      setPostData((prevData) => ({
+        ...prevData,
+        educations: [...prevData.educations, response.data.education], 
+      }));
+  
+      setEducationData({
+        label: '',
+        speciality: '',
+        anne: '',
+        ecole: '',
+        paye_ecole: '',
+        coach_id: '',
+      });
+      alert('Education added successfully!');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to add education.');
+    }
+  };
+  
 
 
   const handleSubmitSkill = async (e) => {
@@ -181,6 +228,23 @@ const handleDeleteSkill = async (id) => {
         ...prevData,
         skills: prevData.skills.filter((skill) => skill.id !== id),
       }));
+
+    } catch (error) {
+      console.error('Error deleting skill:', error);
+    }
+  }
+};
+
+
+
+
+
+const handleDeleteEducation = async (id) => {
+  const isConfirmed = window.confirm("Are you sure you want to delete this skill?");
+  if (isConfirmed) {
+    try {
+      const response = await axios.delete(`http://127.0.0.1:8000/api/educations/${id}`);
+      console.log(response.data.message);
 
     } catch (error) {
       console.error('Error deleting skill:', error);
@@ -417,7 +481,7 @@ const handleDeleteSkill = async (id) => {
                                               <button className="add-button" onClick={toggleFormVisibilitySkill}>+ Add New</button>
                                             </div>
                                             <br /><br />
-                                      
+                                    
                                             {showFormSkill && (
                                               <div className="border-2 border-gray-300 rounded-md shadow-lg p-6">
                                                 <h2 className="text-lg font-bold mb-2">Add New Skill</h2>
@@ -440,8 +504,7 @@ const handleDeleteSkill = async (id) => {
                                                   </div>
                                                   <div className="flex flex-col">
                                                     <label htmlFor="niveau">Level:</label>
-                                                    <input
-                                                      type="text"
+                                                    <select
                                                       id="niveau"
                                                       name="niveau"
                                                       value={skillData.niveau}
@@ -452,7 +515,13 @@ const handleDeleteSkill = async (id) => {
                                                       className={`border border-gray-300 rounded px-3 py-1 ${
                                                         focusedInput === 'niveau' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
                                                       }`}
-                                                    />
+                                                    >
+                                                      <option value="">Select Level</option>
+                                                      <option value="Experience Level">Experience Level</option>
+                                                      <option value="Beginner">Beginner</option>
+                                                      <option value="Intermediate">Intermediate</option>
+                                                      <option value="Expert">Expert</option>
+                                                    </select>
                                                   </div>
                                                   <button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
                                                     Add Skill
@@ -473,49 +542,159 @@ const handleDeleteSkill = async (id) => {
                                               {postData && postData.skills ? (
                                                 postData.skills.map((skill, index) => (
                                                   <div key={index} style={{ boxShadow: "0px 0px 10px rgba(0,0,0,0.1)", marginBottom: '10px', padding: '10px', borderRadius: '5px' }}>
-                                                    <li><label>Title: </label>{skill.label}</li>
-                                                    <li><label>Level: </label>{skill.niveau}</li>
-                                                    <button
-                                                      onClick={() => handleDeleteSkill(skill.id)}
-                                                      className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                                                    >
-                                                      Delete <i className="fa-solid fa-trash"></i>
-                                                    </button>
-                                                    <br /> {/* Line break after each skill */}
-                                                  </div>
-                                                ))
-                                              ) : (
-                                                <li>Loading skills...</li>
-                                              )}
-                                            </ul>
-                                          </div>
+                                                  
+                <li><label>Title: </label>{skill.label}</li>
+                <li><label>Level: </label>{skill.niveau}</li>
+                <button
+                  onClick={() => handleDeleteSkill(skill.id)}
+                  className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                >
+                  Delete <i className="fa-solid fa-trash"></i>
+                </button>    
+                <br /> {/* Line break after each skill */}
+              </div>
+            ))
+          ) : (
+            <li>Loading skills...</li>
+          )}
+        </ul>
+      </div>
 
 
 
 
                                             <hr />
                                           
-      <div className="section education">
-      <div className="section-header">
-        <h2 style={{fontSize:"22px"}}> <i class="fa-solid fa-school"></i>  Education</h2>
-        <button className="add-button">+ Add New</button>
-      </div><br></br><br></br>
-      <ul>
-        {postData && postData.educations ? (
-          postData.educations.map((educationItem) => (
-            <li key={educationItem.id}>
-              <strong>Label:</strong> {educationItem.label}<br />
-              <strong>Speciality:</strong> {educationItem.speciality}<br />
-              <strong>Year:</strong> {educationItem.anne}<br />
-              <strong>School:</strong> {educationItem.ecole}<br />
-              <strong>Country:</strong> {educationItem.paye_ecole}<br />
-            </li>
-          ))
-        ) : (
-          <li>Loading education...</li>
-        )}
-      </ul>
-    </div>
+                                            <div className="section education">
+                                            <div className="section-header">
+                                              <h2 style={{ fontSize: "22px" }}><i className="fa-solid fa-school"></i> Education</h2>
+                                              <button className="add-button" onClick={toggleFormVisibilityEducation}>+ Add New</button>
+                                            </div>
+                                            <br /><br />
+                                    
+                                            {showFormEducation && (
+                                              <div className="border-2 border-gray-300 rounded-md shadow-lg p-6">
+                                                <h2 className="text-lg font-bold mb-2">Add New Education</h2>
+                                                <form className="space-y-4" onSubmit={handleSubmitEducation}>
+                                                  <div className="flex flex-col">
+                                                    <label htmlFor="label">Label:</label>
+                                                    <input
+                                                      type="text"
+                                                      id="label"
+                                                      name="label"
+                                                      value={educationData.label}
+                                                      onChange={handleChangeEducation}
+                                                      onFocus={handleFocus}
+                                                      onBlur={handleBlur}
+                                                      required
+                                                      className={`border border-gray-300 rounded px-3 py-1 ${
+                                                        focusedInput === 'label' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                                                      }`}
+                                                    />
+                                                  </div>
+                                                  <div className="flex flex-col">
+                                                    <label htmlFor="speciality">Speciality:</label>
+                                                    <input
+                                                      type="text"
+                                                      id="speciality"
+                                                      name="speciality"
+                                                      value={educationData.speciality}
+                                                      onChange={handleChangeEducation}
+                                                      onFocus={handleFocus}
+                                                      onBlur={handleBlur}
+                                                      required
+                                                      className={`border border-gray-300 rounded px-3 py-1 ${
+                                                        focusedInput === 'speciality' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                                                      }`}
+                                                    />
+                                                  </div>
+                                                  <div className="flex flex-col">
+                                                    <label htmlFor="anne">Year:</label>
+                                                    <input
+                                                      type="number"
+                                                      id="anne"
+                                                      name="anne"
+                                                      value={educationData.anne}
+                                                      onChange={handleChangeEducation}
+                                                      onFocus={handleFocus}
+                                                      onBlur={handleBlur}
+                                                      required
+                                                      className={`border border-gray-300 rounded px-3 py-1 ${
+                                                        focusedInput === 'anne' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                                                      }`}
+                                                    />
+                                                  </div>
+                                                  <div className="flex flex-col">
+                                                    <label htmlFor="ecole">School:</label>
+                                                    <input
+                                                      type="text"
+                                                      id="ecole"
+                                                      name="ecole"
+                                                      value={educationData.ecole}
+                                                      onChange={handleChangeEducation}
+                                                      onFocus={handleFocus}
+                                                      onBlur={handleBlur}
+                                                      required
+                                                      className={`border border-gray-300 rounded px-3 py-1 ${
+                                                        focusedInput === 'ecole' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                                                      }`}
+                                                    />
+                                                  </div>
+                                                  <div className="flex flex-col">
+                                                    <label htmlFor="paye_ecole">Country of School:</label>
+                                                    <input
+                                                      type="text"
+                                                      id="paye_ecole"
+                                                      name="paye_ecole"
+                                                      value={educationData.paye_ecole}
+                                                      onChange={handleChangeEducation}
+                                                      onFocus={handleFocus}
+                                                      onBlur={handleBlur}
+                                                      required
+                                                      className={`border border-gray-300 rounded px-3 py-1 ${
+                                                        focusedInput === 'paye_ecole' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                                                      }`}
+                                                    />
+                                                  </div>
+                                                  <button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+                                                    Add Education
+                                                  </button>
+                                                  <button
+                                                    type="button"
+                                                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                                                    onClick={toggleFormVisibilityEducation}
+                                                  >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                  </button>
+                                                </form>
+                                              </div>
+                                            )}
+                                    
+                                            <ul>
+                                              {postData && postData.educations ? (
+                                                postData.educations.map((education, index) => (
+                                                  <div key={index} style={{ boxShadow: "0px 0px 10px rgba(0,0,0,0.1)", marginBottom: '10px', padding: '10px', borderRadius: '5px' }}>
+                                                    <li><label>Label: </label>{education.label}</li>
+                                                    <li><label>Speciality: </label>{education.speciality}</li>
+                                                    <li><label>Year: </label>{education.anne}</li>
+                                                    <li><label>School: </label>{education.ecole}</li>
+                                                    <li><label>Country: </label>{education.paye_ecole}</li>
+                                                    <button
+                                                      onClick={() => handleDeleteEducation(education.id)}
+                                                      className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                                                      >
+                                                      Delete <i className="fa-solid fa-trash"></i>
+                                                    </button>
+                                                    <br /> 
+                                                  </div>
+                                                ))
+                                              ) : (
+                                                <li>Loading education...</li>
+                                              )}
+                                            </ul>
+                                          </div>
 
     <hr/>
 
