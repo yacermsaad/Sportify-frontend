@@ -250,7 +250,7 @@ const handleDeleteSkill = async (id) => {
                         <div className="relative">
                             <button
                                 onClick={toggleMenu}
-                                className="flex items-center space-x-2 w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent hover:bg-blue-800 md:w-auto md:inline md:mt-0 md:ml-4 hover:bg-gray-200 focus:bg-blue-800 focus:outline-none focus:shadow-outline"
+                                className="flex items-center space-x-2 w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent  md:w-auto md:inline md:mt-0 md:ml-4 hover:bg-gray-200 focus:bg-blue-800 focus:outline-none focus:shadow-outline"
                             >
                             {postData && (
                               <div>
