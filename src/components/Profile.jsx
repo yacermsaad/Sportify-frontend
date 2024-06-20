@@ -255,7 +255,7 @@ const handleDeleteSkill = async (id) => {
                             {postData && (
                               <div>
                               <span>{postData.fullname}</span>
-                              <img className="inline h-6 rounded-full" src={postData.image} alt="Avatar" />
+                              <img className="inline h-6 rounded-full" src= {`http://localhost:8000/storage/${postData.image}`} alt="Avatar" />
                               </div>
                              )}
                                 <svg
@@ -317,7 +317,7 @@ const handleDeleteSkill = async (id) => {
                                         <div className="w-full md:w-3/12 md:mx-2" >
                                         <div className="bg-white min-h-screen flex items-center justify-center">
                                         <div className="max-w-lg mx-auto my-10 bg-white rounded-lg shadow-md p-5">
-                                          <img className="w-32 h-32 rounded-full mx-auto" src={postData.image} alt="Profile picture" />
+                                          <img className="w-32 h-32 rounded-full mx-auto" src= {`http://localhost:8000/storage/${postData.image}`} alt="Profile picture" />
                                           <h2 className="text-center text-2xl font-semibold mt-3">{postData.fullname}</h2>
                                           <p className="text-center text-gray-600 mt-1">@{postData.fullname}</p>
 
