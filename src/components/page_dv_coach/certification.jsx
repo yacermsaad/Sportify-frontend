@@ -8,6 +8,8 @@ export default function Certification(){
     const [year, setyear] = useState("");
     const [data,setdata]=useState([]);
 
+    
+
     // years data
     const startYear = 1900;
     const endYear = new Date().getFullYear();
@@ -52,7 +54,7 @@ export default function Certification(){
                         transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 
                         placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 
                         focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                        placeholder="Certificate ..." onChange={(e)=>{setcertificat(e.target.value)}}/>
+                        placeholder="Certificate ..." onChange={(e)=>{setcertificat(e.target.value)}} />
                 </div>
                 <div className=" h-12 md:w-[200px] lg:w-[200px] xl:w-[300px] bg-gray-50">
                         <input className="peer h-full w-full rounded-[7px] border border-gray-300  text-md
