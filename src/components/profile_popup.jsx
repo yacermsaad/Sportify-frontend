@@ -26,6 +26,7 @@ function Profile_popup(props) {
                 console.log(response.data);
                 setimage('');
                 localStorage.setItem('image_user',response.data.image)
+            props.getdata()
                 closeModal();
             })
             .catch(error => {

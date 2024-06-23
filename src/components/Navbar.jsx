@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Profile_popup from './profile_popup.jsx';
 
-const Navbar = () => {
+const Navbar = (props) => {
 
   
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -135,7 +135,7 @@ const Navbar = () => {
                 <li>
                   <a onClick={()=>{setisModalOpenLike(true)}} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white cursor-pointer">Update your picture</a>
                 </li>
-                <Profile_popup isOpen={isModalOpenLike} setOpen={closeModal} />
+                <Profile_popup isOpen={isModalOpenLike} setOpen={closeModal} getdata={props.getdata} />
                 <li>
                   <a href="/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">Settings</a>
                 </li>

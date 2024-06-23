@@ -37,7 +37,7 @@ function Blogs() {
 
   },[])
   return (<div className='bg-slate-50 min-h-[100vh] '>
-            <Navbar />
+            <Navbar getdata={getdata}/>
            
             {user!=null && coach==1?
             <div className='md:w-[600px] mx-auto  bg-white mt-5  rounded-md '>
