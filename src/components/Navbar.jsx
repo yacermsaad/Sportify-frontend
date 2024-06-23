@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import 'animate.css';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Profile_popup from './profile_popup.jsx';
 
 const Navbar = () => {
 
@@ -15,9 +16,12 @@ const Navbar = () => {
   const [t, i18n] = useTranslation();
   const dispatch = useDispatch();
 
- 
+  const[isModalOpenLike,setisModalOpenLike]=useState(false)
+
+  const image_user = localStorage.getItem('image_user');
+  const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+   
     if (user) {
       const name = user.name;
       setUserInitial(name.slice(0, 2).toUpperCase());
@@ -31,6 +35,7 @@ const Navbar = () => {
   const closeModal = () => {
     setIsModalOpenLogin(false);
     setIsModalOpenCreate(false);
+    setisModalOpenLike(false);
   };
 
   const openModalLogin = () => {
@@ -49,6 +54,7 @@ const Navbar = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('coache');
+    localStorage.removeItem('image_user');
     setUserInitial(null);
   };
 
@@ -87,7 +93,7 @@ const Navbar = () => {
             <Login isOpen={isModalOpenLogin} setOpen={closeModal} />
             <span className="text-gray-400 max-md:hidden">|</span>
             <a className="block md:inline-block mt-2 md:mt-0 text-white font-bold py-2 px-4 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 rounded-full text-bold text-md cursor-pointer" style={{ background: "#04cfb4" }} onClick={openModalCreate}>{t('insc')}</a>
-            <Login isOpen={isModalOpenCreate} setOpen={closeModal} />
+            <Login isOpen={isModalOpenCreate} setOpen={closeModal} blog="false"/>
           
           </>
         )}
@@ -95,24 +101,30 @@ const Navbar = () => {
 
           <div className="flex items-center space-x-4">
            
-            <input type="checkbox" id="dropdownToggle" class="hidden peer" />
+            <input type="checkbox" id="dropdownToggle" className="hidden peer" />
            
-            <div class="relative inline-block text-left  rounded-lg  pl-6  py-1 shadow-sm ">
-              <input type="checkbox" id="dropdownAvatarNameToggle" class="hidden peer" />
-              <label for="dropdownAvatarNameToggle" class="flex items-center text-sm pe-1  text-black font-semibold rounded-full cursor-pointer hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 ">
-                
-                <div className="flex items-center justify-center w-8 h-8 bg-green-500 text-white rounded-full mr-4"
+            <div className="relative inline-block text-left  rounded-lg  pl-6  py-1 shadow-sm ">
+              <input type="checkbox" id="dropdownAvatarNameToggle" className="hidden peer" />
+
+              <label htmlFor="dropdownAvatarNameToggle" className="flex items-center text-sm pe-1  text-black font-semibold rounded-full cursor-pointer hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 ">
+                {image_user=='null'?<div className="flex items-center justify-center w-8 h-8 bg-green-500 text-white rounded-full mr-4"
                   style={{background:"lightgreen", color:"white", marginLeft:"-20px",fontWeight:"bold"} }   id="dropdownToggle">
                   {userInitial}
+                </div> :
+                <div className="flex items-center justify-center w-8 h-8  text-white rounded-full mr-4">
+                <img src={`http://localhost:8000/storage/${image_user}`} />
                 </div>
+                }
+                
+                
                 
                 <span className='pl-2'>{JSON.parse(localStorage.getItem('user')).name}</span>
                 <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                 </svg>
               </label>
 
-            <div id="dropdownAvatarName" className="absolute right-0 z-10 hidden bg-white divide-y divide-gray-300 rounded-lg shadow w-44 peer-checked:block mt-2">
+            <div id="dropdownAvatarName" className="absolute right-0 hidden bg-white divide-y divide-gray-300 rounded-lg shadow w-44 peer-checked:block mt-2">
               <div className="px-4 py-3 text-sm text-gray-900 ">
                 <div className="truncate">{JSON.parse(localStorage.getItem('user')).email}</div>
               </div>
@@ -121,9 +133,13 @@ const Navbar = () => {
                   <a href={localStorage.getItem('coache')==0?'/becom_coache':'/profile'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">{localStorage.getItem('coache')==0?'Become a coach':'switch to coache'}</a>
                 </li>
                 <li>
+                  <a onClick={()=>{setisModalOpenLike(true)}} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white cursor-pointer">Update your picture</a>
+                </li>
+                <Profile_popup isOpen={isModalOpenLike} setOpen={closeModal} />
+                <li>
                   <a href="/settings" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">Settings</a>
                 </li>
-               
+
               </ul>
               <div className="py-2 cursor-pointer" onClick={handleLogout}>
                 <a  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-green-500 dark:text-gray-900 dark:hover:text-white">Sign out</a>
