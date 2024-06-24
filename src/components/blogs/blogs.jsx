@@ -59,15 +59,15 @@ const Blogs = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Response:', response.data); // Log response data for debugging
+      console.log('Response:', response.data); 
       alert('Blog post added successfully!');
       handleClosePopup();
-      // Optionally, you can reset form fields or state here
+    
       resetForm();
     } catch (error) {
       console.error('Error adding blog post:', error);
       if (error.response) {
-        console.error('Response data:', error.response.data); // Log specific error response data
+        console.error('Response data:', error.response.data); 
       }
       alert('Failed to add blog post.');
     }
