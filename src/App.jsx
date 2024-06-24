@@ -14,6 +14,7 @@ import NotFoundPage from './components/NotFoundPage';
 import ResetPasswordForm from './components/ResetPasswordForm';
 import PlaceholderCard from './components/PlaceholderCard';
 import Blogs from './components/blogs/blogs';
+import BlogForm from './components/blogs/BlogForm';
 import Test from './test';
 function App() {
   const [loading, setLoading] = useState(true);
@@ -46,6 +47,8 @@ function App() {
           <Route path="/reset" element={<ResetPasswordForm />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogForm" element={<BlogForm />} />
+
           
         </Routes>
       </div>
