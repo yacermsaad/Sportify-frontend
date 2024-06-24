@@ -18,7 +18,7 @@ const FAQ = () => {
             <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
               <span> What is the Rapide Course?</span>
               <span className="transition group-open:rotate-180">
-                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                   <path d="M6 9l6 6 6-6"></path>
                 </svg>
               </span>
@@ -34,7 +34,7 @@ const FAQ = () => {
             <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
               <span> What are the benefits of the Rapide Course?</span>
               <span className="transition group-open:rotate-180">
-                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                   <path d="M6 9l6 6 6-6"></path>
                 </svg>
               </span>
@@ -50,7 +50,7 @@ const FAQ = () => {
             <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
               <span> Is the Rapide Course suitable for beginners?</span>
               <span className="transition group-open:rotate-180">
-                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                   <path d="M6 9l6 6 6-6"></path>
                 </svg>
               </span>
@@ -66,7 +66,7 @@ const FAQ = () => {
             <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
               <span> How long is the Rapide Course?</span>
               <span className="transition group-open:rotate-180">
-                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                   <path d="M6 9l6 6 6-6"></path>
                 </svg>
               </span>
@@ -82,7 +82,7 @@ const FAQ = () => {
             <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
               <span> How do I enroll in the Rapide Course?</span>
               <span className="transition group-open:rotate-180">
-                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
+                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24">
                   <path d="M6 9l6 6 6-6"></path>
                 </svg>
               </span>

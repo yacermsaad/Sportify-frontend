@@ -32,14 +32,14 @@ const Login = (props) => {
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
 
-    useEffect(() => {
-        if (isSuccess) {
-            const timer = setTimeout(() => {
-                navigate('/');
-            }, 6000);
-            return () => clearTimeout(timer);
-        }
-    }, [isSuccess, navigate]);
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         const timer = setTimeout(() => {
+    //             navigate('/');
+    //         }, 6000);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [isSuccess, navigate]);
 
     const validatePassword = (password) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -107,11 +107,20 @@ const Login = (props) => {
                 console.log('Login successful:', data);
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify({ name: data.name, type: data.type, email: data.email,id: data.id}));
+                localStorage.setItem('image_user',data.image_user);
                 localStorage.setItem('coache',data.coache);
                 setEmail('');
                 setPass('');
                 setMessage('Login successful!');
                 setIsSuccess(true);
+                if(props.blog=="true"){
+                    window.location.reload(false);
+                                    navigate('/blogs');
+                             
+                }else{
+                    navigate("/")
+                }
+               
                 closeModal();
             } else {
                 console.error('Login failed:', response.statusText);
