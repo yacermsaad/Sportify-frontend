@@ -4,7 +4,7 @@ import Navbar from '../Navbar';
 import Blog from './blog';
 import axios from 'axios';
 import PlaceholderCard from '../PlaceholderCard';
-
+import Login from '../login/Login';
 function Blogs() {
   const [user_profile, U_profile] = useState(null);
   const [data, setdata] = useState([]);
@@ -15,10 +15,11 @@ function Blogs() {
   const [showPopup, setShowPopup] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  // const [images, setImages] = useState([]);
   const [picture,setpicture]=useState("")
   const [isCreatingBlog, setIsCreatingBlog] = useState(false);
-  const coache = JSON.parse(localStorage.getItem('coache'));
+  const [cmnt,setcmnt]=useState(false)
+  const [blgid,setblgid]=useState()
+  const [isModalOpenLogin,setisModalOpenLogin]=useState(false)
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -29,7 +30,7 @@ function Blogs() {
     }
   }, []);
 
-
+//get data
   const getdata=()=>{
     axios.get('http://localhost:8000/api/blogs')
     .then(response => {
@@ -44,25 +45,27 @@ function Blogs() {
     setUser(JSON.parse(localStorage.getItem('user')));
     getdata()
   },[])
+
+
   const handleInputClick = () => {
     setIsCreatingBlog(true);
     setShowPopup(true);
   };
 
+  //close poppup
   const handleClosePopup = () => {
     setShowPopup(false);
     setIsCreatingBlog(false);
     resetForm();
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-
+  const closeModal = () => {
+    setisModalOpenLogin(false);
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append('titre', title);
     formData.append('contenu', content);
@@ -75,12 +78,11 @@ function Blogs() {
         },
 
       }).then(response => {
-        console.log('Response:', response.data); // Log response data for debugging      
         handleClosePopup();
         resetForm();
         getdata;
     })
-
+      
     } catch (error) {
       console.error('Error adding blog post:', error);
       if (error.response) {
@@ -88,7 +90,22 @@ function Blogs() {
       }
      
     }
+    getdata();
   };
+
+
+  const add_coment=(blog_id,user_id)=>{
+  
+    axios.post('http://localhost:8000/api/addcoment',{article_id:blog_id,user_id:user_id,contenu:cmnt})
+    .then(response => {
+      getdata();
+      setcmnt("")
+    })
+    .catch(error => {
+        console.error('There was an error', error);
+    });
+
+  }
 
   const resetForm = () => {
     setTitle('');
@@ -113,8 +130,29 @@ function Blogs() {
              :null} 
             <div className='md:w-[600px] mx-auto '>
               {data.length>0?data.map((blg,i)=>{
-                     return <Blog blog={blg} key={i} getdata={getdata}/>
+                     return<div key={i}> <Blog blog={blg} key={i} getdata={getdata} />
+                     <form  className={`bg-white p-4 rounded   items-center flex `}  
+                     onSubmit={(e)=>{e.preventDefault();if((localStorage.getItem('user'))!=null){add_coment(blg.id,JSON.parse(localStorage.getItem('user')).id)}
+                     else{setisModalOpenLogin(true);}}} >
+                <textarea
+                  onChange={(e)=>{setcmnt(e.target.value);setblgid(blg.id)}}
+                  value={blg.id==blgid?cmnt:""} 
+                  className='border border-gray-300 rounded px-3 py-2 flex-grow mr-2'
+                  required
+                  placeholder='Write your comment...'
+                  style={{ height: '50px' }}
+                />
+    
+                <button type='submit' className='bg-green-500 text-white px-4 py-2 rounded' style={{ height: '47px' }}>
+                  Send <i className='fa-regular fa-paper-plane'></i>
+                </button>
+               
+              </form>
+            
+                     </div>
+
                   }):<PlaceholderCard/>}
+                    <Login isOpen={isModalOpenLogin} setOpen={closeModal} blog="true"/>
 
 {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -136,7 +174,7 @@ function Blogs() {
             {isCreatingBlog && (
               <div>
                 <h2 className="text-lg font-bold mb-4">Create a Blog Post</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="flex flex-col">
                     <label className="mb-1 text-sm font-semibold text-gray-700">Title</label>
                     <input
@@ -161,10 +199,12 @@ function Blogs() {
                   <div className="flex flex-col">
                     <label className="mb-1 text-sm font-semibold text-gray-700">Images</label>
                     <input
+                   
                       type="file"
                       multiple
                       onChange={(e)=>{ setpicture(e.target.files[0]);}}
                       className="border border-gray-300 rounded px-3 py-2"
+                      accept="image/png, image/jpeg"
                     />
                   </div>
                   <button
@@ -174,7 +214,10 @@ function Blogs() {
                     Add Blog Post
                   </button>
                 </form>
+                
+              
               </div>
+              
             )}
           </div>
         </div>

@@ -15,7 +15,18 @@ function Blog(props) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
+  const deletecoment=(id)=>{
+      console.log(id)
+    axios.delete(`http://localhost:8000/api/deletcoment/${id}`)
+    .then(response => {
+      props.getdata();
+    })
+    .catch(error => {
+        console.error('There was an error', error);
+    });
 
+  
+};
 
   const addlike=(article_id,user_id)=>{
     axios.post('http://localhost:8000/api/addlike',{article_id:article_id,user_id:user_id})
@@ -28,11 +39,6 @@ function Blog(props) {
         console.error('There was an error', error);
     });
   }
-  const openModalLogin = () => {
-
-   
-    setIsModalOpenLogin(true);
-  };
 
   const closeModal = () => {
     setisModalOpenLike(false);
@@ -42,6 +48,7 @@ function Blog(props) {
 
   const handleCreateFormToggle = () => {
     setShowCreateForm(!showCreateForm);
+  
   };
 
   const handleTitleChange = (e) => {
@@ -73,7 +80,8 @@ function Blog(props) {
       console.error('Error creating blog post:', error);
       alert('Failed to create blog post.');
     }
-  };
+    
+}
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -118,54 +126,54 @@ function Blog(props) {
 
              <div className='flex justify-around border-b-2 py-2'>
               <div className='flex hover:bg-slate-100 cursor-pointer w-[260px] justify-center py-1' onClick={()=>{if((localStorage.getItem('user'))!=null){addlike(props.blog.id,JSON.parse(localStorage.getItem('user')).id)}else{setIsModalOpenLogin(true);}}}> <img src="./img/like.png"className="w-5 h-5 mr-2" alt="prb" /> <span className=''>Like</span></div>
-              <div className='flex hover:bg-slate-100 cursor-pointer w-[260px] justify-center py-1'  onClick={handleCreateFormToggle}> <img src="./img/coment.png"className="w-5 h-5 mr-2 mt-0.5" alt="prb" /> <span className=''>Coment</span></div>
+              <div className='flex hover:bg-slate-100 cursor-pointer w-[260px] justify-center py-1'  onClick={()=>{if((localStorage.getItem('user'))!=null){handleCreateFormToggle()}else{setIsModalOpenLogin(true);}}}> <img src="./img/coment.png"className="w-5 h-5 mr-2 mt-0.5" alt="prb" /> <span className=''>Coment</span></div>
             
             
           </div>
-          {showCreateForm && (  <div style={{ marginTop: '50px' }}>
-          <div className='flex justify-center relative top-1/3'>
-            <div className='relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white' style={{ width: '100%', borderLeft: 'none', borderRight: 'none' }}>
+          {showCreateForm && (  <div style={{ marginTop: '0px' }}>
+            {props.blog.comments.map((cm,i)=>{
+            return <div key={i}>
+                     <div className='flex justify-center relative top-1/3'>
+            <div className='relative grid grid-cols-1 gap-4 p-4  border-b rounded-lg bg-white' style={{ width: '100%', borderLeft: 'none', borderRight: 'none' }}>
               <div className='relative flex gap-4 items-center'>
-                <div className='flex items-center justify-center w-12 h-12 rounded-full overflow-hidden'>
 
-                        <img
-                        src='https://images-us.nivea.com/-/media/nivea/local/ng/articles2/moisturizer-for-men---maain-banner.jpg?rx=1929&ry=0&rw=687&rh=806'
-                        className='w-full h-full object-cover rounded-full'
-                        alt=''
-                        loading='lazy'
-                      />
-                    </div>
-                    <div className='flex flex-col w-full'>
-                      <div className='flex flex-row justify-between'>
-                        <p className='relative text-xl whitespace-nowrap truncate overflow-hidden'>Said Youssfi</p>
-                        <a className='text-gray-500 text-xl' href='#'>
-                          <i className='fa-solid fa-trash'></i>
-                        </a>
-                      </div>
-                      <p className='text-gray-400 text-sm'>20 April 2022, at 14:88 PM</p>
-                    </div>
+              {cm.user.image==null?<div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
+                  style={{background:"lightgreen", color:"white",fontWeight:"bold"} }   id="dropdownToggle">
+                  {cm.user.name.slice(0, 2).toUpperCase()}
+                </div> :
+               
+                <div className='flex items-center justify-center w-10 h-10 rounded-full overflow-hidden'>
+                  <img
+                  src={`http://localhost:8000/storage/${cm.user.image}`}
+                  className='w-full h-full object-cover rounded-full'
+                  alt=''
+                  loading='lazy'
+                />
+              </div> 
+                }
+                
+                <div className='flex flex-col w-full'>
+                  <div className='flex flex-row justify-between'>
+                    <p className='relative text-xl whitespace-nowrap truncate overflow-hidden'>{cm.user.name}</p>
+                    {cm.user.id==JSON.parse(localStorage.getItem('user')).id?
+                    <a className='text-gray-500 text-xl cursor-pointer' onClick={()=>{deletecoment(cm.id)}}>
+
+                      <i className='fa-solid fa-trash'></i>
+                    </a>:null}
                   </div>
-                  <p className='-mt-4 text-gray-500'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. <br />
-                    Maxime quisquam vero adipisci beatae voluptas dolor ame.
-                  </p>
+                  <p className='text-gray-400 text-sm'>20 April 2022, at 14:88 PM</p>
                 </div>
               </div>
+              <div className='text-wrap hover:text-balance flex flex-wrap' style={{overflowWrap: 'anywhere'}}>
+                   {cm.contenu}
+              </div>
+            </div>
+          </div>
     
-              <form onSubmit={handleCreateBlog} className='bg-transparent p-4 rounded mt-4 flex items-center'>
-                <textarea
-                  value={content}
-                  onChange={handleContentChange}
-                  className='border border-gray-300 rounded px-3 py-2 flex-grow mr-2'
-                  required
-                  placeholder='Write your comment...'
-                  style={{ height: '50px' }}
-                />
-    
-                <button type='submit' className='bg-green-500 text-white px-4 py-2 rounded' style={{ height: '47px' }}>
-                  Send <i className='fa-regular fa-paper-plane'></i>
-                </button>
-              </form>
+              </div>
+            
+            })}
+ 
             </div>
           )} 
       <Login isOpen={isModalOpenLogin} setOpen={closeModal} blog="true"/>
