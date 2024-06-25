@@ -73,22 +73,14 @@ function Blogs() {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-<<<<<<< HEAD
-      });
-      console.log('Response:', response.data); 
-      alert('Blog post added successfully!');
-      handleClosePopup();
-    
-      resetForm();
-=======
+
       }).then(response => {
         console.log('Response:', response.data); // Log response data for debugging      
         handleClosePopup();
         resetForm();
         getdata;
     })
-      
->>>>>>> 1500914d0deeb08374f2c923a5c7cce23a92cbeb
+
     } catch (error) {
       console.error('Error adding blog post:', error);
       if (error.response) {

@@ -3,6 +3,7 @@ import Likes_popup from './likes_popus';
 import axios from 'axios';
 import { use } from 'i18next';
 import Login from '../login/Login';
+import { formatDistanceToNow } from 'date-fns';
 
 function Blog(props) {
 
@@ -74,6 +75,18 @@ function Blog(props) {
     }
   };
 
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 to month since getMonth() returns 0-11
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const calculateTimeAgo = (timestamp) => {
+    return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+  };
+
 
 
   return (<div className='bg-white  rounded-md mt-10' key={props.blog.id}> 
@@ -89,8 +102,8 @@ function Blog(props) {
                 }
                 <div >
                    <div className='font-semibold capitalize flex flex-col'>{props.blog.coach.fullname}</div>
-                    <div className='text-slate-400 text-[11px]'>20 h</div>
-                </div>
+                   <div className='text-slate-400 text-[11px]'>{calculateTimeAgo(props.blog.created_at)}</div>
+                 </div>
               </div>
               <div className='pt-3'>{props.blog.contenu}</div>
             </div>
