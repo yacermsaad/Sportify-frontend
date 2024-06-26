@@ -66,8 +66,8 @@ const Navbar = (props) => {
       </div>
 
       {/* Links */}
-      <div className="block md:flex items-center space-x-5 mx-auto" style={{marginLeft:"260px"}}>
-        <Link to="/" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Home')}</Link>
+      <div className={`block md:flex ${i18n.language == 'ar' ? 'flex-row-reverse' : ''} items-center space-x-5 mx-auto`} style={{marginLeft:"260px"}}>
+        <Link to="/" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors ml-5" style={{color:"black"}}>{t('Home')}</Link>
         <Link to="/services" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Services')}</Link>
         <Link to="/blogs" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Blogs')}</Link>
         <Link to="/contact" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{color:"black"}}>{t('Contact')}</Link>

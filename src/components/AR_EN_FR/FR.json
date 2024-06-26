@@ -15,5 +15,10 @@
     "nom":"Nom",
     "v_n":"Votre Nom",
     "o_m":"Mot de passe oublié?",
-    "p2":"Reste flexible et réserve tes activités au moment et de la manière qui te conviennent le mieux    "
+    "p2":"Reste flexible et réserve tes activités au moment et de la manière qui te conviennent le mieux    ",
+    "Home":"Home",
+    "Services":"Services",
+    "Blogs":"Blogs",
+    "Contact":"Contact",
+    "FAQs":"FAQs"
 }

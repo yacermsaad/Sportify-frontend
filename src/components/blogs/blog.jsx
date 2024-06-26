@@ -94,13 +94,14 @@ function Blog(props) {
 
 useEffect(()=>{
   setLike(false)
+  if(props.blog && JSON.parse(localStorage.getItem('user'))!=undefined){
     props.blog.likes.map((l,i)=>{
       if(l.user.id==JSON.parse(localStorage.getItem('user')).id){
         setLike(true)
       }else{
         setLike(false)
       }
-    });
+    });}
 })
 
   const formatDate = (timestamp) => {
