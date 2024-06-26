@@ -16,6 +16,7 @@ import PlaceholderCard from './components/PlaceholderCard';
 import Blogs from './components/blogs/blogs';
 import BlogForm from './components/blogs/BlogForm';
 import Test from './test';
+import BlogList from './components/blogs/BlogList';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogForm" element={<BlogForm />} />
+          <Route path="/BlogList" element={<BlogList />} />
 
           
         </Routes>

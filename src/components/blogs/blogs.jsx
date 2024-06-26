@@ -76,14 +76,17 @@ function Blogs() {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+
       }).then(response => {
         handleClosePopup();
         resetForm();
-        getdata();
-    })} catch (error) {
+        getdata;
+    })
+      
+    } catch (error) {
       console.error('Error adding blog post:', error);
       if (error.response) {
-        console.error('Response data:', error.response.data); // Log specific error response data
+        console.error('Response data:', error.response.data); 
       }
      
     }

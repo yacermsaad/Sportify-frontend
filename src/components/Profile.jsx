@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './profile.css';
 import axios from 'axios';
+import BlogList from './blogs/BlogList';
 
 const Profile = () => {
   const storedUser = localStorage.getItem('user');
@@ -904,99 +905,10 @@ const handleDeleteEducation = async (id) => {
 
 
 
-                                {ListBlog ? (
-                                  <div className="p-6  px-0" style={{marginLeft:"580px",marginTop:"-2520px"}} >
-                                    <table className="mt-4  min-w-max table-auto text-left" >
-                                      <thead>
-                                        <tr className="bg-blue-gray-50">
-                                          <th className="cursor-pointer border-b border-blue-gray-100 p-4">
-                                            <div className="flex items-center justify-between">
-                                              <span className="text-sm text-blue-gray-900 font-normal">Blog</span>
-                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                                                <path d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
-                                              </svg>
-                                            </div>
-                                          </th>
-                                          <th className="cursor-pointer border-b border-blue-gray-100 p-4">
-                                            <div className="flex items-center justify-between">
-                                              <span className="text-sm text-blue-gray-900 font-normal">Posted by</span>
-                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                                                <path d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
-                                              </svg>
-                                            </div>
-                                          </th>
-                                         
-                                          <th className="cursor-pointer border-b border-blue-gray-100 p-4">
-                                            <div className="flex items-center justify-between">
-                                              <span className="text-sm text-blue-gray-900 font-normal">Status</span>
-                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                                                <path d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
-                                              </svg>
-                                            </div>
-                                          </th>
-                                         
-                                       
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr className="bg-white">
-                                          <td className="p-4 border-b border-blue-gray-100">
-                                            <div className="flex items-center gap-3">
-                                              <div className="flex flex-col">
-                                                <p className="text-sm font-normal text-blue-gray-900">Blog 1</p>
-                                                <p className="text-sm font-normal text-blue-gray-900 opacity-70">Start date: 10 Dec 2023</p>
-                                              </div>
-                                            </div>
-                                          </td>
-                                          <td className="p-4 border-b border-blue-gray-100">
-                                            <div className="flex items-center gap-3">
-                                              <img src="https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg" alt="John Michael" className="w-9 h-9 rounded-full" />
-                                              <div className="flex flex-col">
-                                                <p className="text-sm font-normal text-blue-gray-900">John Michael</p>
-                                                <p className="text-sm font-normal text-blue-gray-900 opacity-70">john@creative-tim.com</p>
-                                              </div>
-                                            </div>
-                                          </td>
-                                          <td className="p-4 border-b border-blue-gray-100">
-                                            <div className="flex flex-col">
-                                              <p className="text-sm font-normal text-green-600">Accepted</p>
-                                            </div>
-                                          </td>
-                                         
-                                          
-                                        </tr>
-                                        <tr className="bg-white">
-                                          <td className="p-4 border-b border-blue-gray-100">
-                                            <div className="flex items-center gap-3">
-                                              <div className="flex flex-col">
-                                                <p className="text-sm font-normal text-blue-gray-900">Blog 2 </p>
-                                                <p className="text-sm font-normal text-blue-gray-900 opacity-70">Start date: 11 Dec 2023</p>
-                                              </div>
-                                            </div>
-                                          </td>
-                                          <td className="p-4 border-b border-blue-gray-100">
-                                            <div className="flex items-center gap-3">
-                                              <img src="https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg" alt="Alexa Liras" className="w-9 h-9 rounded-full" />
-                                              <div className="flex flex-col">
-                                                <p className="text-sm font-normal text-blue-gray-900">Alexa Liras</p>
-                                                <p className="text-sm font-normal text-blue-gray-900 opacity-70">alexa@creative-tim.com</p>
-                                              </div>
-                                            </div>
-                                          </td>
-                                          <td className="p-4 border-b border-blue-gray-100">
-                                            <div className="flex flex-col">
-                                              <p className="text-sm font-normal text-red-500">Refused</p>
-                                            </div>
-                                          </td>
-                                          
-                                          
-                                          
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                ) : null }
-                                
+                               {ListBlog===true? <BlogList/>:null
+
+
+                               }
                                 
 
 

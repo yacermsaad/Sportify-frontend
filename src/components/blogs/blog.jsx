@@ -3,6 +3,7 @@ import Likes_popup from './likes_popus';
 import axios from 'axios';
 import { use } from 'i18next';
 import Login from '../login/Login';
+import { formatDistanceToNow } from 'date-fns';
 
 function Blog(props) {
 
@@ -90,6 +91,7 @@ function Blog(props) {
     } 
 }
 
+
 useEffect(()=>{
   setLike(false)
     props.blog.likes.map((l,i)=>{
@@ -100,6 +102,18 @@ useEffect(()=>{
       }
     });
 })
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 to month since getMonth() returns 0-11
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const calculateTimeAgo = (timestamp) => {
+    return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+  };
 
 
   return (<div className='bg-white  rounded-md mt-10' key={props.blog.id}> 
@@ -115,8 +129,8 @@ useEffect(()=>{
                 }
                 <div >
                    <div className='font-semibold capitalize flex flex-col'>{props.blog.coach.fullname}</div>
-                    <div className='text-slate-400 text-[11px]'>20 h</div>
-                </div>
+                   <div className='text-slate-400 text-[11px]'>{calculateTimeAgo(props.blog.created_at)}</div>
+                 </div>
               </div>
               <div className='pt-3'>{props.blog.contenu}</div>
             </div>
@@ -187,47 +201,5 @@ useEffect(()=>{
   )}
 
 
-//   return (
-//     <div className='bg-white rounded-md mt-10'>
-//       <div className='pl-10 py-5'>
-//         <div className='flex'>
-//           <div className='flex items-center justify-center w-8 h-8 bg-green-500 text-white rounded-full mr-2'>
-//             {props.user_profile}
-//           </div>
-//           <div>
-//             <div className='font-semibold capitalize flex flex-col'>{JSON.parse(localStorage.getItem('user')).name}</div>
-//             <div className='text-slate-400 text-[11px]'>20 h</div>
-//           </div>
-//         </div>
-//         <div className='pt-3'>hhhhhhhh</div>
-//       </div>
-
-//       <img
-//         src='https://img.freepik.com/photos-premium/course-rapide-sprint-relais-athlete-competition-dans-jeu-fitness-entrainement-pour-bien-etre-energetique-piste-stade-sportif-athlete-coureur-vitesse-exercice-entrainement_590464-221769.jpg'
-//         className='w-full'
-//         alt='chair'
-//       />
-//       <div className='flex border-b-2 px-2 justify-between text-slate-600'>
-//         <div className='hover:text-blue-500 hover:underline cursor-pointer' onClick={openModalLogin}>
-//           80 likes
-//         </div>
-//         <div>18 comments</div>
-//       </div>
-
-//       <div className='flex justify-around border-b-2 py-2'>
-//         <div className='flex hover:bg-slate-100 cursor-pointer w-[260px] justify-center py-1'>
-//           <img src='./img/like.png' className='w-5 h-5 mr-2' alt='prb' /> <span className=''>Like</span>
-//         </div>
-
-//         <div className='flex hover:bg-slate-100 cursor-pointer w-[260px] justify-center py-1' onClick={handleCreateFormToggle}>
-//           <img src='./img/coment.png' className='w-5 h-5 mr-2 mt-0.5' alt='prb' /> <span className=''>Comment</span>
-//         </div>
-//       </div>
-
-   
-//     </div>
-// >>>>>>> 533ea1fb6b23886b091431e0f11044719acd3aac
-//   );
-// }
 
 export default Blog;
