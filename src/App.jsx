@@ -17,6 +17,7 @@ import Blogs from './components/blogs/blogs';
 import BlogForm from './components/blogs/BlogForm';
 import Test from './test';
 import BlogList from './components/blogs/BlogList';
+import Detail_service from './components/Deatil_service'
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -50,6 +51,7 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogForm" element={<BlogForm />} />
           <Route path="/BlogList" element={<BlogList />} />
+          <Route path="/serv" element={<Detail_service />} />
 
           
         </Routes>
