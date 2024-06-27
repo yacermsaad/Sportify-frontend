@@ -289,8 +289,13 @@ const handleDeleteEducation = async (id) => {
 
     return (
         <div className="bg-white">
-           
            <Navbar/>
+           
+<<<<<<< HEAD
+           <Navbar/>
+=======
+          
+>>>>>>> 8d6e4befb7d3dcf697f2559ff10a1822b804fb03
 
             
             {/* End of Navbar */}

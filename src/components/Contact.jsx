@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import './contact.css';
+import Navbar from './Navbar';
 
 const Contact = () => {
     const [firstName, setFirstName] = useState('');
@@ -42,6 +43,7 @@ const Contact = () => {
 
     return (
         <section className="contact-section">
+            <Navbar/>
             <div className="contact-bg">
                 <h3>Get in Touch with Us</h3>
                 <h2>Contact Us</h2>
