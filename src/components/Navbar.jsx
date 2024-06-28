@@ -59,7 +59,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav className={`flex items-center justify-between md:px-24 ${i18n.language == 'ar' ? 'flex-row-reverse' : ''} bg-white text-gray-800 p-4 shadow-lg`}>
+    <nav className={`flex items-center justify-between md:px-24 ${i18n.language == 'ar' ? 'flex-row-reverse' : ''} bg-white text-gray-800 p-4 shadow-md`}>
       {/* Logo */}
       <div className="flex items-center">
         <span className="font-bold text-2xl md:text-2xl">Sporti<span className="text-green-500">fy.</span></span>
@@ -124,7 +124,7 @@ const Navbar = (props) => {
                 </svg>
               </label>
 
-            <div id="dropdownAvatarName" className="absolute right-0 hidden bg-white divide-y divide-gray-300 rounded-lg shadow w-44 peer-checked:block mt-2">
+            <div id="dropdownAvatarName" className="absolute right-0 hidden bg-white divide-y divide-gray-300 rounded-lg shadow w-44 peer-checked:block mt-2 z-[999]">
               <div className="px-4 py-3 text-sm text-gray-900 ">
                 <div className="truncate">{JSON.parse(localStorage.getItem('user')).email}</div>
               </div>

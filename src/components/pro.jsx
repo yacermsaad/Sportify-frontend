@@ -16,7 +16,6 @@ import {
   MDBListGroup,
   MDBListGroupItem, MDBTable, MDBTableBody, MDBTableHead 
 } from 'mdb-react-ui-kit';
-// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -381,6 +380,38 @@ export default function ProfilePage() {
         }
       }
     };
+    const [coachId, setCoachId] = useState('');
+    const [images, setImages] = useState([]);
+
+  const handleFormSubmitService = async (event) => {
+    event.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('titre', serviceName);
+    formData.append('description', serviceDescription);
+    formData.append('prix', servicePrice);
+    formData.append('coache_id', coachId);
+    images.forEach((image, index) => {
+      formData.append(`images[${index}]`, image);
+    });
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/services', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+      alert('Service created successfully');
+    } catch (error) {
+      console.error('There was an error creating the service!', error);
+      alert('Failed to create service');
+    }
+  };
+
+  const handleImageChange = (e) => {
+    setImages([...e.target.files]);
+  };
     const breadcrumbContainerStyle = {
       backgroundColor: 'lightgreen',
       borderRadius: '0.375rem',
@@ -543,51 +574,62 @@ export default function ProfilePage() {
 
     <div className="row">
       <div className="col-md-6">
-        <div className="card" style={{ marginLeft: "0px", width: "860px", background: "white", boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.1)", padding: "20px", borderRadius: "10px" }}>
+        <div className="card" style={{ marginLeft: "0px", width: "860px", background: "white",  padding: "20px", borderRadius: "10px" }}>
           <div>
             {blogFrom ? (
-              <form onSubmit={handleFormSubmit} className="space-y-6 p-6 bg-white rounded-lg shadow-2xl">
-  <h1 className="text-xl font-bold mb-4" style={{textAlign:"center"}}>Start Add Service</h1>
-  <div>
-    <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
-    <input
-      type="text"
-      id="serviceName"
-      value={serviceName}
-      onChange={(e) => setServiceName(e.target.value)}
-      required
-      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-  </div>
-  <div>
-    <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
-    <textarea
-      id="serviceDescription"
-      value={serviceDescription}
-      onChange={(e) => setServiceDescription(e.target.value)}
-      required
-      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      rows="4"
-    />
-  </div>
-  <div>
-    <label htmlFor="servicePrice" className="block text-lg font-medium text-gray-700">Service Price:</label>
-    <input
-      type="number"
-      id="servicePrice"
-      value={servicePrice}
-      onChange={(e) => setServicePrice(e.target.value)}
-      required
-      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-  </div>
-  <button
-    type="submit"
-    className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-lg text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-  >
-    Add Service
-  </button>
-</form>
+              <form onSubmit={handleFormSubmitService} className="space-y-6 p-6 bg-white rounded-lg shadow-xl">
+      <h1 className="text-xl font-bold mb-4" style={{ textAlign: 'center' }}>Start Add Service</h1>
+      <div>
+        <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
+        <input
+          type="text"
+          id="serviceName"
+          value={serviceName}
+          onChange={(e) => setServiceName(e.target.value)}
+          required
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
+        <textarea
+          id="serviceDescription"
+          value={serviceDescription}
+          onChange={(e) => setServiceDescription(e.target.value)}
+          required
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          rows="4"
+        />
+      </div>
+      <div>
+        <label htmlFor="servicePrice" className="block text-lg font-medium text-gray-700">Service Price:</label>
+        <input
+          type="number"
+          id="servicePrice"
+          value={servicePrice}
+          onChange={(e) => setServicePrice(e.target.value)}
+          required
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+     
+      <div>
+        <label htmlFor="images" className="block text-lg font-medium text-gray-700">Upload Images:</label>
+        <input
+          type="file"
+          id="images"
+          multiple
+          onChange={handleImageChange}
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-lg text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Add Service
+      </button>
+    </form>
 
             ) : null}
           </div>
@@ -830,7 +872,7 @@ export default function ProfilePage() {
                     onClick={() => handleDeleteSkill(skill.id)}
                     className="text-red-600 hover:text-red-800"
                   >
-                    <i className="fa-solid fa-x"></i>
+                   <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>
@@ -1033,7 +1075,7 @@ export default function ProfilePage() {
                       onClick={() => handleDeleteEducation(education.id)}
                       className="text-red-600 hover:text-red-800"
                     >
-                      <i className="fa-solid fa-x"></i>
+                     <i class="fa-solid fa-trash"></i>
                     </button>
                   </td>
                 </tr>
@@ -1195,7 +1237,7 @@ export default function ProfilePage() {
                   onClick={() => handleDelete(certificate.id)}
                   className="text-red-600 hover:text-red-800"
                 >
-                  <i className="fa-solid fa-x"></i>
+                 <i class="fa-solid fa-trash"></i>
                 </button>
               </td>
             </tr>

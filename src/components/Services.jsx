@@ -10,6 +10,8 @@ import Service from './service';
 function Services() {
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [itemsPerPage, setItemsPerPage] = useState(6); // Default to 6 items
+  const [date, setdata] = useState(); 
+
 
   // Function to update itemsPerPage based on screen width
   const updateItemsPerPage = () => {
@@ -44,10 +46,19 @@ function Services() {
   // Calculate the index of the first and last item to display
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  
+  const getdata=()=>{
+    axios.get('http://localhost:8000/api/blogs')
+    .then(response => {
+        setdata(response.data.blogs)
+    })
+    .catch(error => {
+        console.error('There was an error uploading the image!', error);
+        
+    });
+  }
   return (
     <div>
-      <Navbar />
+      <Navbar getdata={getdata} />
 
       <div id='blogs' className="p-8 relative rounded-lg">
         <h1 className="text-2xl font-bold mb-4">Résultats pour  <span style={{ color: 'lightgreen' }}>Yoga</span></h1>

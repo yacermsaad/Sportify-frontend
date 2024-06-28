@@ -1,11 +1,28 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { useState, useEffect } from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "./detail_service.css"
+
 
 const Detail_service = () => {
+    const [date, setdata] = useState(); 
+
+    const getdata=()=>{
+        axios.get('http://localhost:8000/api/blogs')
+        .then(response => {
+            setdata(response.data.blogs)
+        })
+        .catch(error => {
+            console.error('There was an error uploading the image!', error);
+            
+        });
+      }
   return (
     <div>
-        <Navbar/>
+        <Navbar getdata={getdata}/>
         <div className='flex md:w-[80%]  mx-auto mt-10  '>
             <div className='w-[60%]'>
                 <p className='font-semibold text-[22px] '>I Will help you to wen your Marathone</p>
@@ -22,8 +39,86 @@ const Detail_service = () => {
                     </div>
 
                 </div>
-                <div className='h-[400px]'> images</div>
-                <div className='h-[400px]'>About this gig </div>
+                <div className=' w-[800px] mx-auto mt-10'>    <Carousel>
+                    <div>
+                        <img src="/img/img2.jpg" />
+                       
+                    </div>
+                    <div>
+                        <img src="/img/img2.jpg" />
+                        
+                    </div>
+                    <div>
+                        <img src="/img/img2.jpg" />
+                       
+                    </div>
+                    <div>
+                        <img src="/img/img2.jpg" />
+                       
+                    </div>
+                    </Carousel>
+
+                </div>
+                <div className=' '>
+                    <p className='font-semibold text-[22px] mb-5'>Ce que les gens disent de ce service  </p>
+                    <Carousel>
+                    <div className='border-2 p-6 mx-auto bg-gray-100 shadow-md '>
+                        <div className='flex justify-start'>
+                            <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
+                                style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >
+                                AL
+                            </div>
+                            <div className='text-left ml-3 '>
+                                <div className='font-semibold '>AmIn Rchdy</div>
+                                 <div className='text-wrap hover:text-balance flex flex-wrap text-gray-600 ' style={{overflowWrap: 'anywhere'}}>wa3r akhouya waw m9wd 3jbny hadchy ya khouya wa hamid 7al tbon mo dk bab</div>
+                                <div className='text-gray-400'>Il ya 1 mois </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    <div className='border-2 p-6 mx-auto  bg-gray-100 shadow-md '>
+                        <div className='flex justify-start'>
+                            <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
+                                style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >
+                                AL
+                            </div>
+                            <div className='text-left ml-3'>
+                                <div className='font-semibold '>AmIn Rchdy</div>
+                                 <div className='text-wrap hover:text-balance flex flex-wrap text-gray-600 ' style={{overflowWrap: 'anywhere'}}>wa3r akhouya waw m9wd 3jbny hadchy ya khouya wa hamid 7al tbon mo dk bab</div>
+                                <div className='text-gray-400'>Il ya 1 mois </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                  
+                   
+                    
+                   
+                    </Carousel>
+                </div>
+
+                <div className=' mb-10'>
+                    <p className='font-semibold text-[22px] mb-5'>À propos de ce concert</p>
+                    <div>
+                    You need a decent sports graphic design?
+
+                    You're in the right place! I'm here to work it with you!
+
+                    Whatever you need, just talk to me.
+
+                    I will happy to serve you.
+
+
+
+                    Let's make it work!
+
+
+
+                    Angeline
+                    </div>
+                </div>
                 <div className='font-semibold text-[22px] '>Faites connaissance avec <span>Ayoub Oubakki</span></div>
                 <div className='flex mt-5'>
                     <div className="flex items-center justify-center w-12 h-12 bg-green-500 text-white rounded-full "
@@ -95,7 +190,7 @@ const Detail_service = () => {
                 </div>
             </div>
             <div className='w-[40%] ml-[5%] relative '>
-                <div className='fixed w-[30%]'>
+                <div className='fixed w-[30%] '>
                 <div className='flex justify-end mb-2'> 
                     <div className='pt-1'><img src="./img/coeur.png" className='w-6 h-6 mr-2'/></div>
                     <span className='border rounded-md p-1 px-3 mr-2'>1333</span>
