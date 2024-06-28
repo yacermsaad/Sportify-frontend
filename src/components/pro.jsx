@@ -16,7 +16,7 @@ import {
   MDBListGroup,
   MDBListGroupItem, MDBTable, MDBTableBody, MDBTableHead 
 } from 'mdb-react-ui-kit';
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';

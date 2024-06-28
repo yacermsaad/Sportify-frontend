@@ -62,13 +62,13 @@ const Detail_service = () => {
                 <div className=' '>
                     <p className='font-semibold text-[22px] mb-5'>Ce que les gens disent de ce service  </p>
                     <Carousel>
-                    <div className='border-2 p-6 mx-auto'>
+                    <div className='border-2 p-6 mx-auto bg-gray-100 shadow-md '>
                         <div className='flex justify-start'>
                             <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
                                 style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >
                                 AL
                             </div>
-                            <div className='text-left ml-3'>
+                            <div className='text-left ml-3 '>
                                 <div className='font-semibold '>AmIn Rchdy</div>
                                  <div className='text-wrap hover:text-balance flex flex-wrap text-gray-600 ' style={{overflowWrap: 'anywhere'}}>wa3r akhouya waw m9wd 3jbny hadchy ya khouya wa hamid 7al tbon mo dk bab</div>
                                 <div className='text-gray-400'>Il ya 1 mois </div>
@@ -77,7 +77,7 @@ const Detail_service = () => {
                         </div>
                         
                     </div>
-                    <div className='border-2 p-6 mx-auto'>
+                    <div className='border-2 p-6 mx-auto  bg-gray-100 shadow-md '>
                         <div className='flex justify-start'>
                             <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
                                 style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >

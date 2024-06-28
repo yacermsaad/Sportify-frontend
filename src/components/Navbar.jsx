@@ -59,7 +59,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav className={`flex items-center justify-between md:px-24 ${i18n.language == 'ar' ? 'flex-row-reverse' : ''} bg-white text-gray-800 p-4 shadow-lg`}>
+    <nav className={`flex items-center justify-between md:px-24 ${i18n.language == 'ar' ? 'flex-row-reverse' : ''} bg-white text-gray-800 p-4 shadow-md`}>
       {/* Logo */}
       <div className="flex items-center">
         <span className="font-bold text-2xl md:text-2xl">Sporti<span className="text-green-500">fy.</span></span>
