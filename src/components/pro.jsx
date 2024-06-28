@@ -16,7 +16,7 @@ import {
   MDBListGroup,
   MDBListGroupItem, MDBTable, MDBTableBody, MDBTableHead 
 } from 'mdb-react-ui-kit';
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+// import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -76,11 +76,13 @@ export default function ProfilePage() {
   
     const FormBlog = () => {
       setBlogForm(!blogFrom);
-      console.log(postData); // Log the postData here
+      console.log(postData);
+      setListBlog(false); // Log the postData here
     };
   
     const ShowListBlog = () => {
       setListBlog(!ListBlog);
+      setBlogForm(false);
     };
   
     const [focusedInput, setFocusedInput] = useState(null);
@@ -379,250 +381,277 @@ export default function ProfilePage() {
         }
       }
     };
+    const breadcrumbContainerStyle = {
+      backgroundColor: 'lightgreen',
+      borderRadius: '0.375rem',
+      padding: '1rem',
+      marginBottom: '1rem',
+      display: 'flex',
+      justifyContent: 'center',
+    };
   
+    const breadcrumbItemStyle = {
+      display: 'flex',
+      alignItems: 'center',
+      margin: '0 0.5rem',
+    };
+  
+    const buttonStyle = {
+      display: 'inline-flex',
+      justifyContent: 'center',
+      padding: '0.5rem 1rem',
+      border: 'none',
+      boxShadow: '0 0.25rem 0.375rem rgba(0, 0, 0, 0.15)',
+      fontSize: '0.875rem',
+      fontWeight: 'medium',
+      borderRadius: '0.375rem',
+      color: 'green-500',
+      backgroundColor: 'white',
+      cursor: 'pointer',
+      transition: 'background-color 0.2s ease',
+      marginLeft: '0.5rem',
+      marginRight: '0.5rem',
+    };
+  
+
    
   
   return (
     <section >
     <Navbar/>
       <MDBContainer className="py-5" style={{marginTop:"100px"}}>
-        <MDBRow>
-        <MDBCol>
-        <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4 d-flex justify-content-center">
-          <MDBBreadcrumbItem className="d-flex align-items-center">
-            <button
-              onClick={FormBlog}
-              type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mx-2"
-            >
-              You want to add a service?
-            </button>
-          </MDBBreadcrumbItem>
-          <MDBBreadcrumbItem className="d-flex align-items-center">
-            <button
-              onClick={ShowListBlog}
-              type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mx-2"
-            >
-              You want to show a list blogs?
-            </button>
-          </MDBBreadcrumbItem>
-        </MDBBreadcrumb>
-      </MDBCol>
-      
-        </MDBRow>
+    <div style={{marginLeft:"100px",width:"100%"}}>
+    <div style={breadcrumbContainerStyle} >
+    <div style={breadcrumbItemStyle}>
+      <button
+        onClick={FormBlog}
+        type="button"
+        style={buttonStyle}
+        onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
+        onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
+      >
+        You want to add a service?
+      </button>
+    </div>
+    <div style={breadcrumbItemStyle}>
+      <button
+      onClick={ShowListBlog}
+        type="button"
+        style={buttonStyle}
+        onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
+        onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
+      >
+        You want to show a list blogs?
+      </button>
+    </div>
+  </div>
+    </div>
+        <div className="md:flex no-wrap md:-mx-2">
+        {/* Left Side - Profile Card */}
         {postData && (
-        <MDBRow>
-          <MDBCol lg="4">
-            <MDBCard className="mb-4">
+        <div className="w-full md:w-3/12 md:mx-2" style={{marginLeft:"100px",width:"400px",marginTop:"-15px"}}>
+        <div className="bg-white min-h-screen flex items-center justify-center">
+        <div className="max-w-lg mx-auto my-10 bg-white rounded-lg shadow-md p-5">
+          <img className="w-32 h-32 rounded-full mx-auto" src= {`http://localhost:8000/storage/${postData.image}`} alt="Profile picture" />
+          <h2 className="text-center text-2xl font-semibold mt-3">{postData.fullname}</h2>
+          <p className="text-center text-gray-600 mt-1">@{postData.fullname}</p>
 
-              <MDBCardBody className="text-center">
-                <MDBCardImage
-                src= {`http://localhost:8000/storage/${postData.image}`}
-                  alt="avatar"
-                  className="rounded-circle"
-                  style={{ width: '120px',marginLeft:"130px",height:"120px"}}
-                  fluid />
-                  <p className="text-muted mb-1" style={{fontSize:"30px" , fontWeight:"bold",color:"black"}}>{postData.fullname}</p>
-                <p className="text-muted mb-1">@{postData.fullname}</p>
-                <div className="mt-5">
-                <h1 className="text-2xl font-semibold" >Bio</h1>
-                <p className="text-gray-600 mt-2">
-                  John is a software engineer with over 10 years of experience in developing web and mobile applications. He is skilled in JavaScript, React, and Node.js.
-                </p>
-              </div>
-                <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm" style={{width:"260px",marginLeft:"60px"}}>
-                                          <li className="flex items-center py-3">
-                                              <span><i class="fa-solid fa-location-dot" style={{color:"black"}}> </i> From</span>
-                                              <span className="ml-auto">
-                                                  <span className="bg-black py-1 px-2 rounded text-white text-sm">Morocco</span>
-                                              </span>
-                                          </li>
-                                          <li className="flex items-center py-3">
-                                              <span><i class="fa-solid fa-user" style={{color:"black"}}></i> Member since</span>
-                                              <span className="ml-auto">Nov 07, 2016</span>
-                                          </li>
-                                      </ul>
-              
-              </MDBCardBody>
-            </MDBCard>
+          <div style={{marginLeft:"115px"}}>
+          <a href={postData.profil_linkdine}><i class="fa-brands fa-linkedin"></i></a> &nbsp; <a href={postData.website}><i class="fa-solid fa-globe"></i></a>
 
-            <MDBCard className="mb-4 mb-lg-0">
-              <MDBCardBody className="p-0">
-                <MDBListGroup flush className="rounded-3">
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                  <i class="fa-solid fa-globe" style={{fontSize:"20px",color:"black"}}></i>
-                    <MDBCardText>{postData.website}</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                    <MDBCardText>{postData.profil_linkdine}</MDBCardText>
-                  </MDBListGroupItem>
-                 
-                </MDBListGroup>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol lg="8">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Full Name</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{postData.fullname}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Email</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">example@example.com</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Creation du compte</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{postData.created_at}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-              </MDBCardBody>
-            </MDBCard>
-
-            <MDBRow>
-              <MDBCol md="6">
-              <MDBCard style={{ marginLeft: "0px", width: "860px", background: "white", boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.1)", padding: "20px", borderRadius: "10px" }}>
-              <div>
-                {blogFrom ? (
-                  <form onSubmit={handleFormSubmit} className="space-y-6">
-                    <div>
-                      <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
-                      <input
-                        type="text"
-                        id="serviceName"
-                        value={serviceName}
-                        onChange={(e) => setServiceName(e.target.value)}
-                        required
-                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
-                      <textarea
-                        id="serviceDescription"
-                        value={serviceDescription}
-                        onChange={(e) => setServiceDescription(e.target.value)}
-                        required
-                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        rows="4"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="servicePrice" className="block text-lg font-medium text-gray-700">Service Price:</label>
-                      <input
-                        type="number"
-                        id="servicePrice"
-                        value={servicePrice}
-                        onChange={(e) => setServicePrice(e.target.value)}
-                        required
-                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Add Service
-                    </button>
-                  </form>
-                ) : null}
-              </div>
-            </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-  <MDBCard>
-    {ListBlog ? (
-      <table style={{ marginLeft: "-440px", marginTop: "80px" }}>
-        <thead>
-          <tr className="text-left border-b-2 border-gray-300">
-            <th className="px-4 py-2 bg-gray-200">Title</th>
-            <th className="px-4 py-2 bg-gray-200">Content</th>
-            <th className="px-4 py-2 bg-gray-200">Coach</th>
-            <th className="px-4 py-2 bg-gray-200">Date</th>
-            <th className="px-4 py-2 bg-gray-200">Status</th>
-            <th className="px-4 py-2 bg-gray-200">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {blogs.map((blog) => (
-            <tr key={blog.id}>
-              <td className="px-4 py-2 border-b">{blog.titre}</td>
-              <td className="px-4 py-2 border-b">{blog.contenu}</td>
-              <td className="px-4 py-2 border-b">{blog.coach.fullname}</td>
-              <td className="px-4 py-2 border-b">{formatDate(blog.created_at)}</td>
-              <td className="px-4 py-2 border-b">Accepted</td>
-              <td className="px-4 py-2 border-b">
-                <button
-                  className="bg-red-500 text-white px-3 py-1 rounded"
-                  onClick={() => handleDeleteBlog(blog.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ) : null}
-  </MDBCard>
-</MDBCol>
+          
+          </div>
 
 
 
-            </MDBRow>
-          </MDBCol>
-        </MDBRow>)}
+          <div className="flex justify-center mt-5">
+      <button style={{background:"lightgreen",height:"42px",width:"250px",borderRadius:"8px"}}>Preview Sportify Profile</button>
+          </div>
+          <div className="mt-5">
+            <h3 className="text-xl font-semibold">Bio</h3>
+            <p className="text-gray-600 mt-2">
+              John is a software engineer with over 10 years of experience in developing web and mobile applications. He is skilled in JavaScript, React, and Node.js.
+            </p>
+          </div>
+          <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+          <li className="flex items-center py-3">
+              <span><i class="fa-solid fa-location-dot" style={{color:"lightgreen"}}> </i> From</span>
+              <span className="ml-auto">
+                  <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Morocco</span>
+              </span>
+          </li>
+          <li className="flex items-center py-3">
+              <span><i class="fa-solid fa-user" style={{color:"lightgreen"}}></i> Member since</span>
+              <span className="ml-auto">Nov 07, 2016</span>
+          </li>
+      </ul>
+        </div>
+      </div></div>
+    )}
+
+
+   {postData? <div className="col-lg-8" style={{marginTop:"60px"}}>
+    <div className="card mb-4">
+    <div className="p-6 bg-white shadow rounded">
+  <div className="grid grid-cols-3 gap-4 mb-4">
+    <div>
+      <p className="font-medium text-gray-700">Full Name</p>
+    </div>
+    <div className="col-span-2">
+      <p className="text-gray-600">{postData.fullname}</p>
+    </div>
+  </div>
+  <hr className="mb-4"/>
+  <div className="grid grid-cols-3 gap-4 mb-4">
+    <div>
+      <p className="font-medium text-gray-700">Email</p>
+    </div>
+    <div className="col-span-2">
+      <p className="text-gray-600">example@example.com</p>
+    </div>
+  </div>
+  <hr className="mb-4"/>
+  <div className="grid grid-cols-3 gap-4 mb-4">
+    <div>
+      <p className="font-medium text-gray-700">Creation du compte</p>
+    </div>
+    <div className="col-span-2">
+      <p className="text-gray-600">{postData.created_at}</p>
+    </div>
+  </div>
+  <hr className="mb-4"/>
+  <div className="grid grid-cols-3 gap-4 mb-4">
+    <div>
+      <p className="font-medium text-gray-700">Mobile</p>
+    </div>
+    <div className="col-span-2">
+      <p className="text-gray-600">(098) 765-4321</p>
+    </div>
+  </div>
+  <hr className="mb-4"/>
+  <div className="grid grid-cols-3 gap-4">
+    <div>
+      <p className="font-medium text-gray-700">Address</p>
+    </div>
+    <div className="col-span-2">
+      <p className="text-gray-600">Bay Area, San Francisco, CA</p>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    <div className="row">
+      <div className="col-md-6">
+        <div className="card" style={{ marginLeft: "0px", width: "860px", background: "white", boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.1)", padding: "20px", borderRadius: "10px" }}>
+          <div>
+            {blogFrom ? (
+              <form onSubmit={handleFormSubmit} className="space-y-6 p-6 bg-white rounded-lg shadow-2xl">
+  <h1 className="text-xl font-bold mb-4" style={{textAlign:"center"}}>Start Add Service</h1>
+  <div>
+    <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
+    <input
+      type="text"
+      id="serviceName"
+      value={serviceName}
+      onChange={(e) => setServiceName(e.target.value)}
+      required
+      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    />
+  </div>
+  <div>
+    <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
+    <textarea
+      id="serviceDescription"
+      value={serviceDescription}
+      onChange={(e) => setServiceDescription(e.target.value)}
+      required
+      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      rows="4"
+    />
+  </div>
+  <div>
+    <label htmlFor="servicePrice" className="block text-lg font-medium text-gray-700">Service Price:</label>
+    <input
+      type="number"
+      id="servicePrice"
+      value={servicePrice}
+      onChange={(e) => setServicePrice(e.target.value)}
+      required
+      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    />
+  </div>
+  <button
+    type="submit"
+    className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-lg text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  >
+    Add Service
+  </button>
+</form>
+
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      <div className="col-md-6">
+        <div className="card">
+          {ListBlog ? (
+            <table style={{ marginLeft: "10px", marginTop: "80px",width:"100%" }}>
+              <thead style={{color:"white"}}>
+                <tr className="text-left border-b-2 border-gray-300">
+                  <th className="px-4 py-2 bg-green-400">Title</th>
+                  <th className="px-4 py-2 bg-green-400">Content</th>
+                  <th className="px-4 py-2 bg-green-400">Coach</th>
+                  <th className="px-4 py-2 bg-green-400">Date</th>
+                  <th className="px-4 py-2 bg-green-400">Status</th>
+                  <th className="px-4 py-2 bg-green-400">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {blogs.map((blog) => (
+                  <tr key={blog.id}>
+                    <td className="px-4 py-2 border-b">{blog.titre}</td>
+                    <td className="px-4 py-2 border-b">{blog.contenu}</td>
+                    <td className="px-4 py-2 border-b">{blog.coach.fullname}</td>
+                    <td className="px-4 py-2 border-b">{formatDate(blog.created_at)}</td>
+                    <td className="px-4 py-2 border-b">Accepted</td>
+                    <td className="px-4 py-2 border-b">
+                      <button
+                        className="bg-red-500 text-white px-3 py-1 rounded"
+                        onClick={() => handleDeleteBlog(blog.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  </div>:null}
+            
+            </div>
+        
       </MDBContainer> 
-      <div className="profile-container  bg-white rounded-lg shadow-md p-5"  style={{marginLeft:" 70px",marginTop:"-10px",width:"450px"}}>
+      <div className="profile-container  bg-white rounded-lg shadow-md p-5"  style={{marginLeft:" 80px",marginTop:"-80px",width:"350px"}}>
 
 
       <div className="section description">
       <div className="section-header">
-        <h2 style={{ fontSize: "22px",marginLeft:"-30px" }}><i class="fa-solid fa-circle-chevron-right"></i> Description</h2>
+        <h2 style={{ fontSize: "22px",marginLeft:"-20px" }}><i class="fa-solid fa-circle-chevron-right"></i> Description</h2>
         <button 
-        className="add-button bg-black hover:bg-green-600 rounded-full" 
+        className="add-button bg-green-400 hover:bg-green-600 rounded-full" 
         onClick={handleEditClick} 
         style={{
           width: "33px", 
           height: "33px", 
           borderRadius: "50%",
           padding: "0", 
-          marginLeft: "280px",
+          marginLeft: "250px",
           position: "absolute"
         }}
       >
@@ -644,7 +673,7 @@ export default function ProfilePage() {
               rows="5"
             ></textarea>
             <div className="mt-2">
-              <button type="submit" className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded">
+              <button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
                 Save
               </button>
               <button
@@ -665,7 +694,7 @@ export default function ProfilePage() {
         )
       )}
     </div>
-    <hr   />
+   
 
      
       
@@ -673,20 +702,20 @@ export default function ProfilePage() {
 
 
 
-    <div className="section skills">
+    <div className="section skills" style={{marginTop:"100px"}}>
     <div className="section-header">
-      <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-37px" }}>
+      <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-20px" }}>
         <i className="fa-solid fa-circle-chevron-right"></i> Skills
       </h2>
       <button
-        className="add-button bg-black hover:bg-green-600 rounded-full"
+        className="add-button bg-green-500 hover:bg-green-600 rounded-full"
         onClick={toggleFormVisibilitySkill}
         style={{
           width: "33px",
           height: "33px",
           borderRadius: "50%",
           padding: "0",
-          marginLeft: "280px",
+          marginLeft: "250px",
           position: "absolute"
         }}
       >
@@ -705,7 +734,7 @@ export default function ProfilePage() {
     {showFormSkill && (
       <div
         className="border-2 border-gray-300 rounded-md shadow-lg p-6"
-        style={{ width: "350px", marginLeft: "-20px" }}
+        style={{ width: "320px", marginLeft: "-26px" }}
       >
         <h2 className="text-lg font-bold mb-2">Add New Skill</h2>
         <form className="space-y-4" onSubmit={handleSubmitSkill} >
@@ -752,8 +781,8 @@ export default function ProfilePage() {
           </div>
           <button
             type="submit"
-            className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded"
-            style={{ width: "250px", marginLeft: "30px" }}
+            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+            style={{ width: "250px", marginLeft: "10px" }}
           >
             Add Skill
           </button>
@@ -819,22 +848,22 @@ export default function ProfilePage() {
 
 
 
-      <hr />
+  
     
-      <div className="section education">
+      <div className="section education" style={{marginTop:"100px"}}>
       <div className="section-header">
-        <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-37px" }}>
+        <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-20px" }}>
           <i className="fa-solid fa-circle-chevron-right"></i> Education
         </h2>
         <button
-          className="add-button bg-black hover:bg-green-600 rounded-full"
+          className="add-button bg-green-500 hover:bg-green-600 rounded-full"
           onClick={toggleFormVisibilityEducation}
           style={{
             width: "33px",
             height: "33px",
             borderRadius: "50%",
             padding: "0",
-            marginLeft: "280px",
+            marginLeft: "250px",
             position: "absolute"
           }}
         >
@@ -853,7 +882,7 @@ export default function ProfilePage() {
       {showFormEducation && (
         <div
           className="border-2 border-gray-300 rounded-md shadow-lg p-6"
-          style={{ width: "350px", marginLeft: "-20px" }}
+          style={{ width: "330px", marginLeft: "-30px" }}
         >
           <h2 className="text-lg font-bold mb-2">Add New Education</h2>
           <form className="space-y-4" onSubmit={handleSubmitEducation}>
@@ -949,8 +978,8 @@ export default function ProfilePage() {
             </div>
             <button
               type="submit"
-              className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded"
-              style={{ width: "250px", marginLeft: "30px" }}
+              className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              style={{ width: "250px", marginLeft: "10px" }}
             >
               Add Education
             </button>
@@ -1020,22 +1049,21 @@ export default function ProfilePage() {
     
     
 
-<hr/>
 
-<div className="section certifications">
+<div className="section certifications" style={{marginTop:"100px"}}>
   <div className="section-header">
-    <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-37px" }}>
+    <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-20px" }}>
       <i className="fa-solid fa-circle-chevron-right"></i> Certifications
     </h2>
     <button
-      className="add-button bg-black hover:bg-green-600 rounded-full"
+      className="add-button bg-green-500 hover:bg-green-600 rounded-full"
       onClick={toggleFormVisibility}
       style={{
         width: "33px",
         height: "33px",
         borderRadius: "50%",
         padding: "0",
-        marginLeft: "280px",
+        marginLeft: "250px",
         position: "absolute"
       }}
     >
@@ -1055,7 +1083,7 @@ export default function ProfilePage() {
     {showForm && (
       <div
         className="border-2 border-gray-300 rounded-md shadow-lg p-6 relative"
-        style={{ width: "350px", marginLeft: "-30px" }}
+        style={{ width: "320px", marginLeft: "-26px" }}
       >
         <h2 className="text-lg font-bold mb-2">Add New Certification</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -1115,8 +1143,8 @@ export default function ProfilePage() {
           </div>
           <button
             type="submit"
-            className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded"
-            style={{ width: "250px", marginLeft: "30px" }}
+            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+            style={{ width: "250px", marginLeft: "10px" }}
           >
             Add Certification
           </button>

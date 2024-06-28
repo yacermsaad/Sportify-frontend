@@ -19,6 +19,7 @@ import Test from './test';
 import BlogList from './components/blogs/BlogList';
 import ProfilePage from './components/pro';
 import Detail_service from './components/Deatil_service';
+import CheckoutForm from './components/CheckoutForm';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/BlogList" element={<BlogList />} />
           <Route path="/serv" element={<Detail_service />} />
           <Route path="/pro" element={<ProfilePage />} />
+          <Route path="/checkout" element={<CheckoutForm />} />
 
           
         </Routes>
