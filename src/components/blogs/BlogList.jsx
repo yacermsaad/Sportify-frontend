@@ -42,7 +42,7 @@ const BlogList = () => {
   };
 
   return (
-    <div className="container mx-auto mt-10" style={{marginLeft:"500px",marginTop:"-1900px"}}>
+    <div className="container mx-auto mt-10" style={{marginLeft:"600px",marginTop:"-1900px",position:"absolue"}}>
       <h1 className="text-2xl font-bold mb-5">Your Blogs</h1>
       <table className="bg-white shadow-lg rounded-lg mt-6">
         <thead>

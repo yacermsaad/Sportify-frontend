@@ -48,7 +48,7 @@ export default function Professional_info(props){
                     if (response.ok) {
                         const data = await response.json();
                         console.log('information successful:', data);
-                         navigate("/profile");
+                         navigate("/pro");
                         localStorage.setItem('coache',1);
 
                        

@@ -141,7 +141,7 @@ useEffect(()=>{
             }
              <div className='flex border-b-2 px-2 justify-between text-slate-600'>
               <div  className='hover:text-blue-500  hover:underline cursor-pointer' onClick={()=>{setisModalOpenLike(true);}}> {props.blog.likes.length>0?props.blog.likes.length+" Likes":null} </div>
-              <div>{props.blog.likes.length>0?props.blog.comments.length+" Coments":null}</div>
+              <div onClick={()=>{if((localStorage.getItem('user'))!=null){handleCreateFormToggle()}else{setIsModalOpenLogin(true);}}}>{props.blog.likes.length>0?props.blog.comments.length+" Coments":null}</div>
              </div>
 
              <div className='flex justify-around border-b-2 py-2'>
@@ -176,7 +176,7 @@ useEffect(()=>{
                   <div className='flex flex-row justify-between'>
                     <p className='relative text-xl whitespace-nowrap truncate overflow-hidden'>{cm.user.name}</p>
                     {cm.user.id==JSON.parse(localStorage.getItem('user')).id?
-                    <a className='text-gray-500 text-xl cursor-pointer' onClick={()=>{deletecoment(cm.id)}}>
+                    <a className='text-red-500 text-xl cursor-pointer' onClick={()=>{deletecoment(cm.id)}}>
 
                       <i className='fa-solid fa-trash'></i>
                     </a>:null}

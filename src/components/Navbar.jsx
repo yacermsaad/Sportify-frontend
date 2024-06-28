@@ -130,7 +130,7 @@ const Navbar = (props) => {
               </div>
               <ul className="py-2 text-sm text-gray-900 ">
                 <li>
-                  <a href={localStorage.getItem('coache')==0?'/becom_coache':'/profile'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">{localStorage.getItem('coache')==0?'Become a coach':'switch to coache'}</a>
+                  <a href={localStorage.getItem('coache')==0?'/becom_coache':'/pro'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white">{localStorage.getItem('coache')==0?'Become a coach':'switch to coache'}</a>
                 </li>
                 <li>
                   <a onClick={()=>{setisModalOpenLike(true)}} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-green-500 dark:hover:text-white cursor-pointer">Update your picture</a>
