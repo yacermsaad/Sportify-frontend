@@ -14,14 +14,14 @@ import {
   MDBProgressBar,
   MDBIcon,
   MDBListGroup,
-  MDBListGroupItem
+  MDBListGroupItem, MDBTable, MDBTableBody, MDBTableHead 
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-
+import BlogList from './blogs/BlogList';
 export default function ProfilePage() {
     const storedUser = localStorage.getItem('user');
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
@@ -302,23 +302,114 @@ export default function ProfilePage() {
         alert('Failed to update description.');
       }
     };
+
+    const [serviceName, setServiceName] = useState('');
+    const [serviceDescription, setServiceDescription] = useState('');
+    const [servicePrice, setServicePrice] = useState('');
+  
+    const handleFormSubmit = (e) => {
+      e.preventDefault();
+      // Logic to add the service
+      console.log('Service Added:', { serviceName, serviceDescription, servicePrice });
+      // Reset form fields
+      setServiceName('');
+      setServiceDescription('');
+      setServicePrice('');
+    };
+
+    const [blogs, setBlogs] = useState([]);
+    const userId = JSON.parse(localStorage.getItem('user')).id;
+  
+    useEffect(() => {
+      fetchUserBlogs();
+    }, []);
+  
+    const fetchUserBlogs = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/users/${userId}/blogs`);
+        setBlogs(response.data.blogs);
+      } catch (error) {
+        console.error('Error fetching user blogs:', error);
+      }
+    };
+  
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+    };
+  
+    const handleDeleteBlo = async (blogId) => {
+      const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
+      if (confirmDelete) {
+        try {
+          const response = await axios.delete(`http://localhost:8000/api/users/${userId}/blogs/${blogId}`);
+          console.log(response.data.message);
+  
+          setBlogs(blogs.filter((blog) => blog.id !== blogId));
+        } catch (error) {
+          console.error('Error deleting blog:', error);
+        }
+      }
+    };
+
+ 
+  
+    useEffect(() => {
+      fetchUserBlogs();
+    }, []);
+  
+   
+  
+  
+  
+    const handleDeleteBlog = async (blogId) => {
+      const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
+      if (confirmDelete) {
+        try {
+          const response = await axios.delete(`http://localhost:8000/api/users/${userId}/blogs/${blogId}`);
+          console.log(response.data.message); 
+          
+          setBlogs(blogs.filter(blog => blog.id !== blogId));
+        } catch (error) {
+          console.error('Error deleting blog:', error);
+        }
+      }
+    };
+  
+   
   
   return (
     <section >
     <Navbar/>
-      <MDBContainer className="py-5" style={{marginTop:"200px"}}>
+      <MDBContainer className="py-5" style={{marginTop:"100px"}}>
         <MDBRow>
-          <MDBCol>
-            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <MDBBreadcrumbItem>
-                <a href='#' onClick={FormBlog}>Add service </a>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem>
-                <a href="#">List blog</a>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem active>User Profile</MDBBreadcrumbItem>
-            </MDBBreadcrumb>
-          </MDBCol>
+        <MDBCol>
+        <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4 d-flex justify-content-center">
+          <MDBBreadcrumbItem className="d-flex align-items-center">
+            <button
+              onClick={FormBlog}
+              type="submit"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mx-2"
+            >
+              You want to add a service?
+            </button>
+          </MDBBreadcrumbItem>
+          <MDBBreadcrumbItem className="d-flex align-items-center">
+            <button
+              onClick={ShowListBlog}
+              type="submit"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mx-2"
+            >
+              You want to show a list blogs?
+            </button>
+          </MDBBreadcrumbItem>
+        </MDBBreadcrumb>
+      </MDBCol>
+      
         </MDBRow>
         {postData && (
         <MDBRow>
@@ -330,14 +421,29 @@ export default function ProfilePage() {
                 src= {`http://localhost:8000/storage/${postData.image}`}
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: '150px',marginLeft:"110px" }}
+                  style={{ width: '120px',marginLeft:"130px",height:"120px"}}
                   fluid />
-                <p className="text-muted mb-1">Coach</p>
-                <p className="text-muted mb-4">From : Morocco</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>Follow</MDBBtn>
-                  <MDBBtn outline className="ms-1">Message</MDBBtn>
-                </div>
+                  <p className="text-muted mb-1" style={{fontSize:"30px" , fontWeight:"bold",color:"black"}}>{postData.fullname}</p>
+                <p className="text-muted mb-1">@{postData.fullname}</p>
+                <div className="mt-5">
+                <h1 className="text-2xl font-semibold" >Bio</h1>
+                <p className="text-gray-600 mt-2">
+                  John is a software engineer with over 10 years of experience in developing web and mobile applications. He is skilled in JavaScript, React, and Node.js.
+                </p>
+              </div>
+                <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm" style={{width:"260px",marginLeft:"60px"}}>
+                                          <li className="flex items-center py-3">
+                                              <span><i class="fa-solid fa-location-dot" style={{color:"black"}}> </i> From</span>
+                                              <span className="ml-auto">
+                                                  <span className="bg-black py-1 px-2 rounded text-white text-sm">Morocco</span>
+                                              </span>
+                                          </li>
+                                          <li className="flex items-center py-3">
+                                              <span><i class="fa-solid fa-user" style={{color:"black"}}></i> Member since</span>
+                                              <span className="ml-auto">Nov 07, 2016</span>
+                                          </li>
+                                      </ul>
+              
               </MDBCardBody>
             </MDBCard>
 
@@ -345,12 +451,12 @@ export default function ProfilePage() {
               <MDBCardBody className="p-0">
                 <MDBListGroup flush className="rounded-3">
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fas icon="globe fa-lg text-warning" />
-                    <MDBCardText>https://mdbootstrap.com</MDBCardText>
+                  <i class="fa-solid fa-globe" style={{fontSize:"20px",color:"black"}}></i>
+                    <MDBCardText>{postData.website}</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
+                    <MDBCardText>{postData.profil_linkdine}</MDBCardText>
                   </MDBListGroupItem>
                  
                 </MDBListGroup>
@@ -365,7 +471,7 @@ export default function ProfilePage() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                    <MDBCardText className="text-muted">{postData.fullname}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -380,10 +486,10 @@ export default function ProfilePage() {
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Phone</MDBCardText>
+                    <MDBCardText>Creation du compte</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(097) 234-5678</MDBCardText>
+                    <MDBCardText className="text-muted">{postData.created_at}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -409,68 +515,127 @@ export default function ProfilePage() {
 
             <MDBRow>
               <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                {blogFrom==true ?
-                                        
-  <h1>Hello</h1>
-                    
-                    
-                    
-                    : null 
-
-            }
-                </MDBCard>
+              <MDBCard style={{ marginLeft: "0px", width: "860px", background: "white", boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.1)", padding: "20px", borderRadius: "10px" }}>
+              <div>
+                {blogFrom ? (
+                  <form onSubmit={handleFormSubmit} className="space-y-6">
+                    <div>
+                      <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
+                      <input
+                        type="text"
+                        id="serviceName"
+                        value={serviceName}
+                        onChange={(e) => setServiceName(e.target.value)}
+                        required
+                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
+                      <textarea
+                        id="serviceDescription"
+                        value={serviceDescription}
+                        onChange={(e) => setServiceDescription(e.target.value)}
+                        required
+                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        rows="4"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="servicePrice" className="block text-lg font-medium text-gray-700">Service Price:</label>
+                      <input
+                        type="number"
+                        id="servicePrice"
+                        value={servicePrice}
+                        onChange={(e) => setServicePrice(e.target.value)}
+                        required
+                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Add Service
+                    </button>
+                  </form>
+                ) : null}
+              </div>
+            </MDBCard>
               </MDBCol>
 
               <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+  <MDBCard>
+    {ListBlog ? (
+      <table style={{ marginLeft: "-440px", marginTop: "80px" }}>
+        <thead>
+          <tr className="text-left border-b-2 border-gray-300">
+            <th className="px-4 py-2 bg-gray-200">Title</th>
+            <th className="px-4 py-2 bg-gray-200">Content</th>
+            <th className="px-4 py-2 bg-gray-200">Coach</th>
+            <th className="px-4 py-2 bg-gray-200">Date</th>
+            <th className="px-4 py-2 bg-gray-200">Status</th>
+            <th className="px-4 py-2 bg-gray-200">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {blogs.map((blog) => (
+            <tr key={blog.id}>
+              <td className="px-4 py-2 border-b">{blog.titre}</td>
+              <td className="px-4 py-2 border-b">{blog.contenu}</td>
+              <td className="px-4 py-2 border-b">{blog.coach.fullname}</td>
+              <td className="px-4 py-2 border-b">{formatDate(blog.created_at)}</td>
+              <td className="px-4 py-2 border-b">Accepted</td>
+              <td className="px-4 py-2 border-b">
+                <button
+                  className="bg-red-500 text-white px-3 py-1 rounded"
+                  onClick={() => handleDeleteBlog(blog.id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : null}
+  </MDBCard>
+</MDBCol>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
             </MDBRow>
           </MDBCol>
         </MDBRow>)}
       </MDBContainer> 
-      <div className="profile-container  bg-white rounded-lg shadow-md p-5"  style={{marginLeft:"100px",marginTop:"-100px"}}>
+      <div className="profile-container  bg-white rounded-lg shadow-md p-5"  style={{marginLeft:" 70px",marginTop:"-10px",width:"450px"}}>
 
 
       <div className="section description">
       <div className="section-header">
-        <h2 style={{ fontSize: "22px" }}><i className="fa-solid fa-pen"></i> Description</h2>
-        <button className="edit-button" onClick={handleEditClick}>
-          <i className="fa-solid fa-pen-to-square"></i> Edit
-        </button>
+        <h2 style={{ fontSize: "22px",marginLeft:"-30px" }}><i class="fa-solid fa-circle-chevron-right"></i> Description</h2>
+        <button 
+        className="add-button bg-black hover:bg-green-600 rounded-full" 
+        onClick={handleEditClick} 
+        style={{
+          width: "33px", 
+          height: "33px", 
+          borderRadius: "50%",
+          padding: "0", 
+          marginLeft: "280px",
+          position: "absolute"
+        }}
+      >
+      <i class="fa-solid fa-pen-nib"  style={{
+        color: "white",
+        fontSize: "16px",
+      }}></i>
+      </button>
       </div>
       <br /><br />
 
       {isEditing ? (
-        <div className="max-w-screen-sm">
+        <div className="max-w-screen-sm" style={{width:"350px",marginLeft:"-40px"}}>
           <form onSubmit={handleSubmitDescription}>
             <textarea
               value={description}
@@ -479,7 +644,7 @@ export default function ProfilePage() {
               rows="5"
             ></textarea>
             <div className="mt-2">
-              <button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+              <button type="submit" className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded">
                 Save
               </button>
               <button
@@ -495,102 +660,161 @@ export default function ProfilePage() {
       ) : (
         postData && (
           <div className="max-w-screen-sm">
-            <p className="break-words">{description}</p>
+            <p className="break-words" style={{fontSize:"20px"}}>{description}</p>
           </div>
         )
       )}
     </div>
-      <hr />
+    <hr   />
+
      
       
 
 
 
 
-      <div className="section skills">
-      <div className="section-header">
-        <h2 style={{ fontSize: "22px" }}><i className="fa-solid fa-person-walking"></i> Skills</h2>
-        <button className="add-button" onClick={toggleFormVisibilitySkill}>+ Add New</button>
-      </div>
-      <br /><br />
-
-      {showFormSkill && (
-        <div className="border-2 border-gray-300 rounded-md shadow-lg p-6">
-          <h2 className="text-lg font-bold mb-2">Add New Skill</h2>
-          <form className="space-y-4" onSubmit={handleSubmitSkill}>
-            <div className="flex flex-col">
-              <label htmlFor="label">Label:</label>
-              <input
-                type="text"
-                id="label"
-                name="label"
-                value={skillData.label}
-                onChange={handleChangeSkill}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                required
-                className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'label' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
-                }`}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="niveau">Level:</label>
-              <select
-                id="niveau"
-                name="niveau"
-                value={skillData.niveau}
-                onChange={handleChangeSkill}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                required
-                className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'niveau' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
-                }`}
-              >
-                <option value="">Select Level</option>
-                <option value="Experience Level">Experience Level</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Expert">Expert</option>
-              </select>
-            </div>
-            <button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
-              Add Skill
-            </button>
-            <button
-              type="button"
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={toggleFormVisibilitySkill}
+    <div className="section skills">
+    <div className="section-header">
+      <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-37px" }}>
+        <i className="fa-solid fa-circle-chevron-right"></i> Skills
+      </h2>
+      <button
+        className="add-button bg-black hover:bg-green-600 rounded-full"
+        onClick={toggleFormVisibilitySkill}
+        style={{
+          width: "33px",
+          height: "33px",
+          borderRadius: "50%",
+          padding: "0",
+          marginLeft: "280px",
+          position: "absolute"
+        }}
+      >
+        <i
+          className="fa-solid fa-plus"
+          style={{
+            color: "white",
+            fontSize: "16px",
+          }}
+        ></i>
+      </button>
+    </div>
+    <br />
+    <br />
+  
+    {showFormSkill && (
+      <div
+        className="border-2 border-gray-300 rounded-md shadow-lg p-6"
+        style={{ width: "350px", marginLeft: "-20px" }}
+      >
+        <h2 className="text-lg font-bold mb-2">Add New Skill</h2>
+        <form className="space-y-4" onSubmit={handleSubmitSkill} >
+          <div className="flex flex-col">
+            <label htmlFor="label">Label:</label>
+            <input
+              type="text"
+              id="label"
+              name="label"
+              value={skillData.label}
+              onChange={handleChangeSkill}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
+              className={`border border-gray-300 rounded px-3 py-1 ${
+                focusedInput === "label"
+                  ? "border-t-2 border-blue-500 transition-all duration-300"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="niveau">Level:</label>
+            <select
+              id="niveau"
+              name="niveau"
+              value={skillData.niveau}
+              onChange={handleChangeSkill}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
+              className={`border border-gray-300 rounded px-3 py-1 ${
+                focusedInput === "niveau"
+                  ? "border-t-2 border-blue-500 transition-all duration-300"
+                  : ""
+              }`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </form>
-        </div>
+              <option value="">Select Level</option>
+              <option value="Experience Level">Experience Level</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Expert">Expert</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded"
+            style={{ width: "250px", marginLeft: "30px" }}
+          >
+            Add Skill
+          </button>
+          <button
+            type="button"
+            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            onClick={toggleFormVisibilitySkill}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+    )}
+  
+    <div className="mt-4">
+      {postData && postData.skills ? (
+        <table className="min-w-full bg-white" style={{marginLeft:"-40px"}}>
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b border-gray-200">Title</th>
+              <th className="py-2 px-4 border-b border-gray-200">Level</th>
+              <th className="py-2 px-4 border-b border-gray-200">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {postData.skills.map((skill, index) => (
+              <tr key={index} className="hover:bg-gray-100">
+                <td className="py-2 px-4 border-b border-gray-200">{skill.label}</td>
+                <td className="py-2 px-4 border-b border-gray-200">{skill.niveau}</td>
+                <td className="py-2 px-4 border-b border-gray-200 text-right">
+                  <button
+                    onClick={() => handleDeleteSkill(skill.id)}
+                    className="text-red-600 hover:text-red-800"
+                  >
+                    <i className="fa-solid fa-x"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>Loading skills...</p>
       )}
-      <ul>
-        {postData && postData.skills ? (
-          postData.skills.map((skill, index) => (
-            <div key={index} style={{ boxShadow: "0px 0px 10px rgba(0,0,0,0.1)", marginBottom: '10px', padding: '10px', borderRadius: '5px' }}>
-            
-<li><label>Title: </label>{skill.label}</li>
-<li><label>Level: </label>{skill.niveau}</li>
-<button
-onClick={() => handleDeleteSkill(skill.id)}
-className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
->
-Delete <i className="fa-solid fa-trash"></i>
-</button>    
-<br /> {/* Line break after each skill */}
-</div>
-))
-) : (
-<li>Loading skills...</li>
-)}
-</ul>
-</div>
+    </div>
+  </div>
+  
+    
 
 
 
@@ -599,13 +823,38 @@ Delete <i className="fa-solid fa-trash"></i>
     
       <div className="section education">
       <div className="section-header">
-        <h2 style={{ fontSize: "22px" }}><i className="fa-solid fa-school"></i> Education</h2>
-        <button className="add-button" onClick={toggleFormVisibilityEducation}>+ Add New</button>
+        <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-37px" }}>
+          <i className="fa-solid fa-circle-chevron-right"></i> Education
+        </h2>
+        <button
+          className="add-button bg-black hover:bg-green-600 rounded-full"
+          onClick={toggleFormVisibilityEducation}
+          style={{
+            width: "33px",
+            height: "33px",
+            borderRadius: "50%",
+            padding: "0",
+            marginLeft: "280px",
+            position: "absolute"
+          }}
+        >
+          <i
+            className="fa-solid fa-plus"
+            style={{
+              color: "white",
+              fontSize: "16px",
+            }}
+          ></i>
+        </button>
       </div>
-      <br /><br />
-
+      <br />
+      <br />
+    
       {showFormEducation && (
-        <div className="border-2 border-gray-300 rounded-md shadow-lg p-6">
+        <div
+          className="border-2 border-gray-300 rounded-md shadow-lg p-6"
+          style={{ width: "350px", marginLeft: "-20px" }}
+        >
           <h2 className="text-lg font-bold mb-2">Add New Education</h2>
           <form className="space-y-4" onSubmit={handleSubmitEducation}>
             <div className="flex flex-col">
@@ -620,7 +869,9 @@ Delete <i className="fa-solid fa-trash"></i>
                 onBlur={handleBlur}
                 required
                 className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'label' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                  focusedInput === "label"
+                    ? "border-t-2 border-blue-500 transition-all duration-300"
+                    : ""
                 }`}
               />
             </div>
@@ -636,7 +887,9 @@ Delete <i className="fa-solid fa-trash"></i>
                 onBlur={handleBlur}
                 required
                 className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'speciality' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                  focusedInput === "speciality"
+                    ? "border-t-2 border-blue-500 transition-all duration-300"
+                    : ""
                 }`}
               />
             </div>
@@ -652,7 +905,9 @@ Delete <i className="fa-solid fa-trash"></i>
                 onBlur={handleBlur}
                 required
                 className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'anne' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                  focusedInput === "anne"
+                    ? "border-t-2 border-blue-500 transition-all duration-300"
+                    : ""
                 }`}
               />
             </div>
@@ -668,7 +923,9 @@ Delete <i className="fa-solid fa-trash"></i>
                 onBlur={handleBlur}
                 required
                 className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'ecole' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                  focusedInput === "ecole"
+                    ? "border-t-2 border-blue-500 transition-all duration-300"
+                    : ""
                 }`}
               />
             </div>
@@ -684,11 +941,17 @@ Delete <i className="fa-solid fa-trash"></i>
                 onBlur={handleBlur}
                 required
                 className={`border border-gray-300 rounded px-3 py-1 ${
-                  focusedInput === 'paye_ecole' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
+                  focusedInput === "paye_ecole"
+                    ? "border-t-2 border-blue-500 transition-all duration-300"
+                    : ""
                 }`}
               />
             </div>
-            <button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+            <button
+              type="submit"
+              className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded"
+              style={{ width: "250px", marginLeft: "30px" }}
+            >
               Add Education
             </button>
             <button
@@ -696,146 +959,227 @@ Delete <i className="fa-solid fa-trash"></i>
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               onClick={toggleFormVisibilityEducation}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </form>
         </div>
       )}
-
-      <ul>
+    
+      <div className="mt-4 overflow-x-auto">
         {postData && postData.educations ? (
-          postData.educations.map((education, index) => (
-            <div key={index} style={{ boxShadow: "0px 0px 10px rgba(0,0,0,0.1)", marginBottom: '10px', padding: '10px', borderRadius: '5px' }}>
-              <li><label>Label: </label>{education.label}</li>
-              <li><label>Speciality: </label>{education.speciality}</li>
-              <li><label>Year: </label>{education.anne}</li>
-              <li><label>School: </label>{education.ecole}</li>
-              <li><label>Country: </label>{education.paye_ecole}</li>
-              <button
-                onClick={() => handleDeleteEducation(education.id)}
-                className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                >
-                Delete <i className="fa-solid fa-trash"></i>
-              </button>
-              <br /> 
-            </div>
-          ))
+          <table className="min-w-full bg-white table-auto" >
+            <thead>
+              <tr>
+                <th className="py-2 px-3 border-b border-gray-200">Label</th>
+                <th className="py-2 px-3 border-b border-gray-200">Speciality</th>
+                <th className="py-2 px-3 border-b border-gray-200">Year</th>
+                <th className="py-2 px-3 border-b border-gray-200">School</th>
+                <th className="py-2 px-3 border-b border-gray-200">Country</th>
+                <th className="py-2 px-3 border-b border-gray-200">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {postData.educations.map((education, index) => (
+                <tr key={index} className="hover:bg-gray-100">
+                  <td className="py-2 px-3 border-b border-gray-200">{education.label}</td>
+                  <td className="py-2 px-3 border-b border-gray-200">{education.speciality}</td>
+                  <td className="py-2 px-3 border-b border-gray-200">{education.anne}</td>
+                  <td className="py-2 px-3 border-b border-gray-200">{education.ecole}</td>
+                  <td className="py-2 px-3 border-b border-gray-200">{education.paye_ecole}</td>
+                  <td className="py-2 px-3 border-b border-gray-200 text-right">
+                    <button
+                      onClick={() => handleDeleteEducation(education.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <i className="fa-solid fa-x"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
-          <li>Loading education...</li>
+          <p>Loading education...</p>
         )}
-      </ul>
+      </div>
     </div>
+    
+    
+    
 
 <hr/>
 
-
 <div className="section certifications">
-<div className="section-header">
-<h2 style={{fontSize:"22px"}}> <i class="fa-solid fa-certificate"></i> Certifications</h2>
-<button className="add-button" onClick={toggleFormVisibility}>+ Add New</button>
-</div><br></br><br></br>
+  <div className="section-header">
+    <h2 style={{ fontSize: "22px", position: "absolute", marginLeft: "-37px" }}>
+      <i className="fa-solid fa-circle-chevron-right"></i> Certifications
+    </h2>
+    <button
+      className="add-button bg-black hover:bg-green-600 rounded-full"
+      onClick={toggleFormVisibility}
+      style={{
+        width: "33px",
+        height: "33px",
+        borderRadius: "50%",
+        padding: "0",
+        marginLeft: "280px",
+        position: "absolute"
+      }}
+    >
+      <i
+        className="fa-solid fa-plus"
+        style={{
+          color: "white",
+          fontSize: "16px",
+        }}
+      ></i>
+    </button>
+  </div>
+  <br />
+  <br />
 
-<div className="container mx-auto mt-5">
-<div className="container mx-auto mt-5">
-{showForm ? (
-<div className="border-2 border-gray-300 rounded-md shadow-lg p-6">
-<h2 className="text-lg font-bold mb-2">Add New Certification</h2>
-<form className="space-y-4" onSubmit={handleSubmit}>
-<div className="flex flex-col">
-<label htmlFor="label">Label:</label>
-<input
-type="text"
-id="label"
-name="label"
-value={formData.label}
-onChange={handleChange}
-onFocus={handleFocus}
-onBlur={handleBlur}
-required
-className={`border border-gray-300 rounded px-3 py-1 ${
-focusedInput === 'label' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
-}`}
-/>
-</div>
-<div className="flex flex-col">
-<label htmlFor="certifier_par">Certified By:</label>
-<input
-type="text"
-id="certifier_par"
-name="certifier_par"
-value={formData.certifier_par}
-onChange={handleChange}
-onFocus={handleFocus}
-onBlur={handleBlur}
-required
-className={`border border-gray-300 rounded px-3 py-1 ${
-focusedInput === 'certifier_par' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
-}`}
-/>
-</div>
-<div className="flex flex-col">
-<label htmlFor="anne">Year:</label>
-<input
-type="number"
-id="anne"
-name="anne"
-value={formData.anne}
-onChange={handleChange}
-onFocus={handleFocus}
-onBlur={handleBlur}
-required
-className={`border border-gray-300 rounded px-3 py-1 ${
-focusedInput === 'anne' ? 'border-t-2 border-blue-500 transition-all duration-300' : ''
-}`}
-/>
-</div>
-<button type="submit" className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
-Add Certification
-</button>
-<button
-className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-onClick={toggleFormVisibility}
->
-<svg
-xmlns="http://www.w3.org/2000/svg"
-className="h-6 w-6"
-fill="currentColor"
-viewBox="0 0 24 24"
-stroke="currentColor"
->
-<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-</svg>
-</button>
-</form>
-</div>
-) : null}
-<br />
-</div>
-</div>
-<ul className="space-y-4">
-{postData && postData.certificats ? (
-postData.certificats.map((certificate) => (
-<li key={certificate.id} className="border p-4 rounded" style={{ boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.1)' }}>
-<strong>Label:</strong> {certificate.label}<br />
-<strong>Certified By:</strong> {certificate.certifier_par}<br />
-<strong>Year:</strong> {certificate.anne}<br />
-<button
-onClick={() => handleDelete(certificate.id)}
-className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
->
-Delete <i class="fa-solid fa-trash"></i>
-</button>
-</li>
-))
-) : (
-<li>Loading certifications...</li>
-)}
-</ul>
+  <div className="container mx-auto mt-5">
+    {showForm && (
+      <div
+        className="border-2 border-gray-300 rounded-md shadow-lg p-6 relative"
+        style={{ width: "350px", marginLeft: "-30px" }}
+      >
+        <h2 className="text-lg font-bold mb-2">Add New Certification</h2>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div className="flex flex-col">
+            <label htmlFor="label">Label:</label>
+            <input
+              type="text"
+              id="label"
+              name="label"
+              value={formData.label}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
+              className={`border border-gray-300 rounded px-3 py-1 ${
+                focusedInput === "label"
+                  ? "border-t-2 border-blue-500 transition-all duration-300"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="certifier_par">Certified By:</label>
+            <input
+              type="text"
+              id="certifier_par"
+              name="certifier_par"
+              value={formData.certifier_par}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
+              className={`border border-gray-300 rounded px-3 py-1 ${
+                focusedInput === "certifier_par"
+                  ? "border-t-2 border-blue-500 transition-all duration-300"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="anne">Year:</label>
+            <input
+              type="number"
+              id="anne"
+              name="anne"
+              value={formData.anne}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
+              className={`border border-gray-300 rounded px-3 py-1 ${
+                focusedInput === "anne"
+                  ? "border-t-2 border-blue-500 transition-all duration-300"
+                  : ""
+              }`}
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-black hover:bg-green-600 text-white py-2 px-4 rounded"
+            style={{ width: "250px", marginLeft: "30px" }}
+          >
+            Add Certification
+          </button>
+          <button
+            type="button"
+            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            onClick={toggleFormVisibility}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+    )}
+  </div>
 
-
+  <div className="mt-4 overflow-x-auto">
+    {postData && postData.certificats ? (
+      <table className="min-w-full bg-white table-auto">
+        <thead>
+          <tr>
+            <th className="py-2 px-3 border-b border-gray-200">Label</th>
+            <th className="py-2 px-3 border-b border-gray-200">Certified By</th>
+            <th className="py-2 px-3 border-b border-gray-200">Year</th>
+            <th className="py-2 px-3 border-b border-gray-200">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {postData.certificats.map((certificate, index) => (
+            <tr key={index} className="hover:bg-gray-100">
+              <td className="py-2 px-3 border-b border-gray-200">{certificate.label}</td>
+              <td className="py-2 px-3 border-b border-gray-200">{certificate.certifier_par}</td>
+              <td className="py-2 px-3 border-b border-gray-200">{certificate.anne}</td>
+              <td className="py-2 px-3 border-b border-gray-200 text-right">
+                <button
+                  onClick={() => handleDelete(certificate.id)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <i className="fa-solid fa-x"></i>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p>Loading certifications...</p>
+    )}
+  </div>
 </div>
+
   </div>
     </section>
   );

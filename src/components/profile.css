@@ -27,23 +27,7 @@
     margin: 0;
   }
   
-  .edit-button, .add-button {
-    background-color: transparent;
-    border: none;
-    color:white;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.9em;
-    height: 40px;
-    border-radius: 10px;
-    width: 110px;
-    margin-left: 40px;
-    background-color:rgb(41, 213, 107) ;
-  }
-  
-  .edit-button:hover, .add-button:hover {
-    text-decoration: underline;
-  }
+ 
   
   .section p, .section ul {
     margin: 0;
@@ -67,10 +51,3 @@
     color: #999;
   }
   
-  hr {
-    border: none;
-    border-top: 1px solid #ccc;
-   margin-left: 20px;
-   margin-top: 20px;
-    width: 80%;
-  }  

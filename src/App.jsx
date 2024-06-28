@@ -17,11 +17,8 @@ import Blogs from './components/blogs/blogs';
 import BlogForm from './components/blogs/BlogForm';
 import Test from './test';
 import BlogList from './components/blogs/BlogList';
-<<<<<<< HEAD
 import ProfilePage from './components/pro';
-=======
-import Detail_service from './components/Deatil_service'
->>>>>>> 8d6e4befb7d3dcf697f2559ff10a1822b804fb03
+import Detail_service from './components/Deatil_service';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -55,11 +52,8 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogForm" element={<BlogForm />} />
           <Route path="/BlogList" element={<BlogList />} />
-<<<<<<< HEAD
-          <Route path="/pro" element={<ProfilePage />} />
-=======
           <Route path="/serv" element={<Detail_service />} />
->>>>>>> 8d6e4befb7d3dcf697f2559ff10a1822b804fb03
+          <Route path="/pro" element={<ProfilePage />} />
 
           
         </Routes>

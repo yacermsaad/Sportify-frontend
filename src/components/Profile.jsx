@@ -289,19 +289,14 @@ const handleDeleteEducation = async (id) => {
 
     return (
         <div className="bg-white">
-           <Navbar/>
            
-<<<<<<< HEAD
            <Navbar/>
-=======
-          
->>>>>>> 8d6e4befb7d3dcf697f2559ff10a1822b804fb03
 
             
             {/* End of Navbar */}
 
             {/* Profile Section */}
-                                    <div style={{display:"flex",marginTop:"30px"}}>
+                                    <div style={{display:"flex"}}>
                                     <div className="container mx-auto my-5 p-5" style={{marginTop:"-20px"}} >
                                     <div className="md:flex no-wrap md:-mx-2">
                                         {/* Left Side - Profile Card */}
