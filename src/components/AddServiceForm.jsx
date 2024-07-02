@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AddServiceForm = () => {
-  const [serviceName, setServiceName] = useState('');
+ const [serviceName,setServiceName] = useState("");
+  
   const [serviceDescription, setServiceDescription] = useState('');
   const [servicePrice, setServicePrice] = useState('');
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState('');
   const [coachId, setCoachId] = useState('');
 
   useEffect(() => {
@@ -19,14 +20,12 @@ const AddServiceForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     const formData = new FormData();
     formData.append('titre', serviceName);
     formData.append('description', serviceDescription);
     formData.append('prix', servicePrice);
     formData.append('coach_id', coachId);
     formData.append('images', images);
-
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/services', formData, {
         headers: {
@@ -45,7 +44,7 @@ const AddServiceForm = () => {
   };
 
   const handleImageChange = (e) => {
-    setImages([...e.target.files]);
+    setImages(e.target.files[0]);
   };
 
   return (
@@ -56,8 +55,7 @@ const AddServiceForm = () => {
         <input
           type="text"
           id="serviceName"
-          value={serviceName}
-          onChange={(e) => setServiceName(e.target.value)}
+          onChange={(e)=>{setServiceName(e.target.value)}}
           required
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />

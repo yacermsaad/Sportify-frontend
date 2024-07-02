@@ -69,9 +69,10 @@ const Navbar = (props) => {
         <Link to="/" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors ml-5" style={{ color: "black" }}>{t('Home')}</Link>
         <Link to="/services" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('Services')}</Link>
         <Link to="/blogs" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('Blogs')}</Link>
-        <Link to="/contact" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('Contact')}</Link>
-        <Link to="#" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('FAQs')}</Link>
+        {/* <Link to="#" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('FAQs')}</Link> */}
         <Link to="/consultation" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('Consultation')}</Link>
+        <Link to="/contact" className="text-green-500 hover:text-[#04cfb4] cursor-pointer font-medium text-md text-center transition-colors" style={{ color: "black" }}>{t('Contact')}</Link>
+
       </div>
 
       {/* User Authentication Section */}

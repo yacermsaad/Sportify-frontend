@@ -76,19 +76,13 @@ function Blogs() {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-
       }).then(response => {
-        handleClosePopup();
-        resetForm();
         getdata;
+        handleClosePopup()
     })
       
     } catch (error) {
-      console.error('Error adding blog post:', error);
-      if (error.response) {
-        console.error('Response data:', error.response.data); 
-      }
-     
+      
     }
     getdata();
   };
@@ -110,7 +104,7 @@ function Blogs() {
   const resetForm = () => {
     setTitle('');
     setContent('');
-    setImage([]);
+    setImage('');
   };
 
   return (<div className='bg-slate-50 min-h-[100vh] '>
