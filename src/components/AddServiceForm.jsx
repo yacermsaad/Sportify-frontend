@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AddServiceForm = () => {
-  const [serviceName, setServiceName] = useState('');
-  const [serviceDescription, setServiceDescription] = useState('');
-  const [servicePrice, setServicePrice] = useState('');
+  const [serviceName, setServiceName] = useState("");
+  const [serviceDescription, setServiceDescription] = useState("");
+  const [servicePrice, setServicePrice] = useState("");
   const [images, setImages] = useState([]);
-  const [coachId, setCoachId] = useState('');
+  const [coachId, setCoachId] = useState("");
 
   useEffect(() => {
     const storedCoach = JSON.parse(localStorage.getItem('user'));
@@ -15,17 +15,18 @@ const AddServiceForm = () => {
     } else {
       alert('No coach found in local storage');
     }
+
   }, []);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(serviceName);
     const formData = new FormData();
     formData.append('titre', serviceName);
     formData.append('description', serviceDescription);
     formData.append('prix', servicePrice);
     formData.append('coach_id', coachId);
-    formData.append('images', images);
+    // formData.append('images', images);
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/services', formData, {
@@ -42,11 +43,18 @@ const AddServiceForm = () => {
       }
       alert('Failed to create service. Please check your input and try again.');
     }
+    
+
   };
 
   const handleImageChange = (e) => {
-    setImages([...e.target.files]);
+    setImages(e.target.files[0]);
+    
   };
+  console.log(serviceName);
+    console.log(serviceDescription);
+    console.log(servicePrice);
+    console.log(coachId);
 
   return (
     <form onSubmit={handleFormSubmit} className="space-y-6 p-6 bg-white rounded-lg shadow-2xl">
@@ -56,7 +64,7 @@ const AddServiceForm = () => {
         <input
           type="text"
           id="serviceName"
-          value={serviceName}
+         
           onChange={(e) => setServiceName(e.target.value)}
           required
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -66,8 +74,8 @@ const AddServiceForm = () => {
         <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
         <textarea
           id="serviceDescription"
-          value={serviceDescription}
-          onChange={(e) => setServiceDescription(e.target.value)}
+
+          onChange={(e) =>{ setServiceDescription(e.target.value); console.log(e.target.value)}}
           required
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           rows="4"
@@ -78,7 +86,7 @@ const AddServiceForm = () => {
         <input
           type="number"
           id="servicePrice"
-          value={servicePrice}
+          
           onChange={(e) => setServicePrice(e.target.value)}
           required
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
