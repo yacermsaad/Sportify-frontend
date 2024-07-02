@@ -82,7 +82,7 @@ const Service = () => {
               {article.images.length > 0 && (
                 <img
                   className="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
-                  src={article.images[0].image}
+                  src={`http://localhost:8000/storage/${article.images[0].image}`}
                   alt={article.titre}
                 />
               )}
@@ -131,7 +131,7 @@ const Service = () => {
                 <div className="pr-3">
                   <img
                     className="h-12 w-12 rounded-full object-cover"
-                    src={getFullImageUrl(article.coach.image)}
+                    src={`http://localhost:8000/storage/${article.coach.image}`}
                     alt={article.coach?.fullname || 'Coach'}
                   />
                 </div>

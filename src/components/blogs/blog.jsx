@@ -4,6 +4,8 @@ import axios from 'axios';
 import { use } from 'i18next';
 import Login from '../login/Login';
 import { formatDistanceToNow } from 'date-fns';
+import Mod_Blog_popup from './mod_blog_popup';
+import Sup_Blog_popup from './suprm_blog_popup';
 
 function Blog(props) {
 
@@ -60,36 +62,36 @@ function Blog(props) {
   
   };
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
+  // const handleTitleChange = (e) => {
+  //   setTitle(e.target.value);
+  // };
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
+  // const handleContentChange = (e) => {
+  //   setContent(e.target.value);
+  // };
 
-  const handleCreateBlog = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('titre', title);
-    formData.append('contenu', content);
+//   const handleCreateBlog = async (e) => {
+//     e.preventDefault();
+//     const formData = new FormData();
+//     formData.append('titre', title);
+//     formData.append('contenu', content);
     
-    try {
-      const response = await axios.post('http://your-api-endpoint/blog_create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Blog post created:', response.data);
-      alert('Blog post created successfully!');
-      setTitle('');
-      setContent('');
-      setShowCreateForm(false);
-    } catch (error) {
-      console.error('Error creating blog post:', error);
-      alert('Failed to create blog post.');
-    } 
-}
+//     try {
+//       const response = await axios.post('http://your-api-endpoint/blog_create', formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       });
+//       console.log('Blog post created:', response.data);
+//       alert('Blog post created successfully!');
+//       setTitle('');
+//       setContent('');
+//       setShowCreateForm(false);
+//     } catch (error) {
+//       console.error('Error creating blog post:', error);
+//       alert('Failed to create blog post.');
+//     } 
+// }
 
 
 useEffect(()=>{
@@ -104,22 +106,34 @@ useEffect(()=>{
     });}
 })
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 to month since getMonth() returns 0-11
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  // const formatDate = (timestamp) => {
+  //   const date = new Date(timestamp);
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 to month since getMonth() returns 0-11
+  //   const day = date.getDate().toString().padStart(2, '0');
+  //   return `${year}-${month}-${day}`;
+  // };
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen_m_blg, setIsOpen_m_blg] = useState(false);
+  const [isOpen_sup_blg, setIsOpen_sup_blg] = useState(false);
+
+  const closeModalblg = () => {
+    setIsOpen_m_blg(false);
+    setIsOpen_sup_blg(false);
   };
 
   const calculateTimeAgo = (timestamp) => {
     return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
   };
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
 
 
   return (<div className='bg-white  rounded-md mt-10' key={props.blog.id}> 
             <div className='pl-10 py-5' >
-              <div className='flex '>
+            <div className='flex  justify-between'> <div className='flex'>
               {props.blog.coach.image=='null'?<div className="flex items-center justify-center w-8 h-8 bg-green-500 text-white rounded-full mr-4"
                   style={{background:"lightgreen", color:"white", marginLeft:"-20px",fontWeight:"bold"} }   id="dropdownToggle">
                   {userInitial}
@@ -128,17 +142,41 @@ useEffect(()=>{
                 <img src={`http://localhost:8000/storage/${props.blog.coach.image}`} />
                 </div>
                 }
-                <div >
+                <div >  
                    <div className='font-semibold capitalize flex flex-col'>{props.blog.coach.fullname}</div>
                    <div className='text-slate-400 text-[11px]'>{calculateTimeAgo(props.blog.created_at)}</div>
+                   </div>
                  </div>
+                 {props.blog.coach.user_id==JSON.parse(localStorage.getItem('user')).id?
+                 <div   id="dropdownDefaultButton" onClick={toggleDropdown} className='mr-3  hover:bg-gray-100 cursor-pointer text-center w-10 mt-2 h-8 rounded-full text-gray-500 relative'>
+                  <div className="font-bold">...</div>
+                                    <>
+                  {isOpen && (
+                    <div
+                      id="dropdown"
+                      className="absolute z-10 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44  right-0 ">
+                      <ul className="py-2 text-sm text-gray-500 " aria-labelledby="dropdownDefaultButton">
+                        <li onClick={()=>{setIsOpen_m_blg(true)}}>
+                          <a  className="block  hover:underline px-4 py-2  ">Modifier blog</a>
+                        </li>
+                        <li  onClick={()=>{setIsOpen_sup_blg(true)}}>
+                          <a  className="block hover:underline px-4 py-2  ">Supprimer blog</a>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </>
+              </div>:null}
               </div>
+              <Mod_Blog_popup isOpen={isOpen_m_blg} setOpen={closeModalblg}  blog={props.blog} getdata={props.getdata}   />
+              <Sup_Blog_popup  isOpen={isOpen_sup_blg} setOpen={closeModalblg}  blog={props.blog} getdata={props.getdata} />
               <div className='pt-3'>{props.blog.contenu}</div>
             </div>
             {props.blog.images.map((im,i)=>{
               return <img src={`http://localhost:8000/storage/${im.img}`} className=" w-full" alt="chair"  key={i}/>
               })
             }
+             
              <div className='flex border-b-2 px-2 justify-between text-slate-600'>
               <div  className='hover:text-blue-500  hover:underline cursor-pointer' onClick={()=>{setisModalOpenLike(true);}}> {props.blog.likes.length>0?props.blog.likes.length+" Likes":null} </div>
               <div onClick={()=>{if((localStorage.getItem('user'))!=null){handleCreateFormToggle()}else{setIsModalOpenLogin(true);}}}>{props.blog.likes.length>0?props.blog.comments.length+" Coments":null}</div>

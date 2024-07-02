@@ -1,4 +1,6 @@
 import React from 'react';
+import PlaceholderCard from './PlaceholderCard';
+
 import {
   MDBCol,
   MDBContainer,
@@ -21,6 +23,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import BlogList from './blogs/BlogList';
+import AddServiceForm from './AddServiceForm';
 export default function ProfilePage() {
     const storedUser = localStorage.getItem('user');
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
@@ -53,12 +56,6 @@ export default function ProfilePage() {
           }
         }
       };
-  
-  
-  
-    
-    
-     
   
       fetchData();
     }, [storedCoachId]);
@@ -308,26 +305,27 @@ export default function ProfilePage() {
     const [serviceDescription, setServiceDescription] = useState('');
     const [servicePrice, setServicePrice] = useState('');
   
-    const handleFormSubmit = (e) => {
-      e.preventDefault();
-      // Logic to add the service
-      console.log('Service Added:', { serviceName, serviceDescription, servicePrice });
-      // Reset form fields
-      setServiceName('');
-      setServiceDescription('');
-      setServicePrice('');
-    };
+    // const handleFormSubmit = (e) => {
+    //   e.preventDefault();
+    //   // Logic to add the service
+    //   console.log('Service Added:', { serviceName, serviceDescription, servicePrice });
+    //   // Reset form fields
+    //   setServiceName('');
+    //   setServiceDescription('');
+    //   setServicePrice('');
+    // };
 
     const [blogs, setBlogs] = useState([]);
-    const userId = JSON.parse(localStorage.getItem('user')).id;
+    const userId = JSON.parse(localStorage.getItem('user'));
   
     useEffect(() => {
       fetchUserBlogs();
     }, []);
   
     const fetchUserBlogs = async () => {
+      if(userId!=undefined)
       try {
-        const response = await axios.get(`http://localhost:8000/api/users/${userId}/blogs`);
+        const response = await axios.get(`http://localhost:8000/api/users/${userId.id}/blogs`);
         setBlogs(response.data.blogs);
       } catch (error) {
         console.error('Error fetching user blogs:', error);
@@ -343,19 +341,19 @@ export default function ProfilePage() {
       });
     };
   
-    const handleDeleteBlo = async (blogId) => {
-      const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
-      if (confirmDelete) {
-        try {
-          const response = await axios.delete(`http://localhost:8000/api/users/${userId}/blogs/${blogId}`);
-          console.log(response.data.message);
+    // const handleDeleteBlo = async (blogId) => {
+    //   const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
+    //   if (confirmDelete) {
+    //     try {
+    //       const response = await axios.delete(`http://localhost:8000/api/users/${userId}/blogs/${blogId}`);
+    //       console.log(response.data.message);
   
-          setBlogs(blogs.filter((blog) => blog.id !== blogId));
-        } catch (error) {
-          console.error('Error deleting blog:', error);
-        }
-      }
-    };
+    //       setBlogs(blogs.filter((blog) => blog.id !== blogId));
+    //     } catch (error) {
+    //       console.error('Error deleting blog:', error);
+    //     }
+    //   }
+    // };
 
  
   
@@ -383,31 +381,31 @@ export default function ProfilePage() {
     const [coachId, setCoachId] = useState('');
     const [images, setImages] = useState([]);
 
-  const handleFormSubmitService = async (event) => {
-    event.preventDefault();
+  // const handleFormSubmitService = async (event) => {
+  //   event.preventDefault();
     
-    const formData = new FormData();
-    formData.append('titre', serviceName);
-    formData.append('description', serviceDescription);
-    formData.append('prix', servicePrice);
-    formData.append('coache_id', coachId);
-    images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
-    });
+  //   const formData = new FormData();
+  //   formData.append('titre', serviceName);
+  //   formData.append('description', serviceDescription);
+  //   formData.append('prix', servicePrice);
+  //   formData.append('coache_id', coachId);
+  //   images.forEach((image, index) => {
+  //     formData.append(`images[${index}]`, image);
+  //   });
 
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/services', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(response.data);
-      alert('Service created successfully');
-    } catch (error) {
-      console.error('There was an error creating the service!', error);
-      alert('Failed to create service');
-    }
-  };
+  //   try {
+  //     const response = await axios.post('http://127.0.0.1:8000/api/services', formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
+  //     console.log(response.data);
+  //     alert('Service created successfully');
+  //   } catch (error) {
+  //     console.error('There was an error creating the service!', error);
+  //     alert('Failed to create service');
+  //   }
+  // };
 
   const handleImageChange = (e) => {
     setImages([...e.target.files]);
@@ -449,7 +447,11 @@ export default function ProfilePage() {
   
   return (
     <section >
+    
     <Navbar/>
+    
+    {postData!=null?
+    <>
       <MDBContainer className="py-5" style={{marginTop:"100px"}}>
     <div style={{marginLeft:"100px",width:"100%"}}>
     <div style={breadcrumbContainerStyle} >
@@ -458,8 +460,6 @@ export default function ProfilePage() {
         onClick={FormBlog}
         type="button"
         style={buttonStyle}
-        onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-        onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
       >
         You want to add a service?
       </button>
@@ -469,8 +469,6 @@ export default function ProfilePage() {
       onClick={ShowListBlog}
         type="button"
         style={buttonStyle}
-        onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-        onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
       >
         You want to show a list blogs?
       </button>
@@ -576,6 +574,7 @@ export default function ProfilePage() {
       <div className="col-md-6">
         <div className="card" style={{ marginLeft: "0px", width: "860px", background: "white",  padding: "20px", borderRadius: "10px" }}>
           <div>
+<<<<<<< HEAD
           {blogFrom ? (
             <form onSubmit={handleFormSubmitService} className="space-y-6 p-6 bg-white rounded-lg shadow-xl">
     <h1 className="text-xl font-bold mb-4" style={{ textAlign: 'center' }}>Start Add Service</h1>
@@ -630,6 +629,10 @@ export default function ProfilePage() {
       Add Service
     </button>
   </form>
+=======
+            {blogFrom ? (
+             <AddServiceForm />
+>>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
 
           ) : null}
           </div>
@@ -1251,6 +1254,10 @@ export default function ProfilePage() {
 </div>
 
   </div>
+  </>
+  :<PlaceholderCard/>
+  }
+ 
     </section>
   );
 }

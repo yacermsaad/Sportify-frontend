@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AddServiceForm = () => {
+<<<<<<< HEAD
   const [serviceName, setServiceName] = useState("");
   const [serviceDescription, setServiceDescription] = useState("");
   const [servicePrice, setServicePrice] = useState("");
   const [images, setImages] = useState([]);
   const [coachId, setCoachId] = useState("");
+=======
+ const [serviceName,setServiceName] = useState("");
+  
+  const [serviceDescription, setServiceDescription] = useState('');
+  const [servicePrice, setServicePrice] = useState('');
+  const [images, setImages] = useState('');
+  const [coachId, setCoachId] = useState('');
+>>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
 
   useEffect(() => {
     const storedCoach = JSON.parse(localStorage.getItem('user'));
@@ -20,14 +29,21 @@ const AddServiceForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+<<<<<<< HEAD
     console.log(serviceName);
+=======
+>>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
     const formData = new FormData();
     formData.append('titre', serviceName);
     formData.append('description', serviceDescription);
     formData.append('prix', servicePrice);
     formData.append('coach_id', coachId);
+<<<<<<< HEAD
     // formData.append('images', images);
 
+=======
+    formData.append('images', images);
+>>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/services', formData, {
         headers: {
@@ -49,7 +65,10 @@ const AddServiceForm = () => {
 
   const handleImageChange = (e) => {
     setImages(e.target.files[0]);
+<<<<<<< HEAD
     
+=======
+>>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
   };
   console.log(serviceName);
     console.log(serviceDescription);
@@ -64,8 +83,12 @@ const AddServiceForm = () => {
         <input
           type="text"
           id="serviceName"
+<<<<<<< HEAD
          
           onChange={(e) => setServiceName(e.target.value)}
+=======
+          onChange={(e)=>{setServiceName(e.target.value)}}
+>>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
           required
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
