@@ -36,6 +36,7 @@ export default function ProfilePage() {
     const [showFormSkill, setShowFormSkill] = useState(false);
   
     const [postData, setPostData] = useState(null);
+    
     const [description, setDescription] = useState(''); 
   const [isEditing, setIsEditing] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -574,65 +575,8 @@ export default function ProfilePage() {
       <div className="col-md-6">
         <div className="card" style={{ marginLeft: "0px", width: "860px", background: "white",  padding: "20px", borderRadius: "10px" }}>
           <div>
-<<<<<<< HEAD
-          {blogFrom ? (
-            <form onSubmit={handleFormSubmitService} className="space-y-6 p-6 bg-white rounded-lg shadow-xl">
-    <h1 className="text-xl font-bold mb-4" style={{ textAlign: 'center' }}>Start Add Service</h1>
-    <div>
-      <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
-      <input
-        type="text"
-        id="serviceName"
-        value={serviceName}
-        onChange={(e) => setServiceName(e.target.value)}
-        required
-        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
-    <div>
-      <label htmlFor="serviceDescription" className="block text-lg font-medium text-gray-700">Service Description:</label>
-      <textarea
-        id="serviceDescription"
-        value={serviceDescription}
-        onChange={(e) => setServiceDescription(e.target.value)}
-        required
-        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        rows="4"
-      />
-    </div>
-    <div>
-      <label htmlFor="servicePrice" className="block text-lg font-medium text-gray-700">Service Price:</label>
-      <input
-        type="number"
-        id="servicePrice"
-        value={servicePrice}
-        onChange={(e) => setServicePrice(e.target.value)}
-        required
-        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
-   
-    <div>
-      <label htmlFor="images" className="block text-lg font-medium text-gray-700">Upload Images:</label>
-      <input
-        type="file"
-        id="images"
-        multiple
-        onChange={handleImageChange}
-        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
-    <button
-      type="submit"
-      className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-lg text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    >
-      Add Service
-    </button>
-  </form>
-=======
             {blogFrom ? (
              <AddServiceForm />
->>>>>>> a32ed6973e03d4020788f3e79968eaa5b332f0fb
 
           ) : null}
           </div>
