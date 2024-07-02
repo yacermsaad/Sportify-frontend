@@ -37,6 +37,7 @@ export default function ProfilePage() {
     const [showFormSkill, setShowFormSkill] = useState(false);
   
     const [postData, setPostData] = useState(null);
+    
     const [description, setDescription] = useState(''); 
   const [isEditing, setIsEditing] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -549,7 +550,7 @@ export default function ProfilePage() {
             {blogFrom ? (
              <AddServiceForm />
 
-            ) : null}
+          ) : null}
           </div>
         </div>
       </div>
