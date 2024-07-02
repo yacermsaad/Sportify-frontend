@@ -20,5 +20,231 @@
     "Services":"Services",
     "Blogs":"Blogs",
     "Contact":"Contact",
-    "FAQs":"FAQs"
+    "FAQs":"FAQs",
+    "cheznous":"Ce qui vous attend chez nous",
+    "start":"Commencez votre parcours de remise en forme dès aujourd'hui avec notre un coaching expert !",
+    "join":"Rejoignez des millions d'athlètes dans le monde entier qui transforment leur vie grâce à nos cours de marathon modernes.",
+    "startnow": "Commencez maintenant",
+    "learnmore": "En savoir plus",
+    "Become a Coach": "Devenir un Coach",
+    "Switch to Coach": "Passer en tant que Coach",
+    "Update your picture": "Mettre à jour votre photo",
+    "Settings": "Paramètres",
+    "Sign out": "Déconnexion",
+     "Subscribe": "S'abonner",
+    "NewsletterPrompt": "Abonnez-vous à notre newsletter pour les mises à jour.",
+    "EmailPlaceholder": "Entrez votre adresse email" ,
+    "FAQTitle": "FAQ - Cours Rapide",
+    "FAQSubtitle": "Questions fréquemment posées sur le Cours Rapide",
+    "Question1": "Qu'est-ce que le Cours Rapide ?",
+    "Answer1": "Le Cours Rapide est un programme d'entraînement intensif conçu pour accélérer votre parcours de fitness avec des séances d'entraînement structurées et un coaching personnalisé.",
+    "Question2": "Quels sont les avantages du Cours Rapide ?",
+    "Answer2": "Le Cours Rapide offre des gains rapides en fitness grâce à des séances d'entraînement structurées, des conseils nutritionnels et un coaching expert, adaptés pour atteindre vos objectifs plus rapidement.",
+    "Question3": "Le Cours Rapide convient-il aux débutants ?",
+    "Answer3": "Oui, le Cours Rapide est conçu pour répondre à tous les niveaux de fitness, y compris les débutants. Nos entraîneurs fournissent des modifications et une attention personnalisée pour que tout le monde puisse en bénéficier.",
+    "Question4": "Combien de temps dure le Cours Rapide ?",
+    "Answer4": "Le Cours Rapide dure généralement 6 semaines, avec des sessions d'entraînement intensives et des objectifs de fitness progressifs.",
+    "Question5": "Comment puis-je m'inscrire au Cours Rapide ?",
+    "Answer5": "Pour vous inscrire au Cours Rapide, rendez-vous à l'accueil de notre salle de sport ou contactez-nous par téléphone ou par e-mail pour commencer votre inscription.",
+    "footer": {
+    "title": "Sporti<span class=\"text-green-500\">fy.</span>",
+    "description": "Rendre le football meilleur au monde et un jeu plus respectueux.",
+    "socialMedia": [
+      {
+        "name": "Facebook",
+        "icon": "facebook",
+        "url": "#"
+      },
+      {
+        "name": "Twitter",
+        "icon": "twitter",
+        "url": "#"
+      },
+      {
+        "name": "Instagram",
+        "icon": "instagram",
+        "url": "#"
+      },
+      {
+        "name": "YouTube",
+        "icon": "youtube",
+        "url": "#"
+      }
+    ],
+    "links": {
+      "solutions": {
+        "title": "Solutions",
+        "items": [
+          { "text": "Marketing", "url": "#" },
+          { "text": "Analytique", "url": "#" },
+          { "text": "Commerce", "url": "#" },
+          { "text": "Perspectives", "url": "#" }
+        ]
+      },
+      "support": {
+        "title": "Support",
+        "items": [
+          { "text": "Tarification", "url": "#" },
+          { "text": "Documentation", "url": "#" },
+          { "text": "Guides", "url": "#" },
+          { "text": "Statut de l'API", "url": "#" }
+        ]
+      },
+      "company": {
+        "title": "Société",
+        "items": [
+          { "text": "À propos", "url": "#" },
+          { "text": "Blog", "url": "#" },
+          { "text": "Emplois", "url": "#" },
+          { "text": "Presse", "url": "#" },
+          { "text": "Partenaires", "url": "#" }
+        ]
+      },
+      "legal": {
+        "title": "Légal",
+        "items": [
+          { "text": "Réclamation", "url": "#" },
+          { "text": "Confidentialité", "url": "#" },
+          { "text": "Conditions", "url": "#" }
+        ]
+      }
+    },
+    "copyright": "\u00A9 2020 Votre entreprise, Inc. Tous droits réservés."
+  },
+
+   "activityTitle": "Trouve l'activité qui te correspond !",
+    "activityDescription": "Découvre de nouveaux cours, professeur.e.s et studios qui correspondent à tes envies au quotidien.",
+    "chatWithSportify": "Discutez avec le chatbot Sportify",
+    "aiProcessing": "L'IA traite votre question...",
+    "askAnything": "Demandez n'importe quoi",
+    "send": "Envoyer",
+    "error": "Désolé - Une erreur s'est produite. Veuillez réessayer!",
+    "WeeklyArticles": "Articles Hebdomadaires",
+    "WeeklyArticlesDescription": "Recevez les dernières mises à jour et nouvelles directement dans votre boîte de réception chaque semaine.",
+    "NoSpam": "Pas de Spam",
+    "NoSpamDescription": "Nous respectons votre vie privée et ne vous enverrons jamais de spam.",
+    "TestimonialsTitle": "Ce que disent nos clients",
+    "Testimonial1": "Ce service a changé la donne pour mon entreprise. Je le recommande vivement!",
+    "Testimonial2": "L'équipe est extrêmement professionnelle et livre à temps. Je ne pourrais pas être plus heureux.",
+    "Testimonial3": "Qualité exceptionnelle et service client. Je suis maintenant un client fidèle.",
+    "ClientName1": "Jean Dupont",
+    "ClientName2": "Émilie Martin",
+    "ClientName3": "Michel Leblanc",
+    "Client": "Client",
+    "Sportify2024": "Sportify 2024",
+    "JoinUsInDenver": "Rejoignez-nous à Denver du 7 au 9 juin pour voir ce qui va suivre.",
+    "RegisterNow": "Inscrivez-vous maintenant",
+    "Dismiss": "Fermer",
+    "ab": "Bienvenue sur Sportify 2024",
+    "p2": "Rejoignez-nous à Denver du 7 au 9 juin pour découvrir ce qui nous attend.",
+    "Casablanca": "Casablanca",
+    "Rabat": "Rabat",
+    "Marrakech": "Marrakech",
+    "Fès": "Fès",
+    "Tanger": "Tanger",
+    "Agadir": "Agadir",
+    "Meknès": "Meknès",
+    "Oujda": "Oujda",
+    "Kenitra": "Kenitra",
+    "Tétouan": "Tétouan",
+    "Salé": "Salé",
+    "Nador": "Nador",
+    "Mohammédia": "Mohammédia",
+    "Beni Mellal": "Beni Mellal",
+    "Safi": "Safi",
+    "Laâyoune": "Laâyoune",
+    "Khouribga": "Khouribga",
+    "El Jadida": "El Jadida",
+    "Taza": "Taza",
+    "SearchPlaceholder": "Rechercher un sport ou le nom d'un studio",
+    "Yoga": "Yoga",
+    "Pilates": "Pilates",
+    "PoleDance": "Pole Dance",
+    "Stretching": "Étirements",
+    "Dance": "Danse",
+    "ABS": "Cuisses-Abdos-Fessiers",
+    "Boxing": "Boxe",
+    "Fitness": "Fitness",
+    "HRBenefits": "Tu travailles en Ressources Humaines ? Découvre les avantages d'Eversports Corporate.",
+    "personalInfo": {
+    "title": "Informations personnelles",
+    "subtitle": "Parlez-nous un peu de vous. Ces informations apparaîtront sur votre profil public, afin que les acheteurs potentiels puissent mieux vous connaître.",
+    "fullNameLabel": "Nom complet",
+    "fullNamePlaceholder": "Entrez votre nom complet",
+    "profilePictureLabel": "Photo de profil",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Parlez-nous un peu de votre expérience professionnelle",
+    "descriptionMinLengthError": "Veuillez entrer au moins 150 caractères",
+    "descriptionLength": "caractères",
+    "descriptionMaxLength": "/600",
+    "buttonText": "Continuer",
+    "fullNameError": "Veuillez entrer votre nom complet",
+    "descriptionError": "Veuillez entrer votre description",
+    "imageValidatedMessage": "Image validée"
+  },
+  "sportPrefere": {
+    "title": "Votre sport préféré dans votre ville",
+    "description": "Découvrez toutes les offres de yoga et de sports près de chez vous et trouvez le studio ou la salle qui vous correspond.",
+    "buttonText": "Voir la carte"
+  },
+  
+  "titlePlaceholder": "Entrez le titre...",
+  "writeCommentPlaceholder": "Écrivez votre commentaire...",
+ 
+  "createPost": "Créer un article",
+  "title": "Titre",
+  "content": "Contenu",
+  "images": "Images",
+  "addPost": "Ajouter l'article",
+  "get_in_touch": "Contactez-nous",
+  "contact_us": "Nous contacter",
+  "contact_info": "Contactez-nous pour en savoir plus sur nos services, demander de l'assistance ou fournir des commentaires. Nous sommes ici pour vous aider et vous garantir la meilleure expérience possible. Vous pouvez nous joindre par téléphone, par e-mail ou en remplissant le formulaire de contact ci-dessous. Nous avons hâte de vous entendre!",
+  "phone_no": "Numéro de téléphone",
+  
+  "address": "Adresse",
+  "opening_hours": "Heures d'ouverture",
+  "monday_friday": "Lundi - Vendredi (9h00 à 17h00)",
+  "first_name": "Prénom",
+  "last_name": "Nom de famille",
+  "phone": "Téléphone",
+  "message": "Message",
+  "send_message": "Envoyer le message",
+  "follow_us": "Suivez-nous",
+ "success_message": "Votre message a été envoyé avec succès !",
+    "error_message": "Une erreur s'est produite. Veuillez réessayer.",
+   "preview_profile_button": "Prévisualiser le profil",
+  "bio_title": "À propos",
+  "bio_description": "Je travaille en tant que développeur depuis {{ years }} ans, spécialisé dans {{ languages }}.",
+  "from": "De",
+  "country": "Pays",
+  "member_since": "Membre depuis",
+  "membership_date": "Janvier 2023",
+  "description_title": "Description",
+  "edit_button": "Modifier",
+  "save_button": "Enregistrer",
+  "cancel_button": "Annuler",
+  "skills_title": "Compétences",
+  "add_new": "Ajouter",
+  "add_new_skill": "Ajouter une nouvelle compétence",
+  "label": "Label",
+  "level": "Niveau",
+  "select_level": "Sélectionner le niveau",
+  "experience_level": "Niveau d'expérience",
+  "beginner": "Débutant",
+  "add_button": "Ajouter",
+  "education_title": "Éducation",
+  "add_new_education": "Ajouter une nouvelle éducation",
+  "speciality": "Spécialité",
+  "year": "Année",
+  "school": "École",
+  "country_school": "Pays de l'école",
+  "certifications_title": "Certifications",
+  "add_new_certification": "Ajouter une nouvelle certification",
+  "certified_by": "Certifié par",
+  "create_blog_title": "Créer un blog",
+  "your_blog_title": "Votre blog"
+
+
+
+
 }

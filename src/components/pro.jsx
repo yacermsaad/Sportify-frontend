@@ -854,7 +854,7 @@ export default function ProfilePage() {
   
     <div className="mt-4">
       {postData && postData.skills ? (
-        <table className="min-w-full bg-white" style={{marginLeft:"-40px"}}>
+        <table className="min-w-full bg-lightgreen" style={{marginLeft:"-40px"}}>
           <thead>
             <tr>
               <th className="py-2 px-4 border-b border-gray-200">Title</th>

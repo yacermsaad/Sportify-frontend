@@ -10,6 +10,7 @@ import './components/AR_EN_FR/18next.js'
 
 
 const store = createStore(reducer);
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>

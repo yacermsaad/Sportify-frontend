@@ -1,19 +1,20 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function NewsletterSubscription() {
+  const { t, i18n } = useTranslation();
+
   return (
     <div className="relative isolate overflow-hidden bg-white py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
           <div className="max-w-xl lg:max-w-lg">
             <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
-              Subscribe to our newsletter.
+              {t('NewsletterPrompt')}
             </h2>
-            <p className="mt-4 text-lg leading-8 text-gray-700">
-              Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing velit quis. Duis tempor incididunt dolore.
-            </p>
+          
             <div className="mt-6 flex max-w-md gap-x-4">
-              <label htmlFor="email-address" className="sr-only">Email address</label>
+              <label htmlFor="email-address" className="sr-only">{t('Emailaddress')}</label>
               <input
                 id="email-address"
                 name="email"
@@ -21,13 +22,13 @@ function NewsletterSubscription() {
                 autoComplete="email"
                 required
                 className="min-w-0 flex-auto rounded-md border-0 bg-gray-200 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
-                placeholder="Enter your email"
+                placeholder={t('EmailPlaceholder')}
               />
               <button
                 type="submit"
                 className="flex-none rounded-md bg-green-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
               >
-                Subscribe
+                {t('Subscribe')}
               </button>
             </div>
           </div>
@@ -49,9 +50,9 @@ function NewsletterSubscription() {
                   />
                 </svg>
               </div>
-              <dt className="mt-4 font-semibold text-black">Weekly articles</dt>
+              <dt className="mt-4 font-semibold text-black">{t('WeeklyArticles')}</dt>
               <dd className="mt-2 leading-7 text-gray-600">
-                Non laboris consequat cupidatat laborum magna. Eiusmod non irure cupidatat duis commodo amet.
+                {t('WeeklyArticlesDescription')}
               </dd>
             </div>
             <div className="flex flex-col items-start">
@@ -71,9 +72,9 @@ function NewsletterSubscription() {
                   />
                 </svg>
               </div>
-              <dt className="mt-4 font-semibold text-black">No spam</dt>
+              <dt className="mt-4 font-semibold text-black">{t('NoSpam')}</dt>
               <dd className="mt-2 leading-7 text-gray-600">
-                Officia excepteur ullamco ut sint duis proident non adipisicing. Voluptate incididunt anim.
+                {t('NoSpamDescription')}
               </dd>
             </div>
           </dl>
@@ -96,3 +97,4 @@ function NewsletterSubscription() {
 }
 
 export default NewsletterSubscription;
+

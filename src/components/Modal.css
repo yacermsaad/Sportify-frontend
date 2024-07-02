@@ -1,0 +1,60 @@
+/* src/modal.css */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    width: 500px;
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.modal-header {
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title .fas {
+    margin-right: 10px;
+    color: green;
+    font-size: 24px;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+.button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background: #0056b3;
+}

@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import './contact.css';
 import Navbar from './Navbar';
+import { useTranslation } from 'react-i18next';
+
 
 const Contact = () => {
+    const { t, i18n } = useTranslation();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -11,6 +14,7 @@ const Contact = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +23,7 @@ const Contact = () => {
 
         try {
             const response = await axios.post('http://localhost:8000/api/contact', {
+                user_id: user.id, // Include the user ID
                 first_name: firstName,
                 last_name: lastName,
                 email,
@@ -32,7 +37,7 @@ const Contact = () => {
                 setEmail('');
                 setPhone('');
                 setMessage('');
-                setSuccess('Your message has been sent successfully!');
+                setSuccess(true); // Set success to true to display the modal
             } else {
                 setError(response.data.message || 'An error occurred. Please try again.');
             }
@@ -41,22 +46,26 @@ const Contact = () => {
         }
     };
 
+    const closeModal = () => {
+        setSuccess(false); // Close the modal by setting success to false
+    };
+
     return (
         <section className="contact-section">
             <Navbar/>
             <div className="contact-bg">
-                <h3>Get in Touch with Us</h3>
-                <h2>Contact Us</h2>
+                <h3>{t('get_in_touch')}</h3>
+                <h2>{t('contact_us')}</h2>
                 <div className="line"></div>
-                <p className="text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda iste facilis quos impedit fuga nobis modi debitis laboriosam velit reiciendis quisquam alias corporis, maxime enim, optio ab dolorum sequi qui.</p>
+                <p className="text">{t('contact_info')}</p>
             </div>
 
             <div className="contact-body">
                 <div className="contact-info">
-                    <div><i className="fas fa-mobile-alt"></i>Phone No.<span className="text">1-2392-23928-2</span></div>
-                    <div><i className="fas fa-envelope-open"></i>E-mail<span className="text">mail@company.com</span></div>
-                    <div><i className="fas fa-map-marker-alt"></i>Address<span className="text">2939 Patrick Street, Victoria TX, United States</span></div>
-                    <div><i className="fas fa-clock"></i>Opening Hours<span className="text">Monday - Friday (9:00 AM to 5:00 PM)</span></div>
+                    <div><i className="fas fa-mobile-alt"></i>{t('phone_no')}<span className="text">1-2392-23928-2</span></div>
+                    <div><i className="fas fa-envelope-open"></i>{t('email')}<span className="text">mail@company.com</span></div>
+                    <div><i className="fas fa-map-marker-alt"></i>{t('address')}<span className="text">2939 Patrick Street, Victoria TX, United States</span></div>
+                    <div><i className="fas fa-clock"></i>{t('opening_hours')}<span className="text">{t('monday_friday')}</span></div>
                 </div>
 
                 <div className="contact-form">
@@ -65,7 +74,7 @@ const Contact = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="First Name"
+                                placeholder={t('first_name')}
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 required
@@ -73,7 +82,7 @@ const Contact = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Last Name"
+                                placeholder={t('last_name')}
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                                 required
@@ -91,22 +100,22 @@ const Contact = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Phone"
+                                placeholder={t('phone')}
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                             />
                         </div>
                         <textarea
                             rows="5"
-                            placeholder="Message"
+                            placeholder={t('message')}
                             className="form-control"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             required
                         ></textarea>
                         {error && <div className="error">{error}</div>}
-                        {success && <div className="success">{success}</div>}
-                        <input type="submit" className="send-btn" value="Send Message" />
+                        
+                        <input type="submit" className="send-btn" value={t('send_message')} />
                     </form>
                     <div>
                         <img src="img/contact.svg" alt="Contact" style={{ width: "600px" }} />
@@ -128,19 +137,17 @@ const Contact = () => {
             </div>
 
             <div className="contact-footer">
-            <h3>Follow Us</h3>
-            <div className="social-links">
-                <a href="#" className="fab fa-facebook-f"></a>
-                <a href="#" className="fab fa-twitter"></a>
-                <a href="#" className="fab fa-instagram"></a>
-                <a href="#" className="fab fa-linkedin"></a>
-                <a href="#" className="fab fa-youtube"></a>
+                <h3>{t('follow_us')}</h3>
+                <div className="social-links">
+                    <a href="#" className="fab fa-facebook-f"></a>
+                    <a href="#" className="fab fa-twitter"></a>
+                    <a href="#" className="fab fa-instagram"></a>
+                    <a href="#" className="fab fa-linkedin"></a>
+                    <a href="#" className="fab fa-youtube"></a>
+                </div>
             </div>
-        </div>
-    </section>
-);
+        </section>
+    );
 };
 
 export default Contact;
-
-               

@@ -21,6 +21,9 @@ import ProfilePage from './components/pro';
 import Detail_service from './components/Deatil_service';
 import CheckoutForm from './components/CheckoutForm';
 import AddServiceForm from './components/AddServiceForm';
+import Message from './components/Message';
+import ConsultationAi from './components/ConsultationAi';
+import Checkout from './components/Checkout';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -58,6 +61,9 @@ function App() {
           <Route path="/pro" element={<ProfilePage />} />
           <Route path="/checkout" element={<CheckoutForm />} />
           <Route path="/addserv" element={<AddServiceForm />} />
+          <Route path="/messagerie" element={<Message />} />
+          <Route path="/consultation" element={<ConsultationAi />} />
+          <Route path="/fff" element={<Checkout />} />
 
           
         </Routes>

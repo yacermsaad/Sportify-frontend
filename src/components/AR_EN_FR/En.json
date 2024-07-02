@@ -1,0 +1,282 @@
+{
+    "Home": "Home",
+    "Services": "Services",
+    "Blogs": "Blogs",
+    "Contact": "Contact",
+    "FAQs": "FAQs",
+    "Consultation": "Consultation",
+    "Login": "Login",
+    "Register": "Register",
+    "Become a Coach": "Become a Coach",
+    "Switch to Coach": "Switch to Coach",
+    "Update your picture": "Update your picture",
+    "Settings": "Settings",
+    "Sign out": "Sign out",
+    "Subscribe": "Subscribe",
+    "NewsletterPrompt": "Subscribe to our newsletter for updates.",
+    "EmailPlaceholder": "Enter your email",
+    "FAQTitle": "FAQ - Rapide Course",
+    "FAQSubtitle": "Frequently asked questions about the Rapide Course",
+    "Question1": "What is the Rapide Course?",
+    "Answer1": "The Rapide Course is an intensive training program designed to accelerate your fitness journey with structured workouts and personalized coaching.",
+    "Question2": "What are the benefits of the Rapide Course?",
+    "Answer2": "The Rapide Course offers rapid fitness gains through structured workouts, nutritional guidance, and expert coaching, tailored to achieve your goals faster.",
+    "Question3": "Is the Rapide Course suitable for beginners?",
+    "Answer3": "Yes, the Rapide Course is designed to cater to all fitness levels, including beginners. Our trainers provide modifications and personalized attention to ensure everyone can benefit.",
+    "Question4": "How long is the Rapide Course?",
+    "Answer4": "The Rapide Course typically runs for 6 weeks, focusing on intensive training sessions and progressive fitness goals.",
+    "Question5": "How do I enroll in the Rapide Course?",
+    "Answer5": "To enroll in the Rapide Course, visit our gym's reception desk or contact us via phone or email to get started with registration.",
+    "footer": {
+    "title": "Sporti<span class='text-green-500'>fy.</span>",
+    "description": "Making football look better to the world and a more respectful game.",
+    "socialMedia": [
+      {
+        "name": "Facebook",
+        "icon": "facebook",
+        "url": "#"
+      },
+      {
+        "name": "Twitter",
+        "icon": "twitter",
+        "url": "#"
+      },
+      {
+        "name": "GitHub",
+        "icon": "github",
+        "url": "#"
+      },
+      {
+        "name": "YouTube",
+        "icon": "youtube",
+        "url": "#"
+      }
+    ],
+    "links": {
+      "solutions": {
+        "title": "Solutions",
+        "items": [
+          {
+            "text": "Marketing",
+            "url": "#"
+          },
+          {
+            "text": "Analytics",
+            "url": "#"
+          },
+          {
+            "text": "Commerce",
+            "url": "#"
+          },
+          {
+            "text": "Insights",
+            "url": "#"
+          }
+        ]
+      },
+      "support": {
+        "title": "Support",
+        "items": [
+          {
+            "text": "Pricing",
+            "url": "#"
+          },
+          {
+            "text": "Documentation",
+            "url": "#"
+          },
+          {
+            "text": "Guides",
+            "url": "#"
+          },
+          {
+            "text": "API Status",
+            "url": "#"
+          }
+        ]
+      },
+      "company": {
+        "title": "Company",
+        "items": [
+          {
+            "text": "About",
+            "url": "#"
+          },
+          {
+            "text": "Blog",
+            "url": "#"
+          },
+          {
+            "text": "Jobs",
+            "url": "#"
+          },
+          {
+            "text": "Press",
+            "url": "#"
+          },
+          {
+            "text": "Partners",
+            "url": "#"
+          }
+        ]
+      },
+      "legal": {
+        "title": "Legal",
+        "items": [
+          {
+            "text": "Claim",
+            "url": "#"
+          },
+          {
+            "text": "Privacy",
+            "url": "#"
+          },
+          {
+            "text": "Terms",
+            "url": "#"
+          }
+        ]
+      }
+    },
+    "copyright": "&copy; 2020 Your Company, Inc. All rights reserved."
+  },
+  "cheznous": "At Our Place",
+
+   "activityTitle": "Find the activity that suits you!",
+    "activityDescription": "Discover new classes, teachers, and studios that match your daily desires.",
+    "chatWithSportify": "Chat with Sportify Chatbot",
+    "aiProcessing": "AI is processing your question...",
+    "askAnything": "Ask anything",
+    "send": "Send",
+    "error": "Sorry - Something went wrong. Please try again!",
+    "WeeklyArticles": "Weekly Articles",
+    "WeeklyArticlesDescription": "Get the latest updates and news delivered to your inbox every week.",
+    "NoSpam": "No Spam",
+    "NoSpamDescription": "We respect your privacy and will never send you spam.",
+    "TestimonialsTitle": "What's our customers say",
+    "Testimonial1": "This service has been a game-changer for my business. Highly recommend!",
+    "Testimonial2": "The team is extremely professional and delivers on time. Couldn't be happier.",
+    "Testimonial3": "Exceptional quality and customer service. I'm a loyal customer now.",
+    "ClientName1": "John Smith",
+    "ClientName2": "Emily Johnson",
+    "ClientName3": "Michael Brown",
+    "Client": "Client",
+    "Sportify2024": "Sportify 2024",
+    "JoinUsInDenver": "Join us in Denver from June 7 – 9 to see what’s coming next.",
+    "RegisterNow": "Register now",
+    "Dismiss": "Dismiss",
+    "ab": "Welcome to Sportify 2024",
+  "p2": "Join us in Denver from June 7 – 9 to see what’s coming next.",
+  "Casablanca": "Casablanca",
+  "Rabat": "Rabat",
+  "Marrakech": "Marrakech",
+  "Fès": "Fès",
+  "Tanger": "Tanger",
+  "Agadir": "Agadir",
+  "Meknès": "Meknès",
+  "Oujda": "Oujda",
+  "Kenitra": "Kenitra",
+  "Tétouan": "Tétouan",
+  "Salé": "Salé",
+  "Nador": "Nador",
+  "Mohammédia": "Mohammédia",
+  "Beni Mellal": "Beni Mellal",
+  "Safi": "Safi",
+  "Laâyoune": "Laâyoune",
+  "Khouribga": "Khouribga",
+  "El Jadida": "El Jadida",
+  "Taza": "Taza",
+  "SearchPlaceholder": "Search for a sport or studio name",
+  "Yoga": "Yoga",
+  "Pilates": "Pilates",
+  "PoleDance": "Pole Dance",
+  "Stretching": "Stretching",
+  "Dance": "Dance",
+  "ABS": "ABS",
+  "Boxing": "Boxing",
+  "Fitness": "Fitness",
+  "HRBenefits": "Are you in HR? Discover the benefits of Eversports Corporate.",
+  "personalInfo": {
+    "title": "Personal Information",
+    "subtitle": "Tell us a bit about yourself. This information will appear on your public profile so potential buyers can get to know you better.",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "profilePictureLabel": "Profile Picture",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Share a bit about your work experience",
+    "descriptionMinLengthError": "Please enter at least 150 characters",
+    "descriptionLength": "characters",
+    "descriptionMaxLength": "/600",
+    "buttonText": "Continue",
+    "fullNameError": "Please enter your full name",
+    "descriptionError": "Please enter your description",
+    "imageValidatedMessage": "Image validated"
+  },
+  
+    "sportPrefere": {
+      "title": "Your favorite sport in your city",
+      "description": "Discover all yoga and sports offers near you and find the studio or venue that suits you.",
+      "buttonText": "View Map"
+    },
+ 
+    "titlePlaceholder": "Enter title...",
+    "writeCommentPlaceholder": "Write your comment...",
+    
+    "createPost": "Create Post",
+    "title": "Title",
+    "content": "Content",
+    "images": "Images",
+    "addPost": "Add Post",
+    "get_in_touch": "Get in Touch with Us",
+    "contact_us": "Contact Us",
+    "contact_info": "Get in touch with us to learn more about our services, request support, or provide feedback. We're here to assist you and ensure you have the best experience possible. You can reach us via phone, email, or by filling out the contact form below. We look forward to hearing from you!",
+    "phone_no": "Phone No.",
+    "email": "E-mail",
+    "address": "Address",
+    "opening_hours": "Opening Hours",
+    "monday_friday": "Monday - Friday (9:00 AM to 5:00 PM)",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "message": "Message",
+    "send_message": "Send Message",
+    "follow_us": "Follow Us",
+   "success_message": "Your message has been sent successfully!",
+    "error_message": "An error occurred. Please try again.",
+    "preview_profile_button": "Preview Sportify Profile",
+  "bio_title": "Bio",
+  "bio_description": "I have been working as a developer for {{ years }} years, specializing in {{ languages }}.",
+  "from": "From",
+  "country": "Country",
+  "member_since": "Member since",
+  "membership_date": "January 2023",
+  "description_title": "Description",
+  "edit_button": "Edit",
+  "save_button": "Save",
+  "cancel_button": "Cancel",
+  "skills_title": "Skills",
+  "add_new": "Add New",
+  "add_new_skill": "Add New Skill",
+  "label": "Label",
+  "level": "Level",
+  "select_level": "Select Level",
+  "experience_level": "Experience Level",
+  "beginner": "Beginner",
+  "add_button": "Add",
+  "education_title": "Education",
+  "add_new_education": "Add New Education",
+  "speciality": "Speciality",
+  "year": "Year",
+  "school": "School",
+  "country_school": "Country of School",
+  "certifications_title": "Certifications",
+  "add_new_certification": "Add New Certification",
+  "certified_by": "Certified By",
+  "create_blog_title": "Create Blog",
+  "your_blog_title": "Your Blog"
+     
+
+
+
+
+}
