@@ -1,5 +1,6 @@
 import React from 'react';
 import PlaceholderCard from './PlaceholderCard';
+import List_blogs from './listeblogs';
 
 import {
   MDBCol,
@@ -42,6 +43,7 @@ export default function ProfilePage() {
     const [blogFrom, setBlogForm] = useState(false);
     const [ListBlog, setListBlog] = useState(false);
     const [showFullInfo, setShowFullInfo] = useState(false);
+    const [blogs, setBlogs] = useState([]);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -50,6 +52,7 @@ export default function ProfilePage() {
             const response = await axios.get(`http://127.0.0.1:8000/api/coach/${storedCoachId}`);
             setPostData(response.data.coach);
             setDescription(response.data.coach.description); 
+            setBlogs(response.data.coach.blogs);
             console.log(response.data); // Log the fetched data here
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -60,15 +63,16 @@ export default function ProfilePage() {
       fetchData();
     }, [storedCoachId]);
   
+    
    
+
+    // const toggleMenu = () => {
+    //   setIsOpen(!isOpen);
+    // };
   
-    const toggleMenu = () => {
-      setIsOpen(!isOpen);
-    };
-  
-    const toggleFullInfo = () => {
-      setShowFullInfo(!showFullInfo);
-    };
+    // const toggleFullInfo = () => {
+    //   setShowFullInfo(!showFullInfo);
+    // };
   
     const FormBlog = () => {
       setBlogForm(!blogFrom);
@@ -315,31 +319,8 @@ export default function ProfilePage() {
     //   setServicePrice('');
     // };
 
-    const [blogs, setBlogs] = useState([]);
+ 
     const userId = JSON.parse(localStorage.getItem('user'));
-  
-    useEffect(() => {
-      fetchUserBlogs();
-    }, []);
-  
-    const fetchUserBlogs = async () => {
-      if(userId!=undefined)
-      try {
-        const response = await axios.get(`http://localhost:8000/api/users/${userId.id}/blogs`);
-        setBlogs(response.data.blogs);
-      } catch (error) {
-        console.error('Error fetching user blogs:', error);
-      }
-    };
-  
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-GB', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      });
-    };
   
     // const handleDeleteBlo = async (blogId) => {
     //   const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
@@ -354,30 +335,21 @@ export default function ProfilePage() {
     //     }
     //   }
     // };
-
- 
   
-    useEffect(() => {
-      fetchUserBlogs();
-    }, []);
-  
-   
-  
-  
-  
-    const handleDeleteBlog = async (blogId) => {
-      const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
-      if (confirmDelete) {
-        try {
-          const response = await axios.delete(`http://localhost:8000/api/users/${userId}/blogs/${blogId}`);
-          console.log(response.data.message); 
+    // const handleDeleteBlog = async (blogId) => {
+    //   const confirmDelete = window.confirm('Are you sure you want to delete this blog post?');
+    //   if (confirmDelete) {
+    //     try {
+    //       const response = await axios.delete(`http://localhost:8000/api/users/${userId}/blogs/${blogId}`);
+    //       console.log(response.data.message); 
           
-          setBlogs(blogs.filter(blog => blog.id !== blogId));
-        } catch (error) {
-          console.error('Error deleting blog:', error);
-        }
-      }
-    };
+    //       setBlogs(blogs.filter(blog => blog.id !== blogId));
+    //     } catch (error) {
+    //       console.error('Error deleting blog:', error);
+    //     }
+    //   }
+    // };
+    
     const [coachId, setCoachId] = useState('');
     const [images, setImages] = useState([]);
 
@@ -582,47 +554,13 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="col-md-6">
-        <div className="card">
-          {ListBlog ? (
-            <table style={{ marginLeft: "10px", marginTop: "80px",width:"100%" }}>
-              <thead style={{color:"white"}}>
-                <tr className="text-left border-b-2 border-gray-300">
-                  <th className="px-4 py-2 bg-green-400">Title</th>
-                  <th className="px-4 py-2 bg-green-400">Content</th>
-                  <th className="px-4 py-2 bg-green-400">Coach</th>
-                  <th className="px-4 py-2 bg-green-400">Date</th>
-                  <th className="px-4 py-2 bg-green-400">Status</th>
-                  <th className="px-4 py-2 bg-green-400">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {blogs.map((blog) => (
-                  <tr key={blog.id}>
-                    <td className="px-4 py-2 border-b">{blog.titre}</td>
-                    <td className="px-4 py-2 border-b">{blog.contenu}</td>
-                    <td className="px-4 py-2 border-b">{blog.coach.fullname}</td>
-                    <td className="px-4 py-2 border-b">{formatDate(blog.created_at)}</td>
-                    <td className="px-4 py-2 border-b">Accepted</td>
-                    <td className="px-4 py-2 border-b">
-                      <button
-                        className="bg-red-500 text-white px-3 py-1 rounded"
-                        onClick={() => handleDeleteBlog(blog.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : null}
+      <div className="col-md-6 ml-5">
+          {ListBlog ? <List_blogs blogs={blogs} storedCoachId={storedCoachId} /> : null}
         </div>
-      </div>
     </div>
   </div>:null}
             
-            </div>
+    </div>
         
       </MDBContainer> 
       <div className="profile-container  bg-white rounded-lg shadow-md p-5"  style={{marginLeft:" 80px",marginTop:"-80px",width:"350px"}}>
@@ -830,11 +768,6 @@ export default function ProfilePage() {
       )}
     </div>
   </div>
-  
-    
-
-
-
 
   
     

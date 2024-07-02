@@ -18,9 +18,11 @@ function Sup_Blog_popup(props) {
             formData.append('blog_id', props.blog.id);
             axios.post('http://localhost:8000/api/sup_blog',formData)
             .then(response => {
+                props.fetchData();
                 console.log(response.data);
                 closeModal();
                 props.getdata();
+                props.fetchData();
             })
             .catch(error => {
                 console.error('There was an error uploading the image!', error);
@@ -40,14 +42,15 @@ function Sup_Blog_popup(props) {
                     <p className='text-center'>Vous voulez vraiment suprimer se blog</p>
                     <div className='flex justify-center mt-10'>
                         
-                        <button className=" bg-green-500 mb-5  text-white  text-sm font-bold py-2 px-5 border border-green-500 rounded  mr-5 "
-                        onClick={closeModal}>
-                            Non
-                        </button>
-                        <button className="bg-red-500 mb-5  text-white  text-sm font-bold py-2 px-5 border border-red-500 rounded  "
+                      
+                        <button className="bg-green-500 mb-5  text-white  text-sm font-bold py-2 px-5 border border-green-500 rounded mr-5  "
                          onClick={sup_blog}>
                             Oui
                         </button >
+                        <button className=" bg-red-500 mb-5  text-white  text-sm font-bold py-2 px-5 border border-red-500 rounded  "
+                        onClick={closeModal}>
+                            Non
+                        </button>
                     </div> 
                 </div>
             </div>

@@ -57,7 +57,7 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogForm" element={<BlogForm />} />
           <Route path="/BlogList" element={<BlogList />} />
-          <Route path="/serv" element={<Detail_service />} />
+          <Route path="/service/slug/:id" element={<Detail_service />} />
           <Route path="/pro" element={<ProfilePage />} />
           <Route path="/checkout" element={<CheckoutForm />} />
           <Route path="/addserv" element={<AddServiceForm />} />
