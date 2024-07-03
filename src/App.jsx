@@ -24,7 +24,9 @@ import AddServiceForm from './components/AddServiceForm';
 import Message from './components/Message';
 import ConsultationAi from './components/ConsultationAi';
 import Checkout from './components/Checkout';
+import Verification from './components/login/verification';
 function App() {
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -64,6 +66,7 @@ function App() {
           <Route path="/messagerie" element={<Message />} />
           <Route path="/consultation" element={<ConsultationAi />} />
           <Route path="/fff" element={<Checkout />} />
+          <Route path="/verification" element={<Verification />} />
 
           
         </Routes>

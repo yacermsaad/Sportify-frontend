@@ -7,6 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./detail_service.css"
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Login from './login/Login';
 
 import { formatDistanceToNow } from 'date-fns';
 
@@ -20,19 +21,12 @@ const formatDate = (datetime) => {
 const Detail_service = () => {
     const [data, setdata] = useState(null); 
     const [dore, setdore] = useState(false); 
-    const {id} = useParams();
-    console.log(id);
-    // const getdata=()=>{
-    //     axios.get('http://localhost:8000//api/service/')
-    //     .then(response => {
-    //         setdata(response.data.blogs)
-    //     })
-    //     .catch(error => {
-    //         console.error('There was an error uploading the image!', error);
-            
-    //     });
-    //   }
+    const [isModalOpenLogin,setisModalOpenLogin]=useState(false)
 
+    const {id} = useParams();
+    const closeModal = () => {
+        setisModalOpenLogin(false);
+      };
 
     const fetchData = async () => {
         if (id) {
@@ -85,6 +79,7 @@ const Detail_service = () => {
 
         <Navbar />
         {data!=null?<>
+            <Login isOpen={isModalOpenLogin} setOpen={closeModal} blog="true"/>
         <div className='flex md:w-[80%]  mx-auto mt-10  '>
             <div className='w-[60%]'>
                 <p className='font-semibold text-[22px] '>{data.titre}</p>
@@ -234,7 +229,7 @@ const Detail_service = () => {
             <div className='w-[40%] ml-[5%] relative '>
                 <div className='fixed w-[30%] '>
                 <div className='flex justify-end mb-2'> 
-                    <div className='pt-1'>  <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-[30px] h-[30px] left-[76%] top-0 cursor-pointer" onClick={() => {Add_like()}}
+                    <div className='pt-1'>  <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-[30px] h-[30px] left-[76%] top-0 cursor-pointer" onClick={() => {JSON.parse(localStorage.getItem('user'))!=undefined?Add_like():setisModalOpenLogin(true)}}
                        fill={dore ? "red" : "none"} viewBox="0 0 24 24" stroke={dore ? "red" : "gray"} enableBackground="" >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg></div>
