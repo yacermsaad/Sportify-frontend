@@ -7,6 +7,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./detail_service.css"
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { formatDistanceToNow } from 'date-fns';
+
 
 const formatDate = (datetime) => {
     const date = new Date(datetime);
@@ -40,7 +42,18 @@ const Detail_service = () => {
    
       useEffect(() => {fetchData()},[id])
       console.log(data)
-    
+      const calculateTimeAgo = (timestamp) => {
+        return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+      };
+      const calculatestare = () => {
+        if (!data.comments || data.comments.length === 0) {
+            return 0; // or return null or any default value if there are no comments
+        }
+        
+        const somme = data.comments.reduce((acc, com) => acc + com.nb_start, 0);
+        return somme / data.comments.length;
+
+      };
 
   return (
     <div>
@@ -49,7 +62,7 @@ const Detail_service = () => {
         {data!=null?<>
         <div className='flex md:w-[80%]  mx-auto mt-10  '>
             <div className='w-[60%]'>
-                <p className='font-semibold text-[22px] '>I Will help you to wen your Marathone</p>
+                <p className='font-semibold text-[22px] '>{data.titre}</p>
                 <div className='flex mt-5 border-b'>
                 {data.coach.image === 'null' ?
                   <div className="flex items-center justify-center w-12 h-12 bg-green-500 text-white rounded-full mr-4"
@@ -64,63 +77,48 @@ const Detail_service = () => {
                         <div className='ml-5 font-semibold capitalize text-[17px]'>{data.coach.fullname}</div>
                         <div className='ml-5 '> 
                             <i className="fas fa-star text-black-500 mr-1"></i>
-                            <span className='font-medium'>5</span><span className='text-slate-600 ml-2 underline'>(2235) </span></div>
+                            <span className='font-medium'>{calculatestare()}</span><span className='text-slate-600 ml-2 underline'>({data.orders.length}) </span></div>
                     </div>
 
                 </div>
                 <div className=' w-[800px] mx-auto mt-10'>    <Carousel>
-                    <div>
-                        <img src="/img/img2.jpg" />
-                       
-                    </div>
-                    <div>
-                        <img src="/img/img2.jpg" />
-                        
-                    </div>
-                    <div>
-                        <img src="/img/img2.jpg" />
-                       
-                    </div>
-                    <div>
-                        <img src="/img/img2.jpg" />
-                       
-                    </div>
+                    {data.images.map((im,i)=>{
+                        return( <div key={i}>
+                            <img src={`http://localhost:8000/storage/${im.image}`} />
+                           
+                        </div>)
+                    })}
+                   
+                   
                     </Carousel>
 
                 </div>
                 <div className=' '>
                     <p className='font-semibold text-[22px] mb-5'>Ce que les gens disent de ce service  </p>
                     <Carousel>
-                    <div className='border-2 p-6 mx-auto bg-gray-100 shadow-md '>
-                        <div className='flex justify-start'>
-                            <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
-                                style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >
-                                AL
+                        {data.comments.map((com,i)=>{
+                            return(  <div className='border-2 p-6 mx-auto bg-gray-100 shadow-md ' key={i}>
+                                <div className='flex justify-start'>
+                                    {com.user.image==null?
+                                    <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
+                                        style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >
+                                      {com.user.name.slice(0, 2).toUpperCase()}
+                                    </div>:
+                                    <div className="flex items-center justify-center w-12 h-12 text-white rounded-full mr-4">
+                                    <img src={`http://localhost:8000/storage/${com.user.image}`} alt="User Avatar" />
+                                  </div>
+                                    }
+                                    <div className='text-left ml-3 '>
+                                        <div className='font-semibold '>{com.user.name}</div>
+                                        <div className='text-wrap hover:text-balance flex flex-wrap text-gray-600 ' style={{overflowWrap: 'anywhere'}}>{com.contenu}</div>
+                                        <div className='text-gray-400'>{calculateTimeAgo(com.created_at)} </div>
+                                    </div>
+                                </div>
+                                
                             </div>
-                            <div className='text-left ml-3 '>
-                                <div className='font-semibold '>AmIn Rchdy</div>
-                                 <div className='text-wrap hover:text-balance flex flex-wrap text-gray-600 ' style={{overflowWrap: 'anywhere'}}>wa3r akhouya waw m9wd 3jbny hadchy ya khouya wa hamid 7al tbon mo dk bab</div>
-                                <div className='text-gray-400'>Il ya 1 mois </div>
-                            </div>
-
-                        </div>
-                        
-                    </div>
-                    <div className='border-2 p-6 mx-auto  bg-gray-100 shadow-md '>
-                        <div className='flex justify-start'>
-                            <div className="flex items-center justify-center w-10 h-9 bg-green-500 text-white rounded-full "
-                                style={{background:"lightgreen", color:"white",fontWeight:"bold"} }  >
-                                AL
-                            </div>
-                            <div className='text-left ml-3'>
-                                <div className='font-semibold '>AmIn Rchdy</div>
-                                 <div className='text-wrap hover:text-balance flex flex-wrap text-gray-600 ' style={{overflowWrap: 'anywhere'}}>wa3r akhouya waw m9wd 3jbny hadchy ya khouya wa hamid 7al tbon mo dk bab</div>
-                                <div className='text-gray-400'>Il ya 1 mois </div>
-                            </div>
-
-                        </div>
-                        
-                    </div>
+                            )
+                        })}
+                  
                   
                    
                     
@@ -131,21 +129,7 @@ const Detail_service = () => {
                 <div className=' mb-10'>
                     <p className='font-semibold text-[22px] mb-5'>À propos de ce concert</p>
                     <div>
-                    You need a decent sports graphic design?
-
-                    You're in the right place! I'm here to work it with you!
-
-                    Whatever you need, just talk to me.
-
-                    I will happy to serve you.
-
-
-
-                    Let's make it work!
-
-
-
-                    Angeline
+                  {data.description}
                     </div>
                 </div>
                 <div className='font-semibold text-[22px] '>Faites connaissance avec <span className='font-semibold capitalize'>{data.coach.fullname}</span></div>
@@ -163,7 +147,7 @@ const Detail_service = () => {
                         <div className='ml-5 font-semibold text-[17px] capitalize '>{data.coach.fullname}</div>
                         <div className='ml-5 '> 
                             <i className="fas fa-star text-black-500 mr-1"></i>
-                            <span className='font-medium'>5</span><span className='text-slate-600 ml-2 underline'>(2235) </span>
+                            <span className='font-medium'>{calculatestare()}</span><span className='text-slate-600 ml-2 underline'>({data.orders.length}) </span>
                         </div>
                     </div>
                 </div>
