@@ -16,7 +16,7 @@ export default function Education(){
     const yearOptions = [];
     for (let year = startYear; year <= endYear; year++) {
       yearOptions.push(
-        <option value={year} key={year}>
+        <option defaultValue={year} key={year}>
           {year}
         </option>
       );
@@ -94,7 +94,7 @@ const delete_func=(data_delete)=>{
                  cursor-pointer rounded-md" onChange={(e)=>{setcountry_universty(e.target.value)}}  >
                     <option selected disabled className='max-md:text-md'>Countries of Universirty...</option>
                     {pays_data.map((pay) => (
-                        <option key={pay.cca3} value={pay.name.common}>
+                        <option key={pay.cca3} defaultValue={pay.name.common}>
                         {pay.name.common}
                         </option>
                     ))}

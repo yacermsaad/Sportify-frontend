@@ -91,21 +91,21 @@ function List_blogs(props) {
                         className="bg-green-500 text-white px-3 py-1 rounded mr-2"
                         onClick={() => openModBlog(blg)}
                         >
-                        Modifier {blg.id}
+                        Modifier 
                         </button>
                         <button
                         className="bg-red-500 text-white px-3 py-1 rounded"
                         onClick={() => openSupBlog(blg)}
                         >
-                        Supprimer {blg.id}
+                        Supprimer 
                         </button>
                     </td>
                     </tr>
                 ))}
                 {selectedBlog && (
                     <>
-                    <Mod_Blog_popup isOpen={isOpen_m_blg} setOpen={closeModalblg} blog={selectedBlog} fetchData={fetchData} />
-                    <Sup_Blog_popup isOpen={isOpen_sup_blg} setOpen={closeModalblg} blog={selectedBlog} fetchData={fetchData}  />
+                    <Mod_Blog_popup isOpen={isOpen_m_blg} setOpen={closeModalblg} blog={selectedBlog} fetchData={fetchData} fetch="true" />
+                    <Sup_Blog_popup isOpen={isOpen_sup_blg} setOpen={closeModalblg} blog={selectedBlog} fetchData={fetchData} fetch="true" />
                     </>
                 )}
                 </tbody>

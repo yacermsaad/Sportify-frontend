@@ -25,11 +25,15 @@ function Mod_Blog_popup(props) {
             axios.post('http://localhost:8000/api/mod_blog',formData)
             .then(response => {
                 console.log(response.data);
-                props.fetchData();
+                if(props.fetch!="false"){
+                    props.fetchData();
+                }
                 closeModal();
                 setimage("")
                 props.getdata();
-                props.fetchData();
+                if(props.fetch!="false"){
+                    props.fetchData();
+                }
             })
             .catch(error => {
                 console.error('There was an error uploading the image!', error);
@@ -37,7 +41,6 @@ function Mod_Blog_popup(props) {
             });
         }
     }
- console.log(props.blog)
     
     return(<div>
              <Modal isOpen={IsOpen} onRequestClose={closeModal} contentLabel="Pop-up Modal" className="w-full h-full bg-[rgba(0,0,0,.65)] pt-[148px] pb-[110px] z-[999]">
@@ -52,7 +55,7 @@ function Mod_Blog_popup(props) {
                         <textarea onChange={(e)=>{setcontext(e.target.value)}} id="message" rows="4" className="block p-2.5  mb-5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 outline-none" placeholder="Votre context" defaultValue={props.blog.contenu}></textarea>
                         
                         <label htmlFor="message" className="block text-sm font-medium text-gray-900  mb-4"> Image</label>
-                        <div class="flex  justify-between   ">
+                        <div className="flex  justify-between   ">
                             <div>
                             <label htmlFor="dropzone-file" className=" mr-2 flex flex-col items-center justify-center w-[210px] h-[120px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800  hover:bg-gray-100  ">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">

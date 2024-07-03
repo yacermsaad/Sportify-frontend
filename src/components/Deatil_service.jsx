@@ -7,7 +7,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./detail_service.css"
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+
 import { formatDistanceToNow } from 'date-fns';
+
 
 
 const formatDate = (datetime) => {
@@ -17,6 +19,7 @@ const formatDate = (datetime) => {
 
 const Detail_service = () => {
     const [data, setdata] = useState(null); 
+    const [dore, setdore] = useState(false); 
     const {id} = useParams();
     console.log(id);
     // const getdata=()=>{
@@ -29,6 +32,8 @@ const Detail_service = () => {
             
     //     });
     //   }
+
+
     const fetchData = async () => {
         if (id) {
           try {
@@ -39,11 +44,31 @@ const Detail_service = () => {
           }
         }
       };
-   
       useEffect(() => {fetchData()},[id])
-      console.log(data)
+      
+      const Add_like = async () => {
+        const user=JSON.parse(localStorage.getItem('user'))
+        if (id && user!=undefined) {
+            const id_user=user.id
+           
+          try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/service_like/${id}`,{ id_user });
+           if(response.data.message=="Like deleted"){
+            setdore(false)
+           }else{
+            setdore(true)
+           }
+            fetchData()
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
+      };
+      
       const calculateTimeAgo = (timestamp) => {
-        return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+        let result = formatDistanceToNow(new Date(timestamp), { addSuffix: false });
+        result = result.replace('about', 'Environ'); // Replace "about" with "environ"
+        return result;
       };
       const calculatestare = () => {
         if (!data.comments || data.comments.length === 0) {
@@ -81,10 +106,10 @@ const Detail_service = () => {
                     </div>
 
                 </div>
-                <div className=' w-[800px] mx-auto mt-10'>    <Carousel>
+                <div className=' w-[800px]  mx-auto mt-10'>    <Carousel>
                     {data.images.map((im,i)=>{
-                        return( <div key={i}>
-                            <img src={`http://localhost:8000/storage/${im.image}`} />
+                        return( <div key={i} className='h-[500px]'>
+                            <img src={`http://localhost:8000/storage/${im.image}`}  />
                            
                         </div>)
                     })}
@@ -94,6 +119,7 @@ const Detail_service = () => {
 
                 </div>
                 <div className=' '>
+                    {data.comments.length>0?<>
                     <p className='font-semibold text-[22px] mb-5'>Ce que les gens disent de ce service  </p>
                     <Carousel>
                         {data.comments.map((com,i)=>{
@@ -118,12 +144,7 @@ const Detail_service = () => {
                             </div>
                             )
                         })}
-                  
-                  
-                   
-                    
-                   
-                    </Carousel>
+                    </Carousel></>:null}
                 </div>
 
                 <div className=' mb-10'>
@@ -160,7 +181,7 @@ const Detail_service = () => {
                             </div>
                             <div>
                                 <div className='text-gray-400'>Derniére Commande</div>
-                                <div className=' ml-4 text-gray-600'>Environ 3 heures</div>
+                                <div className=' ml-4 text-gray-600'> {data.orders.length>0?calculateTimeAgo(data.orders[0].created_at): "1 jour"}</div>
                             </div>
                         </div>
                         <div className='flex justify-between mt-10 mb-8 font-semibold ' >
@@ -213,7 +234,10 @@ const Detail_service = () => {
             <div className='w-[40%] ml-[5%] relative '>
                 <div className='fixed w-[30%] '>
                 <div className='flex justify-end mb-2'> 
-                    <div className='pt-1'><img src="/img/coeur.png" className='w-6 h-6 mr-2'/></div>
+                    <div className='pt-1'>  <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-[30px] h-[30px] left-[76%] top-0 cursor-pointer" onClick={() => {Add_like()}}
+                       fill={dore ? "red" : "none"} viewBox="0 0 24 24" stroke={dore ? "red" : "gray"} enableBackground="" >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg></div>
                     <span className='border rounded-md p-1 px-3 mr-2'>{data.likes.length}</span>
                     <div className='border rounded-md  p-1 px-3'><img src="/img/partager.png"  className='w-6 h-6 '/></div>
                 </div>

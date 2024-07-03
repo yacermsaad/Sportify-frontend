@@ -18,15 +18,19 @@ function Sup_Blog_popup(props) {
             formData.append('blog_id', props.blog.id);
             axios.post('http://localhost:8000/api/sup_blog',formData)
             .then(response => {
-                props.fetchData();
+                if(props.fetch!="false"){
+                    props.fetchData();
+                }
                 console.log(response.data);
                 closeModal();
                 props.getdata();
-                props.fetchData();
+                if(props.fetch!="false"){
+                    props.fetchData();
+                }
+               
             })
             .catch(error => {
                 console.error('There was an error uploading the image!', error);
-                
             });
         
     }

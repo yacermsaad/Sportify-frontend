@@ -309,7 +309,7 @@ const handleDeleteEducation = async (id) => {
                                           <p className="text-center text-gray-600 mt-1">@{postData.fullname}</p>
 
                                           <div style={{marginLeft:"115px"}}>
-                                          <a href={postData.profil_linkdine}><i class="fa-brands fa-linkedin"></i></a> &nbsp; <a href={postData.website}><i class="fa-solid fa-globe"></i></a>
+                                          <a href={postData.profil_linkdine}><i className="fa-brands fa-linkedin"></i></a> &nbsp; <a href={postData.website}><i className="fa-solid fa-globe"></i></a>
 
                                           
                                           </div>
@@ -327,13 +327,13 @@ const handleDeleteEducation = async (id) => {
                                           </div>
                                           <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                           <li className="flex items-center py-3">
-                                              <span><i class="fa-solid fa-location-dot" style={{color:"lightgreen"}}> </i> From</span>
+                                              <span><i className="fa-solid fa-location-dot" style={{color:"lightgreen"}}> </i> From</span>
                                               <span className="ml-auto">
                                                   <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Morocco</span>
                                               </span>
                                           </li>
                                           <li className="flex items-center py-3">
-                                              <span><i class="fa-solid fa-user" style={{color:"lightgreen"}}></i> Member since</span>
+                                              <span><i className="fa-solid fa-user" style={{color:"lightgreen"}}></i> Member since</span>
                                               <span className="ml-auto">Nov 07, 2016</span>
                                           </li>
                                       </ul>
@@ -624,7 +624,7 @@ const handleDeleteEducation = async (id) => {
 
     <div className="section certifications">
     <div className="section-header">
-      <h2 style={{fontSize:"22px"}}> <i class="fa-solid fa-certificate"></i> Certifications</h2>
+      <h2 style={{fontSize:"22px"}}> <i className="fa-solid fa-certificate"></i> Certifications</h2>
       <button className="add-button" onClick={toggleFormVisibility}>+ Add New</button>
     </div><br></br><br></br>
 
@@ -716,7 +716,7 @@ const handleDeleteEducation = async (id) => {
       onClick={() => handleDelete(certificate.id)}
       className="mt-2 px-4 py-2 bg-green-500 hover:bg-red-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
     >
-      Delete <i class="fa-solid fa-trash"></i>
+      Delete <i className="fa-solid fa-trash"></i>
     </button>
     </li>
   ))
@@ -743,10 +743,10 @@ const handleDeleteEducation = async (id) => {
                                             <div className="flex items-center justify-center h-screen ">
                                             <div style={{ width: "800px", background: "white", height: "50px",marginRight:"1200px",position:"absolute",marginTop:"-550px", boxShadow:"0 2px 4px 0 rgba(0,0,0,.2)",borderRadius:"10px"}}>
                                                 <button style={{marginLeft:"250px",marginTop:"13px" }} onClick={FormBlog}>
-                                                <i class="fa-solid fa-plus" style={{color:"lightgreen"}}></i> Add Service
+                                                <i className="fa-solid fa-plus" style={{color:"lightgreen"}}></i> Add Service
                                                 </button>
                                                 <button style={{marginLeft:"30px"}}  onClick={ShowListBlog}> 
-                                                <i class="fa-solid fa-list" style={{color:"lightgreen"}}></i> List blog
+                                                <i className="fa-solid fa-list" style={{color:"lightgreen"}}></i> List blog
                                                 </button>
                                             </div>
                                         </div>

@@ -459,7 +459,7 @@ export default function ProfilePage() {
           <p className="text-center text-gray-600 mt-1">@{postData.fullname}</p>
 
           <div style={{marginLeft:"115px"}}>
-          <a href={postData.profil_linkdine}><i class="fa-brands fa-linkedin"></i></a> &nbsp; <a href={postData.website}><i class="fa-solid fa-globe"></i></a>
+          <a href={postData.profil_linkdine}><i className="fa-brands fa-linkedin"></i></a> &nbsp; <a href={postData.website}><i className="fa-solid fa-globe"></i></a>
 
           
           </div>
@@ -477,13 +477,13 @@ export default function ProfilePage() {
           </div>
           <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
           <li className="flex items-center py-3">
-              <span><i class="fa-solid fa-location-dot" style={{color:"lightgreen"}}> </i> From</span>
+              <span><i className="fa-solid fa-location-dot" style={{color:"lightgreen"}}> </i> From</span>
               <span className="ml-auto">
                   <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Morocco</span>
               </span>
           </li>
           <li className="flex items-center py-3">
-              <span><i class="fa-solid fa-user" style={{color:"lightgreen"}}></i> Member since</span>
+              <span><i className="fa-solid fa-user" style={{color:"lightgreen"}}></i> Member since</span>
               <span className="ml-auto">Nov 07, 2016</span>
           </li>
       </ul>
@@ -569,7 +569,7 @@ export default function ProfilePage() {
 
       <div className="section description">
       <div className="section-header">
-        <h2 style={{ fontSize: "22px",marginLeft:"-20px" }}><i class="fa-solid fa-circle-chevron-right"></i> Description</h2>
+        <h2 style={{ fontSize: "22px",marginLeft:"-20px" }}><i className="fa-solid fa-circle-chevron-right"></i> Description</h2>
         <button 
         className="add-button bg-green-400 hover:bg-green-600 rounded-full" 
         onClick={handleEditClick} 
@@ -582,7 +582,7 @@ export default function ProfilePage() {
           position: "absolute"
         }}
       >
-      <i class="fa-solid fa-pen-nib"  style={{
+      <i className="fa-solid fa-pen-nib"  style={{
         color: "white",
         fontSize: "16px",
       }}></i>
@@ -594,7 +594,7 @@ export default function ProfilePage() {
         <div className="max-w-screen-sm" style={{width:"350px",marginLeft:"-40px"}}>
           <form onSubmit={handleSubmitDescription}>
             <textarea
-              value={description}
+              defaultValue={description}
               onChange={handleChangeDescription}
               className="border border-gray-300 rounded px-3 py-2 w-full"
               rows="5"
@@ -671,7 +671,7 @@ export default function ProfilePage() {
               type="text"
               id="label"
               name="label"
-              value={skillData.label}
+              defaultValue={skillData.label}
               onChange={handleChangeSkill}
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -688,7 +688,7 @@ export default function ProfilePage() {
             <select
               id="niveau"
               name="niveau"
-              value={skillData.niveau}
+              defaultValue={skillData.niveau}
               onChange={handleChangeSkill}
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -699,11 +699,11 @@ export default function ProfilePage() {
                   : ""
               }`}
             >
-              <option value="">Select Level</option>
-              <option value="Experience Level">Experience Level</option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Expert">Expert</option>
+              <option defaultValue="">Select Level</option>
+              <option defaultValue="Experience Level">Experience Level</option>
+              <option defaultValue="Beginner">Beginner</option>
+              <option defaultValue="Intermediate">Intermediate</option>
+              <option defaultValue="Expert">Expert</option>
             </select>
           </div>
           <button
@@ -757,7 +757,7 @@ export default function ProfilePage() {
                     onClick={() => handleDeleteSkill(skill.id)}
                     className="text-red-600 hover:text-red-800"
                   >
-                   <i class="fa-solid fa-trash"></i>
+                   <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>
@@ -814,7 +814,7 @@ export default function ProfilePage() {
                 type="text"
                 id="label"
                 name="label"
-                value={educationData.label}
+                defaultValue={educationData.label}
                 onChange={handleChangeEducation}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -955,7 +955,7 @@ export default function ProfilePage() {
                       onClick={() => handleDeleteEducation(education.id)}
                       className="text-red-600 hover:text-red-800"
                     >
-                     <i class="fa-solid fa-trash"></i>
+                     <i className="fa-solid fa-trash"></i>
                     </button>
                   </td>
                 </tr>
@@ -1117,7 +1117,7 @@ export default function ProfilePage() {
                   onClick={() => handleDelete(certificate.id)}
                   className="text-red-600 hover:text-red-800"
                 >
-                 <i class="fa-solid fa-trash"></i>
+                 <i className="fa-solid fa-trash"></i>
                 </button>
               </td>
             </tr>
