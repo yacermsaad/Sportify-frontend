@@ -18,9 +18,6 @@ export default function Verification(){
     const navigate = useNavigate();
 
 
-
-
-
     const Verification_func=async (e)=>{
         e.preventDefault();
         if(code==code_verification){

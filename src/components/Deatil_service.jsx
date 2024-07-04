@@ -10,6 +10,7 @@ import axios from 'axios';
 import Login from './login/Login';
 
 import { formatDistanceToNow } from 'date-fns';
+import Order_confirmation from '../components/order_confirmation';
 
 
 
@@ -20,26 +21,35 @@ const formatDate = (datetime) => {
 
 const Detail_service = () => {
     const [data, setdata] = useState(null); 
+    const [isopen, setisopen] = useState(false); 
     const [dore, setdore] = useState(false); 
     const [isModalOpenLogin,setisModalOpenLogin]=useState(false)
 
     const {id} = useParams();
     const closeModal = () => {
         setisModalOpenLogin(false);
+        setisopen(false)
       };
-
+      const user=JSON.parse(localStorage.getItem('user'))
     const fetchData = async () => {
         if (id) {
           try {
             const response = await axios.get(`http://127.0.0.1:8000/api/service/${id}`);
             setdata(response.data);
+            response.data.likes.map((lik)=>{
+                if(user!=undefined){
+                    if(lik.user_id==user.id){
+                        setdore(true)
+                    }
+                }
+            })
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         }
       };
       useEffect(() => {fetchData()},[id])
-      
+
       const Add_like = async () => {
         const user=JSON.parse(localStorage.getItem('user'))
         if (id && user!=undefined) {
@@ -73,6 +83,15 @@ const Detail_service = () => {
         return somme / data.comments.length;
 
       };
+      const order_conf=()=>{
+        const user=JSON.parse(localStorage.getItem('user'))
+        if(user!=undefined){
+            if(user.id!=data.coach.user_id){
+                setisopen(true);
+            }
+            
+        }
+      }
 
   return (
     <div>
@@ -113,7 +132,7 @@ const Detail_service = () => {
                     </Carousel>
 
                 </div>
-                <div className=' '>
+                <div className=''>
                     {data.comments.length>0?<>
                     <p className='font-semibold text-[22px] mb-5'>Ce que les gens disent de ce service  </p>
                     <Carousel>
@@ -256,10 +275,10 @@ const Detail_service = () => {
                         <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
                         <span className='ml-2 text-gray-600'>Preparation Marathone </span>
                     </div>
-
-                    <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] '> Continue  </div>
+                    <Order_confirmation  isOpen={isopen}  setOpen={closeModal} id={id} />
+                    <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={()=>{order_conf()}}> Continue  </div>
                     
-
+                  
                     </div>
                     <div className="bg-slate-50 mt-5 p-6">
                     <div className='border border-green-500 text-center font-bold text-green-500 py-2 rounded-md text-[18px]'> Contact me  </div>
