@@ -77,14 +77,16 @@ function Blogs() {
           'Content-Type': 'multipart/form-data',
         },
       }).then(response => {
+        handleClosePopup();
         getdata;
-        handleClosePopup()
+        
     })
       
     } catch (error) {
       
     }
     getdata();
+    handleClosePopup();
   };
 
 

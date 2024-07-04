@@ -16,7 +16,7 @@ export default function Certification(){
     const yearOptions = [];
     for (let year = startYear; year <= endYear; year++) {
       yearOptions.push(
-        <option value={year} key={year}>
+        <option defaultValue={year} key={year}>
           {year}
         </option>
       );

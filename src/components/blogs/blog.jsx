@@ -168,8 +168,8 @@ useEffect(()=>{
                 </>
               </div>:null}
               </div>
-              <Mod_Blog_popup isOpen={isOpen_m_blg} setOpen={closeModalblg}  blog={props.blog} getdata={props.getdata}   />
-              <Sup_Blog_popup  isOpen={isOpen_sup_blg} setOpen={closeModalblg}  blog={props.blog} getdata={props.getdata} />
+              <Mod_Blog_popup isOpen={isOpen_m_blg} setOpen={closeModalblg}  blog={props.blog} getdata={props.getdata} fetch="false"   />
+              <Sup_Blog_popup  isOpen={isOpen_sup_blg} setOpen={closeModalblg}  blog={props.blog} getdata={props.getdata} fetch="false"  />
               <div className='pt-3'>{props.blog.contenu}</div>
             </div>
             {props.blog.images.map((im,i)=>{

@@ -7,7 +7,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./detail_service.css"
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Login from './login/Login';
+
 import { formatDistanceToNow } from 'date-fns';
+import Order_confirmation from '../components/order_confirmation';
+
 
 
 const formatDate = (datetime) => {
@@ -17,34 +21,65 @@ const formatDate = (datetime) => {
 
 const Detail_service = () => {
     const [data, setdata] = useState(null); 
+    const [isopen, setisopen] = useState(false); 
+    const [dore, setdore] = useState(false); 
+    const [isModalOpenLogin,setisModalOpenLogin]=useState(false)
+
     const {id} = useParams();
-    console.log(id);
-    // const getdata=()=>{
-    //     axios.get('http://localhost:8000//api/service/')
-    //     .then(response => {
-    //         setdata(response.data.blogs)
-    //     })
-    //     .catch(error => {
-    //         console.error('There was an error uploading the image!', error);
-            
-    //     });
-    //   }
+    const closeModal = () => {
+        setisModalOpenLogin(false);
+        setisopen(false)
+      };
+      const user=JSON.parse(localStorage.getItem('user'))
     const fetchData = async () => {
         if (id) {
           try {
             const response = await axios.get(`http://127.0.0.1:8000/api/service/${id}`);
             setdata(response.data);
+            response.data.likes.map((lik)=>{
+                if(user!=undefined){
+                    if(lik.user_id==user.id){
+                        setdore(true)
+                    }
+                }
+            })
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         }
       };
+<<<<<<< HEAD
     
       useEffect(() => {fetchData()},[id])
       
       console.log(data)
+=======
+      useEffect(() => {fetchData()},[id])
+
+      const Add_like = async () => {
+        const user=JSON.parse(localStorage.getItem('user'))
+        if (id && user!=undefined) {
+            const id_user=user.id
+           
+          try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/service_like/${id}`,{ id_user });
+           if(response.data.message=="Like deleted"){
+            setdore(false)
+           }else{
+            setdore(true)
+           }
+            fetchData()
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
+      };
+      
+>>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
       const calculateTimeAgo = (timestamp) => {
-        return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+        let result = formatDistanceToNow(new Date(timestamp), { addSuffix: false });
+        result = result.replace('about', 'Environ'); // Replace "about" with "environ"
+        return result;
       };
       const calculatestare = () => {
         if (!data.comments || data.comments.length === 0) {
@@ -55,6 +90,7 @@ const Detail_service = () => {
         return somme / data.comments.length;
 
       };
+<<<<<<< HEAD
       const handleLike = async () => {
         try {
             const response = await axios.post(`http://127.0.0.1:8000/api/services/${id}/like`);
@@ -68,6 +104,17 @@ const Detail_service = () => {
         contenu: '',
         nb_start: 0, // Assuming nb_start is the rating or stars
       });
+=======
+      const order_conf=()=>{
+        const user=JSON.parse(localStorage.getItem('user'))
+        if(user!=undefined){
+            if(user.id!=data.coach.user_id){
+                setisopen(true);
+            }
+            
+        }
+      }
+>>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
 
       const handleSubmitComment = async (e) => {
         e.preventDefault();
@@ -112,6 +159,7 @@ const Detail_service = () => {
 
         <Navbar />
         {data!=null?<>
+            <Login isOpen={isModalOpenLogin} setOpen={closeModal} blog="true"/>
         <div className='flex md:w-[80%]  mx-auto mt-10  '>
             <div className='w-[60%]'>
                 <p className='font-semibold text-[22px] '>{data.titre}</p>
@@ -133,10 +181,10 @@ const Detail_service = () => {
                     </div>
 
                 </div>
-                <div className=' w-[800px] mx-auto mt-10'>    <Carousel>
+                <div className=' w-[800px]  mx-auto mt-10'>    <Carousel>
                     {data.images.map((im,i)=>{
-                        return( <div key={i}>
-                            <img src={`http://localhost:8000/storage/${im.image}`} />
+                        return( <div key={i} className='h-[500px]'>
+                            <img src={`http://localhost:8000/storage/${im.image}`}  />
                            
                         </div>)
                     })}
@@ -145,7 +193,8 @@ const Detail_service = () => {
                     </Carousel>
 
                 </div>
-                <div className=' '>
+                <div className=''>
+                    {data.comments.length>0?<>
                     <p className='font-semibold text-[22px] mb-5'>Ce que les gens disent de ce service  </p>
                     <Carousel>
                         {data.comments.map((com,i)=>{
@@ -170,12 +219,7 @@ const Detail_service = () => {
                             </div>
                             )
                         })}
-                  
-                  
-                   
-                    
-                   
-                    </Carousel>
+                    </Carousel></>:null}
                 </div>
 
                 <div className=' mb-10'>
@@ -212,7 +256,7 @@ const Detail_service = () => {
                             </div>
                             <div>
                                 <div className='text-gray-400'>Derniére Commande</div>
-                                <div className=' ml-4 text-gray-600'>Environ 3 heures</div>
+                                <div className=' ml-4 text-gray-600'> {data.orders.length>0?calculateTimeAgo(data.orders[0].created_at): "1 jour"}</div>
                             </div>
                         </div>
                         <div className='flex justify-between mt-10 mb-8 font-semibold ' >
@@ -265,7 +309,14 @@ const Detail_service = () => {
             <div className='w-[40%] ml-[5%] relative '>
                 <div className='fixed w-[30%] '>
                 <div className='flex justify-end mb-2'> 
+<<<<<<< HEAD
                     <div className='pt-1' onClick={handleLike}><img src="/img/coeur.png" className='w-6 h-6 mr-2'/></div>
+=======
+                    <div className='pt-1'>  <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-[30px] h-[30px] left-[76%] top-0 cursor-pointer" onClick={() => {JSON.parse(localStorage.getItem('user'))!=undefined?Add_like():setisModalOpenLogin(true)}}
+                       fill={dore ? "red" : "none"} viewBox="0 0 24 24" stroke={dore ? "red" : "gray"} enableBackground="" >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg></div>
+>>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
                     <span className='border rounded-md p-1 px-3 mr-2'>{data.likes.length}</span>
                     <div className='border rounded-md  p-1 px-3'><img src="/img/partager.png"  className='w-6 h-6 '/></div>
                 </div>
@@ -273,6 +324,7 @@ const Detail_service = () => {
                     <div className='flex justify-center border mb-10  text-black font-bold py-2 text-[18px] '> {data.prix} dh <span className='text-gray-400 ml-2 text-[12px]'> 1 mois /anné</span></div>
                 <div className='text-[18px]  font-bold  mb-5'>Coaching</div>
                 
+<<<<<<< HEAD
                {/* Programmes */}
                {data.programmes.length > 0 && (
                 <div className="mb-5">
@@ -293,8 +345,28 @@ const Detail_service = () => {
                 </div>
               )}
                     <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] '> Continue  </div>
+=======
+                <div className='flex'>
+                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
+                        <span className='ml-2 text-gray-600'>Programe d'entrainement </span>
+                    </div>
+                    <div className='flex'>
+                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
+                        <span className='ml-2 text-gray-600'>Programe de nature </span>
+                    </div>
+                    <div className='flex'>
+                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
+                        <span className='ml-2 text-gray-600'>Des conseilles </span>
+                    </div>
+                    <div className='flex'>
+                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
+                        <span className='ml-2 text-gray-600'>Preparation Marathone </span>
+                    </div>
+                    <Order_confirmation  isOpen={isopen}  setOpen={closeModal} id={id} />
+                    <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={()=>{order_conf()}}> Continue  </div>
+>>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
                     
-
+                  
                     </div>
                     <div className="bg-slate-50 mt-5 p-6">
                     <div className='border border-green-500 text-center font-bold text-green-500 py-2 rounded-md text-[18px]'> Contact me  </div>

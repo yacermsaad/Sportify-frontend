@@ -24,8 +24,9 @@ import AddServiceForm from './components/AddServiceForm';
 import Message from './components/Message';
 import ConsultationAi from './components/ConsultationAi';
 import Checkout from './components/Checkout';
-import { useNavigate } from 'react-router-dom';
+import Verification from './components/login/verification';
 function App() {
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -76,6 +77,7 @@ function App() {
             <Route path="/consultation" element={<Navigate to="/" state={{ from: '/consultation' }} />} />
           )}
           <Route path="/fff" element={<Checkout />} />
+          <Route path="/verification" element={<Verification />} />
 
           
         </Routes>

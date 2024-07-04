@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { GoogleLogin } from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/css/Login.css';
+import Modb_ob from "./oublier_md"
 
 Modal.setAppElement('#root');
 
@@ -17,13 +18,12 @@ const Login = (props) => {
     const [t, i18n] = useTranslation();
     const navigate = useNavigate();
 
+
     useEffect(() => {
         setIsOpen(props.isOpen);
     }, [props.isOpen]);
 
-    const closeModal = () => {
-        props.setOpen(false);
-    };
+  
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -31,16 +31,13 @@ const Login = (props) => {
     const [passwordError, setPasswordError] = useState('');
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
+    const [obl_md,setobl_md]= useState(false);
 
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         const timer = setTimeout(() => {
-    //             navigate('/');
-    //         }, 6000);
-    //         return () => clearTimeout(timer);
-    //     }
-    // }, [isSuccess, navigate]);
-
+    const closeModal = () => {
+        props.setOpen(false);
+        setobl_md(false)
+        setPass('');setEmail('');setName('')
+    };
     const validatePassword = (password) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         return regex.test(password);
@@ -133,11 +130,12 @@ const Login = (props) => {
             setIsSuccess(false);
         }
     };
-
     return (
         <div>
-            <Modal isOpen={IsOpen} onRequestClose={closeModal} contentLabel="Pop-up Modal" className="w-full h-full bg-[rgba(0,0,0,.65)] pt-[148px] pb-[110px] z-[999]">
+            <Modal isOpen={IsOpen} onRequestClose={closeModal} contentLabel="Pop-up Modal" className="w-full h-full bg-[rgba(0,0,0,.65)] pt-[148px] pb-[110px] z-[9999]">
                 <div className={`flex justify-center animate__animated animate__zoomIn`}>
+                    
+                  
                     <div className="min-[870px]:flex hidden w-[490px] h-[560px] ">
                         <img src="https://i.pinimg.com/564x/ed/1c/53/ed1c53ea75cacaf96165684b1179c074.jpg" alt="login" className="w-full h-full rounded-l-lg" />
                     </div>
@@ -145,9 +143,10 @@ const Login = (props) => {
                         <button className='w-5 h-5 ml-[460px] mt-[6px]' onClick={closeModal}>
                             <img src='/img/croix.png' alt='close icon' className='w-full h-full' />
                         </button>
+                        {obl_md==false?
                         <form className="" onSubmit={create ? handleRegistration : handleLogin}>
                             <h1 className={`${i18n.language === 'ar' ? 'mr-[30px]' : 'ml-[30px]'} text-2xl mb-1 font-bold`}>{create ? t('cree ncmp') : t('cnct_v_cmpt')}</h1>
-                            <p className={`${i18n.language === 'ar' ? 'mr-[30px]' : 'ml-[30px]'}`}>{create ? t('v_c') : t('v_n_p_c')} <a className='cursor-pointer underline text-[#04cfb4]' onClick={() => { dispatch({ type: 'create', log: !create }); }}>{create ? t('cnx') : t('i_v')}</a> </p>
+                            <p className={`${i18n.language === 'ar' ? 'mr-[30px]' : 'ml-[30px]'}`}>{create ? t('v_c') : t('v_n_p_c')} <a className='cursor-pointer underline text-[#04cfb4]' onClick={() => { dispatch({ type: 'create', log: !create });setEmail("");setPass("") }}>{create ? t('cnx') : t('i_v')}</a> </p>
                             <div className="w-full px-8 pt-5">
                                 {create && (
                                     <div className={'mb-2 mt-2'}>
@@ -163,7 +162,7 @@ const Login = (props) => {
                                     <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="password" dir={`${i18n.language === 'ar' ? "rtl" : ''}`}>{t('m_p')}</label>
                                     <input required className="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10" id="password" type="password" placeholder={t('v_m_p')} onChange={(e) => setPass(e.target.value)} value={password} />
                                     {passwordError && <p className="text-red-500 text-xs italic mt-1">{passwordError}</p>}
-                                    {!create && <a className="inline-block align-baseline text-sm text-gray-600 hover:text-gray-800" href="/">{t('o_m')}</a>}
+                                    {!create && <a className="inline-block align-baseline text-sm text-gray-600 hover:text-gray-800 cursor-pointer"onClick={()=>{setobl_md(true)}} >{t('o_m')}</a>}
                                 </div>
                                 <div className="flex w-full mt-6">
                                     <button className="w-full bg-[#04cfb4] hover:bg-gray-900 hover:transition-colors duration-300 text-white text-sm py-2 px-4 font-semibold rounded h-10" type="submit">{create ? t('insc') : t('cnx')}</button>
@@ -176,8 +175,9 @@ const Login = (props) => {
                                 <GoogleLogin className='GoogleLogin' buttonText='Continue with Google' isSignedIn={false} />
                             </div>
                             {message && !passwordError && <div className={`mt-2 text-center text-sm ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>{message}</div>}
-                        </form>
+                        </form>:<Modb_ob></Modb_ob>}
                     </div>
+                  
                 </div>
             </Modal>
         </div>
