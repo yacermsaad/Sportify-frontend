@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const Service = () => {
+  const { t, i18n } = useTranslation();
   const [articles, setArticles] = useState([]);
-  const [sortOrder, setSortOrder] = useState('none'); // Added state for sorting
+  const [sortOrder, setSortOrder] = useState('none');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResultsCount, setSearchResultsCount] = useState(0); // State to hold the count of search results
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/service')
@@ -14,6 +18,39 @@ const Service = () => {
         console.error('There was an error fetching the services!', error);
       });
   }, []);
+
+  useEffect(() => {
+    if (sortOrder !== 'none') {
+      sortArticles(sortOrder);
+    }
+  }, [sortOrder]);
+
+  useEffect(() => {
+    // Calculate the number of search results when searchTerm changes
+    const filteredArticles = articles.filter(article =>
+      article.coach.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResultsCount(filteredArticles.length);
+  }, [searchTerm, articles]);
+
+  const sortArticles = (order) => {
+    const sortedArticles = [...articles];
+    if (order === 'low') {
+      sortedArticles.sort((a, b) => a.prix - b.prix);
+    } else if (order === 'high') {
+      sortedArticles.sort((a, b) => b.prix - a.prix);
+    } else if (order === 'medium') {
+      const averagePrice = articles.reduce((acc, article) => acc + article.prix, 0) / articles.length;
+      sortedArticles.sort((a, b) => Math.abs(a.prix - averagePrice) - Math.abs(b.prix - averagePrice));
+    } else if (order === 'oldest') {
+      sortedArticles.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    } else if (order === 'newest') {
+      sortedArticles.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    } else if (order === 'likes') {
+      sortedArticles.sort((a, b) => b.likes.length - a.likes.length);
+    }
+    setArticles(sortedArticles);
+  };
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -29,55 +66,81 @@ const Service = () => {
   };
 
   const getFullImageUrl = (imagePath) => {
-    const baseUrl = 'http://localhost:8000/'; // Adjust this base URL as needed
+    const baseUrl = 'http://localhost:8000/';
     return `${baseUrl}${imagePath}`;
   };
 
-  // Sorting function
-  const sortArticles = (order) => {
-    const sortedArticles = [...articles];
-    if (order === 'low') {
-      sortedArticles.sort((a, b) => a.prix - b.prix);
-    } else if (order === 'high') {
-      sortedArticles.sort((a, b) => b.prix - a.prix);
-    } else if (order === 'medium') {
-      // Assuming medium means sorting by average price if such logic is needed
-      const averagePrice = articles.reduce((acc, article) => acc + article.prix, 0) / articles.length;
-      sortedArticles.sort((a, b) => Math.abs(a.prix - averagePrice) - Math.abs(b.prix - averagePrice));
+  const fetchLikesCount = async (articleId) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/service/${articleId}/likes`);
+      return response.data.likes.length;
+    } catch (error) {
+      console.error(`Failed to fetch likes for article ${articleId}:`, error);
+      return 0; // Return 0 if fetching fails
     }
-    setArticles(sortedArticles);
   };
-const id="";
+
+  const [likesCounts, setLikesCounts] = useState({});
+
   useEffect(() => {
-    if (sortOrder !== 'none') {
-      sortArticles(sortOrder);
-    }
-  }, [sortOrder]);
+    const fetchLikesCounts = async () => {
+      const counts = {};
+      for (const article of articles) {
+        const likesCount = await fetchLikesCount(article.id);
+        counts[article.id] = likesCount;
+      }
+      setLikesCounts(counts);
+    };
+    fetchLikesCounts();
+  }, [articles]);
+
+  const filteredArticles = articles.filter(article =>
+    article.coach.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const isRTL = i18n.dir() === 'rtl'; // Check if current language is RTL
 
   return (
     <div>
-      <div className="mb-4">
-        <label htmlFor="sortOrder" className="mr-2">Sort by price:</label>
-        <select
-          id="sortOrder"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="p-2 border rounded"
-        >
-          <option value="none">None</option>
-          <option value="low">Low to High</option>
-          <option value="medium">Medium</option>
-          <option value="high">High to Low</option>
-        </select>
+      <div className={`mb-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className="flex">
+          <label htmlFor="sortOrder" className="mr-2">{t('sortBy')}</label>
+          <select
+            id="sortOrder"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="p-2 border rounded"
+          >
+            <option value="none">{t('none')}</option>
+            <option value="low">{t('low')}</option>
+            <option value="medium">{t('medium')}</option>
+            <option value="high">{t('high')}</option>
+            <option value="oldest">{t('oldest')}</option>
+            <option value="newest">{t('newest')}</option>
+            <option value="likes">{t('likes')}</option>
+          </select>
+        </div>
+        <div className={`flex ${isRTL ? 'ml-4' : 'mr-4'}`}>
+          <input
+            type="text"
+            placeholder={t('searchPlaceholder')}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border rounded"
+          />
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-        {articles.map((article) => (
+
+      {/* Display the number of search results found */}
+      {searchTerm && (
+        <div className={`flex justify-between items-center mb-4 ${isRTL ? 'flex-row-reverse' : ''}`} style={{ marginTop: "30px" }}>
+          <p style={{ color: "gray" }}>{filteredArticles.length} {t('resultsFound', { count: filteredArticles.length })}</p>
+        </div>
+      )}
+
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 ${isRTL ? 'grid-flow-row' : ''}`}>
+        {filteredArticles.map((article) => (
           <div key={article.id} className="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border">
-            <a
-              target="_self"
-              href={`/service/slug/${article.id}`}
-              className="absolute opacity-0 top-0 right-0 left-0 bottom-0"
-            ></a>
             <div className="relative mb-4 rounded-2xl">
               {article.images.length > 0 && (
                 <img
@@ -101,30 +164,8 @@ const id="";
                     d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                   />
                 </svg>
-                <span className="ml-1 text-sm text-slate-400">2</span>
+                <span className="ml-1 text-sm text-slate-400">{article.likes.length}</span>
               </div>
-              <a
-                className="flex justify-center items-center bg-green-300 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                href={`/service/slug/${article.id}`}
-                target="_self"
-                rel="noopener noreferrer"
-              >
-                More details
-                <svg
-                  className="ml-2 w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                  />
-                </svg>
-              </a>
             </div>
             <div className="flex justify-between items-center w-full pb-4 mb-auto">
               <div className="flex items-center">
@@ -141,14 +182,14 @@ const id="";
                       {article.coach?.fullname || 'Author Name'}
                     </p>
                     <p className="text-sm text-gray-500">
-                      Published on {formatDate(article.created_at)}
+                      {t('publishedOn', { date: formatDate(article.created_at) })}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="flex justify-end">
                 <div className="text-sm flex items-center text-gray-500 ">
-                  {calculateDaysAgo(article.created_at)} days ago
+                  {calculateDaysAgo(article.created_at)} {t('daysAgo')}
                   <svg
                     className="ml-1 w-4 h-4"
                     fill="none"

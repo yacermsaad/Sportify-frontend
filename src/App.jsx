@@ -1,5 +1,5 @@
 // App.js
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -24,6 +24,7 @@ import AddServiceForm from './components/AddServiceForm';
 import Message from './components/Message';
 import ConsultationAi from './components/ConsultationAi';
 import Checkout from './components/Checkout';
+import { useNavigate } from 'react-router-dom';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -36,8 +37,15 @@ function App() {
     return () => clearTimeout(timer); 
   }, []);
 
+  const userLoggedIn = !!localStorage.getItem('user');
+
   if (loading) {
-    return <PlaceholderCard />; 
+    return (
+      <div>
+      <PlaceholderCard  />
+    
+      </div>
+    ); 
   }
 
   return (
@@ -62,7 +70,11 @@ function App() {
           <Route path="/checkout" element={<CheckoutForm />} />
           <Route path="/addserv" element={<AddServiceForm />} />
           <Route path="/messagerie" element={<Message />} />
-          <Route path="/consultation" element={<ConsultationAi />} />
+          {userLoggedIn ? (
+            <Route path="/consultation" element={<ConsultationAi />} />
+          ) : (
+            <Route path="/consultation" element={<Navigate to="/" state={{ from: '/consultation' }} />} />
+          )}
           <Route path="/fff" element={<Checkout />} />
 
           

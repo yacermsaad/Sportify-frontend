@@ -226,7 +226,21 @@
   "add_new_certification": "إضافة شهادة جديدة",
   "certified_by": "مصدقة من قبل",
   "create_blog_title": "إنشاء مدونة",
-  "your_blog_title": "مدونتك"
+  "your_blog_title": "مدونتك",
+  "none": "لا شيء",
+  "low": "السعر: من الأقل إلى الأعلى",
+  "medium": "السعر: متوسط",
+  "high": "السعر: من الأعلى إلى الأقل",
+  "oldest": "الأقدم أولاً",
+  "newest": "الأحدث أولاً",
+  "likes": "الأكثر إعجابًا",
+    "searchPlaceholder": "البحث بواسطة اسم المدرب",
+  "resultsFound": "{{count}} نتيجة وجدت",
+  "sortBy": "ترتيب حسب",
+  "welcome": "مرحبا بك في الصفحة الرئيسية للخدمات",
+  "discoverServices": "اكتشف خدماتنا الرائعة",
+  "previous": "السابق",
+  "next": "التالي"
 
  
 }

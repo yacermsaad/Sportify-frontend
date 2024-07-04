@@ -8,6 +8,7 @@ const AddServiceForm = () => {
   const [images, setImages] = useState([null, null, null, null, null]);
   const [imagePreviews, setImagePreviews] = useState([null, null, null, null, null]);
   const [coachId, setCoachId] = useState('');
+  const [programmes, setProgrammes] = useState([{ label: '' }]);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -38,6 +39,11 @@ const AddServiceForm = () => {
       if (image) {
         formData.append(`images[${index}]`, image);
       }
+    });
+
+    // Append programmes data to formData
+    programmes.forEach((programme, index) => {
+      formData.append(`programmes[${index}][label]`, programme.label);
     });
 
     try {
@@ -75,6 +81,22 @@ const AddServiceForm = () => {
     }
   };
 
+  const handleProgrammeChange = (index, e) => {
+    const newProgrammes = [...programmes];
+    newProgrammes[index] = { label: e.target.value };
+    setProgrammes(newProgrammes);
+  };
+
+  const addProgrammeField = () => {
+    setProgrammes([...programmes, { label: '' }]);
+  };
+
+  const removeProgrammeField = (index) => {
+    const newProgrammes = [...programmes];
+    newProgrammes.splice(index, 1);
+    setProgrammes(newProgrammes);
+  };
+
   return (
     <div>
       {showErrorModal && (
@@ -92,7 +114,7 @@ const AddServiceForm = () => {
         </div>
       )}
       <form onSubmit={handleFormSubmit} className="space-y-6 p-6 bg-white rounded-lg shadow-2xl">
-        <h1 className="text-xl font-bold mb-4" style={{ textAlign: 'center' }}>Start Add Service</h1>
+        <h1 className="text-xl font-bold mb-4" style={{ textAlign: 'center' }}>Add Service</h1>
         <div>
           <label htmlFor="serviceName" className="block text-lg font-medium text-gray-700">Service Name:</label>
           <input
@@ -137,6 +159,36 @@ const AddServiceForm = () => {
               )}
             </div>
           ))}
+        </div>
+        <div>
+          <label className="block text-lg font-medium text-gray-700">Programmes:</label>
+          {programmes.map((programme, index) => (
+            <div key={index} className="mt-2 flex items-center">
+              <input
+                type="text"
+                value={programme.label}
+                onChange={(e) => handleProgrammeChange(index, e)}
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter programme label"
+              />
+              {index > 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeProgrammeField(index)}
+                  className="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addProgrammeField}
+            className="mt-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          >
+            Add Programme
+          </button>
         </div>
         <button
           type="submit"

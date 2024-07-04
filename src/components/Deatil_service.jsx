@@ -39,8 +39,9 @@ const Detail_service = () => {
           }
         }
       };
-   
+    
       useEffect(() => {fetchData()},[id])
+      
       console.log(data)
       const calculateTimeAgo = (timestamp) => {
         return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
@@ -54,7 +55,58 @@ const Detail_service = () => {
         return somme / data.comments.length;
 
       };
+      const handleLike = async () => {
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/services/${id}/like`);
+            setIsLiked(!isLiked);
+            setdata(response.data.service);
+        } catch (error) {
+            console.error('Error liking/unliking the service:', error);
+        }
+    };
+    const [newComment, setNewComment] = useState({
+        contenu: '',
+        nb_start: 0, // Assuming nb_start is the rating or stars
+      });
 
+      const handleSubmitComment = async (e) => {
+        e.preventDefault();
+      
+        // Retrieve user_id from local storage
+        const user_id = localStorage.getItem('user_id');
+      
+        try {
+          const response = await axios.post(`http://127.0.0.1:8000/api/addcoment`, {
+            user_id: user_id,
+            service_id: id,
+            contenu: newComment.contenu,
+            nb_start: newComment.nb_start,
+          });
+      
+          // Assuming response.data.comment contains the new comment object
+          const newCommentData = response.data.comment;
+      
+          // Update the comments state with the new comment
+          setdata((prevData) => ({
+            ...prevData,
+            comments: [...prevData.comments, newCommentData],
+          }));
+      
+          // Reset the newComment state
+          setNewComment({
+            contenu: '',
+            nb_start: 0,
+          });
+      
+          console.log('Comment added successfully:', newCommentData);
+        } catch (error) {
+          console.error('Error adding comment:', error);
+          // Handle error state or display error message to user
+        }
+      };
+      
+      
+    
   return (
     <div>
 
@@ -213,7 +265,7 @@ const Detail_service = () => {
             <div className='w-[40%] ml-[5%] relative '>
                 <div className='fixed w-[30%] '>
                 <div className='flex justify-end mb-2'> 
-                    <div className='pt-1'><img src="/img/coeur.png" className='w-6 h-6 mr-2'/></div>
+                    <div className='pt-1' onClick={handleLike}><img src="/img/coeur.png" className='w-6 h-6 mr-2'/></div>
                     <span className='border rounded-md p-1 px-3 mr-2'>{data.likes.length}</span>
                     <div className='border rounded-md  p-1 px-3'><img src="/img/partager.png"  className='w-6 h-6 '/></div>
                 </div>
@@ -221,23 +273,25 @@ const Detail_service = () => {
                     <div className='flex justify-center border mb-10  text-black font-bold py-2 text-[18px] '> {data.prix} dh <span className='text-gray-400 ml-2 text-[12px]'> 1 mois /anné</span></div>
                 <div className='text-[18px]  font-bold  mb-5'>Coaching</div>
                 
-                <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Programe d'entrainement </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Programe de nature </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Des conseilles </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Preparation Marathone </span>
-                    </div>
-
+               {/* Programmes */}
+               {data.programmes.length > 0 && (
+                <div className="mb-5">
+                  <div className="text-lg font-bold mb-2">Programmes</div>
+                  <ul className="list-disc list-inside text-gray-600">
+                    {data.programmes.map((programme) => (
+                      <li key={programme.id} className="flex items-center mb-2">
+                        <span className="inline-block h-5 w-5 bg-green-500 text-white rounded-full flex-shrink-0 mr-2 flex items-center justify-center">
+                          {/* Check mark icon */}
+                          <svg className="h-3 w-3 fill-white" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                          </svg>
+                        </span>
+                        <p>{programme.label}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
                     <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] '> Continue  </div>
                     
 
@@ -249,6 +303,49 @@ const Detail_service = () => {
                 </div>
             </div>
         </div>
+        <div className='mt-10'>
+        <p className='font-semibold text-[22px] mb-5'>Ajouter un commentaire</p>
+        <form onSubmit={handleSubmitComment}>
+          <div className='flex items-center mb-4'>
+            <textarea
+              className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-indigo-500'
+              rows='4'
+              placeholder='Votre commentaire'
+              value={newComment.contenu}
+              onChange={(e) =>
+                setNewComment((prevComment) => ({
+                  ...prevComment,
+                  contenu: e.target.value,
+                }))
+              }
+              required
+            ></textarea>
+          </div>
+          <div className='flex items-center'>
+            <input
+              type='number'
+              min='1'
+              max='5'
+              className='w-16 px-3 py-2 mr-2 border rounded-md focus:outline-none focus:border-indigo-500'
+              placeholder='Note'
+              value={newComment.nb_start}
+              onChange={(e) =>
+                setNewComment((prevComment) => ({
+                  ...prevComment,
+                  nb_start: parseInt(e.target.value),
+                }))
+              }
+              required
+            />
+            <button
+              type='submit'
+              className='px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700'
+            >
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
         <Footer/>
         </>:null}
     </div>

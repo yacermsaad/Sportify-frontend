@@ -242,7 +242,21 @@
   "add_new_certification": "Ajouter une nouvelle certification",
   "certified_by": "Certifié par",
   "create_blog_title": "Créer un blog",
-  "your_blog_title": "Votre blog"
+  "your_blog_title": "Votre blog",
+  "none": "Aucun",
+  "low": "Prix : du moins cher au plus cher",
+  "medium": "Prix : Moyen",
+  "high": "Prix : du plus cher au moins cher",
+  "oldest": "Les plus anciens d'abord",
+  "newest": "Les plus récents d'abord",
+  "likes": "Les plus aimés",
+    "searchPlaceholder": "Rechercher par nom du coach",
+  "resultsFound": "{{count}} résultats trouvés",
+  "sortBy": "Trier par",
+  "welcome": "Bienvenue sur la page des Services",
+  "discoverServices": "Découvrir nos meilleurs services",
+  "previous": "Précédent",
+  "next": "Suivant"
 
 
 

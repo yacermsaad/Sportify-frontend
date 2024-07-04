@@ -9,6 +9,8 @@ import BlogSection from './BlogSection';
 import Testimonials from './Testimonial';
 import FAQ from './FAQ';
 import Cards from './Cards';
+import Header from './BannerServ';
+import BlogGrid from './BlogGrid';
 function Home() {
   const [t,i18n]=useTranslation();
   return (
@@ -314,6 +316,10 @@ function Home() {
 
 
         <Testimonials/>
+
+        <Header/>
+
+        <BlogGrid/>
 
 
         <FAQ/>

@@ -273,7 +273,21 @@
   "add_new_certification": "Add New Certification",
   "certified_by": "Certified By",
   "create_blog_title": "Create Blog",
-  "your_blog_title": "Your Blog"
+  "your_blog_title": "Your Blog",
+  "none": "None",
+    "low": "Price: Low to High",
+    "medium": "Price: Medium",
+    "high": "Price: High to Low",
+    "oldest": "Oldest First",
+    "newest": "Newest First",
+    "likes": "Most Likes",
+    "searchPlaceholder": "Search by coach's name",
+  "resultsFound": "{{count}} results found",
+  "sortBy": "Sort by",
+  "welcome": "Welcome to the Services Page",
+  "discoverServices": "Discover Our Best Services",
+  "previous": "Previous",
+  "next": "Next"
      
 
 
