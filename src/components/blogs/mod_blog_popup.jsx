@@ -51,7 +51,7 @@ function Mod_Blog_popup(props) {
                 </button>
                 <h2 className='font-bold text-center text-[1.5rem]'>Modifier Votre Blog</h2 >
                 <form className="px-8 pt-3 pb-5 mb-4">                   
-                        <label htmlFor="message" className="block pl-1  text-sm font-medium text-gray-900 mb-4 "> Context </label>
+                        <label htmlFor="message" className="block pl-1  text-sm font-medium text-gray-900 mb-4 "> Contenu </label>
                         <textarea onChange={(e)=>{setcontext(e.target.value)}} id="message" rows="4" className="block p-2.5  mb-5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 outline-none" placeholder="Votre context" defaultValue={props.blog.contenu}></textarea>
                         
                         <label htmlFor="message" className="block text-sm font-medium text-gray-900  mb-4"> Image</label>

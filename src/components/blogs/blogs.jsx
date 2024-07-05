@@ -120,7 +120,8 @@ function Blogs() {
                     style={{background:"lightgreen", color:"white", marginLeft:"-20px",fontWeight:"bold"} }   id="dropdownToggle">
                   {user.name.slice(0, 2).toUpperCase()}
                   </div>
-                  <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl  block w-full p-2.5 dark:bg-gray-100  dark:placeholder-gray-400 cursor-pointer outline-none " placeholder="Do you want to create block ?" readOnly/>
+                  <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl  block w-full p-2.5 dark:bg-gray-100  dark:placeholder-gray-400 cursor-pointer outline-none " placeholder="
+veux-tu créer un blog ?" readOnly/>
                 </label>
             </div>
              :null} 
@@ -135,12 +136,12 @@ function Blogs() {
                   value={blg.id==blgid?cmnt:""} 
                   className='border border-gray-300 rounded px-3 py-2 flex-grow mr-2'
                   required
-                  placeholder='Write your comment...'
+                  placeholder='Écrivez votre commentaire...'
                   style={{ height: '50px' }}
                 />
     
                 <button type='submit' className='bg-green-500 text-white px-4 py-2 rounded' style={{ height: '47px' }}>
-                  Send <i className='fa-regular fa-paper-plane'></i>
+                Envoyer <i className='fa-regular fa-paper-plane'></i>
                 </button>
                
               </form>
@@ -169,10 +170,10 @@ function Blogs() {
             </button>
             {isCreatingBlog && (
               <div>
-                <h2 className="text-lg font-bold mb-4">Create a Blog Post</h2>
+                <h2 className="text-xl font-bold mb-4 text-center ">Créer un Blog</h2>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="flex flex-col">
-                    <label className="mb-1 text-sm font-semibold text-gray-700">Title</label>
+                    <label className="mb-1 text-sm font-semibold text-gray-700">Titre</label>
                     <input
                       type="text"
                       value={title}
@@ -183,7 +184,7 @@ function Blogs() {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="mb-1 text-sm font-semibold text-gray-700">Content</label>
+                    <label className="mb-1 text-sm font-semibold text-gray-700">Contenu</label>
                     <textarea
                       value={content}
                       onChange={(e) => setContent(e.target.value)}
@@ -207,7 +208,7 @@ function Blogs() {
                     type="submit"
                     className="w-full bg-green-400 hover:bg-blue-600 text-white py-2 px-4 rounded"
                   >
-                    Add Blog Post
+                    Ajouter
                   </button>
                 </form>
                 

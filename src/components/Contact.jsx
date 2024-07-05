@@ -62,10 +62,10 @@ const Contact = () => {
 
             <div className="contact-body">
                 <div className="contact-info">
-                    <div><i className="fas fa-mobile-alt"></i>{t('phone_no')}<span className="text">1-2392-23928-2</span></div>
-                    <div><i className="fas fa-envelope-open"></i>{t('email')}<span className="text">mail@company.com</span></div>
-                    <div><i className="fas fa-map-marker-alt"></i>{t('address')}<span className="text">2939 Patrick Street, Victoria TX, United States</span></div>
-                    <div><i className="fas fa-clock"></i>{t('opening_hours')}<span className="text">{t('monday_friday')}</span></div>
+                    <div><i className="fas fa-mobile-alt mr-2"></i>{t('phone_no')}<span className="text">+212-614785126</span></div>
+                    <div><i className="fas fa-envelope-open mr-2"></i>{t('email')}<span className="text">oboocontact@gmail.com</span></div>
+                    <div><i className="fas fa-map-marker-alt mr-2"></i>{t('address')}<span className="text">2939 Rue 01 Tetouane, Maroc</span></div>
+                    <div><i className="fas fa-clock mr-2"></i>{t('opening_hours')}<span className="text">{t('monday_friday')}</span></div>
                 </div>
 
                 <div className="contact-form">

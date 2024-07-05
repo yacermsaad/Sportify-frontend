@@ -23,6 +23,8 @@ const Detail_service = () => {
     const [data, setdata] = useState(null); 
     const [isopen, setisopen] = useState(false); 
     const [dore, setdore] = useState(false); 
+    const [newComment , setNewComment ] = useState(""); 
+
     const [isModalOpenLogin,setisModalOpenLogin]=useState(false)
 
     const {id} = useParams();
@@ -83,6 +85,36 @@ const Detail_service = () => {
         return somme / data.comments.length;
 
       };
+     
+      
+
+      const [nbrstr, setnbrstr] = useState("");
+
+      const handleSubmitComment = async (e) => {
+        e.preventDefault();
+      
+        // Retrieve user_id from local storage
+        const user_id=JSON.parse(localStorage.getItem('user')).id
+        const contenu=newComment;
+          const nb_start=nbrstr;
+          console.log(contenu + nb_start)
+      
+        try {
+          const response = await axios.post(`http://127.0.0.1:8000/api/addcoment`, {user_id,
+            id,contenu,
+            nb_start 
+          });
+    
+          fetchData()
+          setNewComment("");
+          setnbrstr("")
+      
+          console.log('Comment added successfully:');
+        } catch (error) {
+          console.error('Error adding comment:', error);
+          // Handle error state or display error message to user
+        }
+      };
       const order_conf=()=>{
         const user=JSON.parse(localStorage.getItem('user'))
         if(user!=undefined){
@@ -92,43 +124,6 @@ const Detail_service = () => {
             
         }
       }
-
-      const handleSubmitComment = async (e) => {
-        e.preventDefault();
-      
-        // Retrieve user_id from local storage
-        const user_id = localStorage.getItem('user_id');
-      
-        try {
-          const response = await axios.post(`http://127.0.0.1:8000/api/addcoment`, {
-            user_id: user_id,
-            service_id: id,
-            contenu: newComment.contenu,
-            nb_start: newComment.nb_start,
-          });
-      
-          // Assuming response.data.comment contains the new comment object
-          const newCommentData = response.data.comment;
-      
-          // Update the comments state with the new comment
-          setdata((prevData) => ({
-            ...prevData,
-            comments: [...prevData.comments, newCommentData],
-          }));
-      
-          // Reset the newComment state
-          setNewComment({
-            contenu: '',
-            nb_start: 0,
-          });
-      
-          console.log('Comment added successfully:', newCommentData);
-        } catch (error) {
-          console.error('Error adding comment:', error);
-          // Handle error state or display error message to user
-        }
-      };
-      
       
     
   return (
@@ -311,8 +306,9 @@ const Detail_service = () => {
     </div>
   ))}
 
+  
+  <div className='flex justify-center border bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={order_conf}> Continue </div>
   <Order_confirmation isOpen={isopen} setOpen={closeModal} id={id} />
-  <div className='flex justify-center border bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={() => { order_conf() }}> Continue </div>
 </div>
 
 
@@ -335,15 +331,22 @@ const Detail_service = () => {
               rows='4'
               placeholder='Votre commentaire'
               required
+              onChange={(e)=>{setNewComment(e.target.value,
+                )}}
             ></textarea>
           </div>
           <div className='flex items-center mb-4'>
             <input
               type='number'
               min='1'
-              max='5'
+              max="5"
               className='w-16 px-3 py-2 mr-2 border rounded-md focus:outline-none focus:border-indigo-500'
               placeholder='Note'
+<<<<<<< HEAD
+=======
+
+              onChange={(e)=>{setnbrstr(e.target.value)}}
+>>>>>>> c3cc6425de772d89702f2389b6d6ba301611bccb
               required
             />
             <button
