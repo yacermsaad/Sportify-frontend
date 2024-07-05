@@ -97,6 +97,14 @@ const Service = () => {
   const filteredArticles = articles.filter(article =>
     article.coach.fullname.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const calculatestare = (article) => {
+    if (!article.comments || article.comments.length === 0) {
+        return 0; // or return null or any default value if there are no comments
+    }
+    const somme = article.comments.reduce((acc, com) => acc + com.nb_start, 0);
+    return somme / article.comments.length;
+
+  };
 
   const isRTL = i18n.dir() === 'rtl'; // Check if current language is RTL
 
@@ -212,7 +220,7 @@ const Service = () => {
          <h3 className="font-medium text-xl leading-8 flex items-center">
            <div className="flex items-center mt-2">
              <i className="fas fa-star text-green-500 mr-1"></i>
-             <span style={{ fontSize: "15px", marginLeft: "20px" }}>{article.comments.length > 0 ? article.comments[0].nb_start : 'N/A'}</span>
+             <span style={{ fontSize: "15px", marginLeft: "20px" }}>{article.comments.length > 0 ? calculatestare(article) : 'N/A'}</span>
              <span className="ml-2" style={{ marginLeft: "180px", fontSize: "15px" }}>A partir de {article.prix} Mad</span>
            </div>
          </h3>
