@@ -93,6 +93,44 @@ const Detail_service = () => {
         }
       }
 
+      const handleSubmitComment = async (e) => {
+        e.preventDefault();
+      
+        // Retrieve user_id from local storage
+        const user_id = localStorage.getItem('user_id');
+      
+        try {
+          const response = await axios.post(`http://127.0.0.1:8000/api/addcoment`, {
+            user_id: user_id,
+            service_id: id,
+            contenu: newComment.contenu,
+            nb_start: newComment.nb_start,
+          });
+      
+          // Assuming response.data.comment contains the new comment object
+          const newCommentData = response.data.comment;
+      
+          // Update the comments state with the new comment
+          setdata((prevData) => ({
+            ...prevData,
+            comments: [...prevData.comments, newCommentData],
+          }));
+      
+          // Reset the newComment state
+          setNewComment({
+            contenu: '',
+            nb_start: 0,
+          });
+      
+          console.log('Comment added successfully:', newCommentData);
+        } catch (error) {
+          console.error('Error adding comment:', error);
+          // Handle error state or display error message to user
+        }
+      };
+      
+      
+    
   return (
     <div>
 
@@ -255,31 +293,32 @@ const Detail_service = () => {
                     <span className='border rounded-md p-1 px-3 mr-2'>{data.likes.length}</span>
                     <div className='border rounded-md  p-1 px-3'><img src="/img/partager.png"  className='w-6 h-6 '/></div>
                 </div>
-                <div className='border p-5'>
-                    <div className='flex justify-center border mb-10  text-black font-bold py-2 text-[18px] '> {data.prix} dh <span className='text-gray-400 ml-2 text-[12px]'> 1 mois /anné</span></div>
-                <div className='text-[18px]  font-bold  mb-5'>Coaching</div>
-                
-                <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Programe d'entrainement </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Programe de nature </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Des conseilles </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Preparation Marathone </span>
-                    </div>
-                    <Order_confirmation  isOpen={isopen}  setOpen={closeModal} id={id} />
-                    <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={()=>{order_conf()}}> Continue  </div>
-                    
-                  
-                    </div>
+
+
+             <div className='border p-5'>
+  <div className='flex justify-center border mb-10 text-black font-bold py-2 text-[18px]'>
+    {data.prix} dh <span className='text-gray-400 ml-2 text-[12px]'> 1 mois /anné</span>
+  </div>
+  <div className='text-[18px] font-bold mb-5'>Coaching</div>
+
+  {/* Displaying programmes */}
+  {data.programmes.map(programme => (
+    <div key={programme.id} className='flex'>
+      <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill">
+        <path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path>
+      </svg>
+      <span className='ml-2 text-gray-600'>{programme.label}</span>
+    </div>
+  ))}
+
+  <Order_confirmation isOpen={isopen} setOpen={closeModal} id={id} />
+  <div className='flex justify-center border bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={() => { order_conf() }}> Continue </div>
+</div>
+
+
+
+
+
                     <div className="bg-slate-50 mt-5 p-6">
                     <div className='border border-green-500 text-center font-bold text-green-500 py-2 rounded-md text-[18px]'> Contact me  </div>
 
@@ -287,6 +326,37 @@ const Detail_service = () => {
                 </div>
             </div>
         </div>
+        <div className='mt-10'>
+        <p className='font-semibold text-[22px] mb-5'>Ajouter un commentaire</p>
+        <form onSubmit={handleSubmitComment}>
+          <div className='flex items-center mb-4'>
+            <textarea
+              className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-indigo-500'
+              rows='4'
+              placeholder='Votre commentaire'
+              
+              required
+            ></textarea>
+          </div>
+          <div className='flex items-center'>
+            <input
+              type='number'
+              min='1'
+              max='5'
+              className='w-16 px-3 py-2 mr-2 border rounded-md focus:outline-none focus:border-indigo-500'
+              placeholder='Note'
+              
+              required
+            />
+            <button
+              type='submit'
+              className='px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700'
+            >
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
         <Footer/>
         </>:null}
     </div>

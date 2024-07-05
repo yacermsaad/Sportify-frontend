@@ -28,9 +28,9 @@ export default function Order_confirmation(props){
                 const id=props.id
                 const response = await axios.post(`http://127.0.0.1:8000/api/Add_order`,{user_id,id});
                 console.log(response.data)
-                // navigate("http://127.0.0.1:8080");
+                navigate("http://127.0.0.1:8001");
                 // history.push('http://127.0.0.1:8080')
-                window.location.href = 'http://127.0.0.1:8080'
+                window.location.href = 'http://127.0.0.1:8001/'
                 closeModal();
                 } catch (error) {
                 console.error('Error fetching data:', error);

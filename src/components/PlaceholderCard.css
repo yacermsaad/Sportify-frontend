@@ -1,0 +1,21 @@
+/* SkeletonLoading.css */
+
+.skeleton-loading {
+    background-color: #e0e0e0; /* Default background color for skeleton */
+    border-radius: 4px; /* Rounded corners for skeleton */
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* Pulse animation */
+  }
+  
+  /* Define pulse animation */
+  @keyframes pulse {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
+  

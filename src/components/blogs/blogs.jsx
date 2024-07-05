@@ -92,7 +92,7 @@ function Blogs() {
 
   const add_coment=(blog_id,user_id)=>{
   
-    axios.post('http://localhost:8000/api/addcoment',{article_id:blog_id,user_id:user_id,contenu:cmnt})
+    axios.post('http://localhost:8000/api/Addcoment',{article_id:blog_id,user_id:user_id,contenu:cmnt})
     .then(response => {
       getdata();
       setcmnt("")
