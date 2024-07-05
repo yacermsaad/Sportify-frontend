@@ -342,11 +342,9 @@ const Detail_service = () => {
               max="5"
               className='w-16 px-3 py-2 mr-2 border rounded-md focus:outline-none focus:border-indigo-500'
               placeholder='Note'
-<<<<<<< HEAD
-=======
+              style={{width:"100px"}}
 
               onChange={(e)=>{setnbrstr(e.target.value)}}
->>>>>>> c3cc6425de772d89702f2389b6d6ba301611bccb
               required
             />
             <button
