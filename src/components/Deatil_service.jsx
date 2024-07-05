@@ -48,12 +48,6 @@ const Detail_service = () => {
           }
         }
       };
-<<<<<<< HEAD
-    
-      useEffect(() => {fetchData()},[id])
-      
-      console.log(data)
-=======
       useEffect(() => {fetchData()},[id])
 
       const Add_like = async () => {
@@ -75,7 +69,6 @@ const Detail_service = () => {
         }
       };
       
->>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
       const calculateTimeAgo = (timestamp) => {
         let result = formatDistanceToNow(new Date(timestamp), { addSuffix: false });
         result = result.replace('about', 'Environ'); // Replace "about" with "environ"
@@ -90,21 +83,6 @@ const Detail_service = () => {
         return somme / data.comments.length;
 
       };
-<<<<<<< HEAD
-      const handleLike = async () => {
-        try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/services/${id}/like`);
-            setIsLiked(!isLiked);
-            setdata(response.data.service);
-        } catch (error) {
-            console.error('Error liking/unliking the service:', error);
-        }
-    };
-    const [newComment, setNewComment] = useState({
-        contenu: '',
-        nb_start: 0, // Assuming nb_start is the rating or stars
-      });
-=======
       const order_conf=()=>{
         const user=JSON.parse(localStorage.getItem('user'))
         if(user!=undefined){
@@ -114,7 +92,6 @@ const Detail_service = () => {
             
         }
       }
->>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
 
       const handleSubmitComment = async (e) => {
         e.preventDefault();
@@ -309,65 +286,39 @@ const Detail_service = () => {
             <div className='w-[40%] ml-[5%] relative '>
                 <div className='fixed w-[30%] '>
                 <div className='flex justify-end mb-2'> 
-<<<<<<< HEAD
-                    <div className='pt-1' onClick={handleLike}><img src="/img/coeur.png" className='w-6 h-6 mr-2'/></div>
-=======
                     <div className='pt-1'>  <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-[30px] h-[30px] left-[76%] top-0 cursor-pointer" onClick={() => {JSON.parse(localStorage.getItem('user'))!=undefined?Add_like():setisModalOpenLogin(true)}}
                        fill={dore ? "red" : "none"} viewBox="0 0 24 24" stroke={dore ? "red" : "gray"} enableBackground="" >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg></div>
->>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
                     <span className='border rounded-md p-1 px-3 mr-2'>{data.likes.length}</span>
                     <div className='border rounded-md  p-1 px-3'><img src="/img/partager.png"  className='w-6 h-6 '/></div>
                 </div>
-                <div className='border p-5'>
-                    <div className='flex justify-center border mb-10  text-black font-bold py-2 text-[18px] '> {data.prix} dh <span className='text-gray-400 ml-2 text-[12px]'> 1 mois /anné</span></div>
-                <div className='text-[18px]  font-bold  mb-5'>Coaching</div>
-                
-<<<<<<< HEAD
-               {/* Programmes */}
-               {data.programmes.length > 0 && (
-                <div className="mb-5">
-                  <div className="text-lg font-bold mb-2">Programmes</div>
-                  <ul className="list-disc list-inside text-gray-600">
-                    {data.programmes.map((programme) => (
-                      <li key={programme.id} className="flex items-center mb-2">
-                        <span className="inline-block h-5 w-5 bg-green-500 text-white rounded-full flex-shrink-0 mr-2 flex items-center justify-center">
-                          {/* Check mark icon */}
-                          <svg className="h-3 w-3 fill-white" viewBox="0 0 24 24">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                          </svg>
-                        </span>
-                        <p>{programme.label}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-                    <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] '> Continue  </div>
-=======
-                <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Programe d'entrainement </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Programe de nature </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Des conseilles </span>
-                    </div>
-                    <div className='flex'>
-                        <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill"><path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path></svg>
-                        <span className='ml-2 text-gray-600'>Preparation Marathone </span>
-                    </div>
-                    <Order_confirmation  isOpen={isopen}  setOpen={closeModal} id={id} />
-                    <div className='flex justify-center border  bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={()=>{order_conf()}}> Continue  </div>
->>>>>>> f8c85dd52fb04f7682f1e4161a7306235a384474
-                    
-                  
-                    </div>
+
+
+             <div className='border p-5'>
+  <div className='flex justify-center border mb-10 text-black font-bold py-2 text-[18px]'>
+    {data.prix} dh <span className='text-gray-400 ml-2 text-[12px]'> 1 mois /anné</span>
+  </div>
+  <div className='text-[18px] font-bold mb-5'>Coaching</div>
+
+  {/* Displaying programmes */}
+  {data.programmes.map(programme => (
+    <div key={programme.id} className='flex'>
+      <svg width="16" height="25" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg" fill="currentFill">
+        <path d="M3.645 8.102.158 4.615a.536.536 0 0 1 0-.759l.759-.758c.21-.21.549-.21.758 0l2.35 2.349L9.054.416c.21-.21.55-.21.759 0l.758.758c.21.21.21.55 0 .759L4.403 8.102c-.209.21-.549.21-.758 0Z"></path>
+      </svg>
+      <span className='ml-2 text-gray-600'>{programme.label}</span>
+    </div>
+  ))}
+
+  <Order_confirmation isOpen={isopen} setOpen={closeModal} id={id} />
+  <div className='flex justify-center border bg-green-500 text-white font-bold py-2 mt-10 rounded-md text-[18px] cursor-pointer' onClick={() => { order_conf() }}> Continue </div>
+</div>
+
+
+
+
+
                     <div className="bg-slate-50 mt-5 p-6">
                     <div className='border border-green-500 text-center font-bold text-green-500 py-2 rounded-md text-[18px]'> Contact me  </div>
 
@@ -383,13 +334,7 @@ const Detail_service = () => {
               className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-indigo-500'
               rows='4'
               placeholder='Votre commentaire'
-              value={newComment.contenu}
-              onChange={(e) =>
-                setNewComment((prevComment) => ({
-                  ...prevComment,
-                  contenu: e.target.value,
-                }))
-              }
+              
               required
             ></textarea>
           </div>
@@ -400,13 +345,7 @@ const Detail_service = () => {
               max='5'
               className='w-16 px-3 py-2 mr-2 border rounded-md focus:outline-none focus:border-indigo-500'
               placeholder='Note'
-              value={newComment.nb_start}
-              onChange={(e) =>
-                setNewComment((prevComment) => ({
-                  ...prevComment,
-                  nb_start: parseInt(e.target.value),
-                }))
-              }
+              
               required
             />
             <button
