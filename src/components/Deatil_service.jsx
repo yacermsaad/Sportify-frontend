@@ -326,26 +326,24 @@ const Detail_service = () => {
                 </div>
             </div>
         </div>
-        <div className='mt-10'>
-        <p className='font-semibold text-[22px] mb-5'>Ajouter un commentaire</p>
-        <form onSubmit={handleSubmitComment}>
-          <div className='flex items-center mb-4'>
+        <div className='mt-10' style={{marginLeft:"160px"}}>
+        <p className='font-semibold text-2xl mb-5'>Ajouter un commentaire</p>
+        <form onSubmit={handleSubmitComment} className='max-w-lg mx-auto' style={{marginLeft:"-10px"}}>
+          <div className='mb-4'>
             <textarea
               className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-indigo-500'
               rows='4'
               placeholder='Votre commentaire'
-              
               required
             ></textarea>
           </div>
-          <div className='flex items-center'>
+          <div className='flex items-center mb-4'>
             <input
               type='number'
               min='1'
               max='5'
               className='w-16 px-3 py-2 mr-2 border rounded-md focus:outline-none focus:border-indigo-500'
               placeholder='Note'
-              
               required
             />
             <button
@@ -357,6 +355,7 @@ const Detail_service = () => {
           </div>
         </form>
       </div>
+      
         <Footer/>
         </>:null}
     </div>
