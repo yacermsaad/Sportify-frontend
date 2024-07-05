@@ -137,7 +137,7 @@ const Login = (props) => {
                     
                   
                     <div className="min-[870px]:flex hidden w-[490px] h-[560px] ">
-                        <img src="https://i.pinimg.com/564x/ed/1c/53/ed1c53ea75cacaf96165684b1179c074.jpg" alt="login" className="w-full h-full rounded-l-lg" />
+                        <img src={obl_md==false?"https://i.pinimg.com/564x/ed/1c/53/ed1c53ea75cacaf96165684b1179c074.jpg":"/img/login1.jpg"} alt="login" className="w-full h-full rounded-l-lg" />
                     </div>
                     <div className="min-[550px]:w-[490px] w-full h-[560px] min-[870px]:rounded-r-lg max-[870px]:rounded-lg bg-white" dir={`${i18n.language === 'ar' ? "rtl" : ''}`}>
                         <button className='w-5 h-5 ml-[460px] mt-[6px]' onClick={closeModal}>

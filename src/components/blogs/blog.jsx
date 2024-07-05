@@ -106,13 +106,14 @@ useEffect(()=>{
     });}
 })
 
-  // const formatDate = (timestamp) => {
-  //   const date = new Date(timestamp);
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 to month since getMonth() returns 0-11
-  //   const day = date.getDate().toString().padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // };
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 to month since getMonth() returns 0-11
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen_m_blg, setIsOpen_m_blg] = useState(false);
   const [isOpen_sup_blg, setIsOpen_sup_blg] = useState(false);
@@ -219,7 +220,7 @@ useEffect(()=>{
                       <i className='fa-solid fa-trash'></i>
                     </a>:null}
                   </div>
-                  <p className='text-gray-400 text-sm'>20 April 2022, at 14:88 PM</p>
+                  <p className='text-gray-400 text-sm'>{calculateTimeAgo(cm.created_at)}</p>
                 </div>
               </div>
               <div className='text-wrap hover:text-balance flex flex-wrap' style={{overflowWrap: 'anywhere'}}>
